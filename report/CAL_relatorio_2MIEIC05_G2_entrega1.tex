@@ -76,7 +76,7 @@ De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicaçã
 	\begin{itemize}
 		\item \( G_i = (V_i, E_i) \) - Grafo dirigido pesado, representado por:
 		\begin{itemize}
-			\item \( V_i \) - Vértices, onde \( V_i(i) \) representa o i-ésimo vértice, representando os centros de distribuição e de aplicação, com:
+			\item \( V_i \) - Vértices, onde \( V_i(i) \) representa o i-ésimo vértice, entre os quais se encontram os centros de distribuição e de aplicação, com:
 			\begin{itemize}
 				\item Id - identificador do vértice, único
 				\item \( Adj \subseteq E \) - Arestas que partem do vértice
@@ -142,7 +142,7 @@ De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicaçã
 
 	\section{Funções Objetivo}
 	O principal objetivo deste problema é que as vacinas sejam todas distribuídas num dado tempo limite. Contudo, a melhor solução do mesmo passa por, após ter encontrado uma solução que entregue as vacinas dentro desse tempo limite, minimizar o número de carrinhas que as vão distribuir, de forma a tornar esta distribuição menos dispendiosa. \par
-	Assim, primeiro pretende-se diminuir o tempo despendido pela carrinha que demora mais tempo, de forma que as vacinas não estejam em transporte mais do que o tempo limite, e, secundariamente, o número de carrinhas que irão transportar as vacinas todas pretendidas aos centros de administração.
+	Assim, primeiro pretende-se minimizar o tempo despendido pela carrinha que demora mais tempo (função \textit{f}), de forma que as vacinas não estejam em transporte mais do que o tempo limite (\textit{T}), e, secundariamente, minimizar o número de carrinhas que irão transportar as vacinas (função \textit{g}) aos centros de administração.
 
 	\[ f = max([T(c)\, \forall c \in C_f]) < T\]
 	\[ g = |C_f| \]
@@ -441,28 +441,29 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	\end{itemize}
 
 		\subsection{\textit{Bellman-Held-Karp algorithm}}
-		Uma possível solução para este problema é a utilização do algoritmo de \textit{Bellman-Held-Karp}. \par
+		Uma possível solução exata para este problema é a utilização do algoritmo de \textit{Bellman-Held-Karp}. \par
 		Este algoritmo foi proposto independentemente em 1962 por \textit{Richard Bellman}, \textit{Michael Held} e por \textit{Richard Karp} e consiste na utilização de programação dinâmica, resolvendo o exercício geral e mais complexo a partir da resolução de subproblemas do mesmo, isto é, a solução do problema pode ser obtida a partir das soluções dos seus subproblemas. \par
-		Este algoritmo oferece-nos uma complexidade temporal relativamente boa (apesar de ainda exponencial) de \( O(|V|^2 \cdot 2^{|V|})\) mas, por outro lado, uma complexidade espacial \( O(|V| \cdot 2^{|V|})\), ambas no pior caso. \cite{bellmanheldkarp}
+		Este algoritmo oferece-nos uma complexidade temporal relativamente boa (inferior à complexidade da abordagem \textit{brute-force} que é de ordem fatorial) de \( O(|V|^2 \cdot 2^{|V|})\) mas, por outro lado, tem uma complexidade espacial \( O(|V| \cdot 2^{|V|})\), ambas no pior caso. \cite{bellmanheldkarp} \par
+		Assim sendo, e uma vez que os grafos com os quais vamos lidar serão relativamente grandes, não vai ser útil um algoritmo de ordem exponencial e como tal, não será usado na implementação. Ainda assim, achamos por bem fazer referência a ele dado que se trata de um algoritmo exato.
 
 		\begin{center}
 			\captionof{algorithm}{\textit{Bellman-Held-Karp}}
 			\begin{algorithmic}[1]
 				\State $G = (V, E)$
 				\newline
-				\Function{BellmanHeldKarp}{$G,c$}
+				\Function{BellmanHeldKarp}{$G$}
 				\State $s \leftarrow inicial$ $vertex$
 				\For{$v \in V$}
-					\State $OPT[\{v\}, v] \leftarrow c(s,v)$
+					\State $OPT[\{v\}, v] \leftarrow weight(s,v)$
 				\EndFor
 				\For{$i=2$ to $|V|$}
 					\For{$S \subseteq V-s$ with $|S| = i$}
 						\For{$v \in S$}
-							\State $ OPT[S,v] \leftarrow min\{OPT[S - v, u] + c(u, v)$ | $u \in S - v \})$
+							\State $ OPT[S,v] \leftarrow min\{OPT[S - v, u] + weight(u, v)$ | $u \in S - v \})$
 						\EndFor
 					\EndFor
 				\EndFor
-				\State $return$ $min\{ OPT[V - s, v] + c(v, s)$ | $v \in V - s \} $
+				\State $return$ $min\{ OPT[V - s, v] + weight(v, s)$ | $v \in V - s \} $
 				\EndFunction
 			\end{algorithmic}
 		\end{center}
@@ -471,9 +472,10 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 		\subsection{\textit{Nearest neighbor (NN) algorithm}}
 		O \textit{Nearest neighbor (NN) algorithm} \cite{nearestneighbor} foi um dos primeiros métodos usados para resolver o \textit{TSP}. Passa por escolher um ponto onde começar e escolhe o vértice adjacente a este cuja aresta que os ligue tenha menor peso e ainda não tenha sido visitado. \par
-		No caso em concreto deste trabalho, em vez de escolher o vértice adjacente mais próximo, é escolhido o ponto de interesse mais próximo, que pode ser, por exemplo, obtido usando o algoritmo \textit{A*} com origem no vértice atual. \par
+		No caso em concreto deste trabalho, em vez de escolher o vértice adjacente mais próximo, é escolhido o ponto de interesse mais próximo, que pode ser, por exemplo, obtido usando o algoritmo \textit{A*} com origem no vértice atual. Outra possibilidade será a de condensar o grafo de input para um outro, cujos únicos vértices são os pontos de interesse (\textit{POI}), ou seja, os centros de armazenamento e os centros de aplicação. \par
 		O resultado é a ordem pela qual os vértices foram visitados. \par
-		Este sendo um algoritmo que procura obter a solução a partir da melhor escolha em cada momento (indo ao vértice mais próximo), revela-se um algoritmo ganancioso e, no pior caso, tem uma complexidade temporal de \(O(|V|^2) \) e espacial de \( O(|V|)\).
+		Este sendo um algoritmo que procura obter a solução a partir da melhor escolha em cada momento (indo ao vértice mais próximo), revela-se um algoritmo ganancioso. Ainda que o problema não possua subestrutura ótima e, como tal, o algoritmo não garanta a solução ótima, o \textit{NN} apresenta bons resultados. \par
+		Este algoritmo tem, no pior caso, uma complexidade temporal de \(O(|V|^2) \) e espacial de \( O(|V|)\).
 
 		\begin{center}
 			\captionof{algorithm}{\textit{Nearest neighbor}}
@@ -527,42 +529,44 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	\section{\textit{Multi-depot Vehicle routing Problem}}
 	\textit{Multi-depot vehicle routing problem} é uma generalização do \textit{Vehicle routing problem} no qual, para além de haver vários veículos, existem também vários armazéns, sendo este o problema com que estamos a lidar para fazer a distribuição das vacinas. \par
 	A abordagem que seguiremos será fazer \textit{clustering} dos centros de aplicação pelos centros de armazenamento de forma a subdividir este problema mais complexo em múltiplos subproblemas do \textit{Vehicle Routing problem}. \par
-	O método usado para fazer os clusters será fazer múltiplas pesquisas em largura “simultaneamente” a partir de todos os centros de armazenamento até todos os centros de distribuição estarem no \textit{cluster} de um centro de armazenamento. Este método acaba por ser uma variante do algoritmo de \textit{Dijkstra} com múltiplas origens.
+	
+		\subsection{\textit{Multi-source Dijkstra}}
+		O método usado para fazer os clusters será fazer múltiplas pesquisas em largura “simultaneamente” a partir de todos os centros de armazenamento até todos os centros de distribuição estarem no \textit{cluster} de um centro de armazenamento. Este método acaba por ser uma variante do algoritmo de \textit{Dijkstra} com múltiplas origens.
 
 
-	\begin{center}
-		\captionof{algorithm}{\textit{Multi-source Dijkstra}}
-		\begin{algorithmic}[1]
-			\State $ G = (V, E) $
-			\State $ S \subseteq V $
-			\newline
-			\Function{MultiDijkstra}{$G,S$}
-			\For{$v \in V$}
-				\State $dist(v) \leftarrow INF$
-				\State $path(v) \leftarrow NULL$
-			\EndFor
-			\For{$s \in S$}
-				\State $dist(s) \leftarrow 0$
-			\EndFor
-			\State $Q \leftarrow V$\Comment{Q is a min-priority queue of dist}
-			\While{$|Q| > 0$}
-				\State $v \leftarrow Q.extract\_min()$
-				\For{$u \in Adj(v)$}
-					\State $dist\_temp \leftarrow dist(v) + weight(v,u)$
-					\If{$dist\_temp < dist(u)$}
-						\State $dist(u) \leftarrow dist\_temp$
-						\State $path(u) \leftarrow v$
-						\State $Q.decrease\_key(u,dist(u))$
-					\EndIf
+		\begin{center}
+			\captionof{algorithm}{\textit{Multi-source Dijkstra}}
+			\begin{algorithmic}[1]
+				\State $ G = (V, E) $
+				\State $ S \subseteq V $
+				\newline
+				\Function{MultiDijkstra}{$G,S$}
+				\For{$v \in V$}
+					\State $dist(v) \leftarrow INF$
+					\State $path(v) \leftarrow NULL$
 				\EndFor
-			\EndWhile
-			\State return G
-			\EndFunction
-		\end{algorithmic}
-	\end{center}
+				\For{$s \in S$}
+					\State $dist(s) \leftarrow 0$
+				\EndFor
+				\State $Q \leftarrow V$\Comment{Q is a min-priority queue of dist}
+				\While{$|Q| > 0$}
+					\State $v \leftarrow Q.extract\_min()$
+					\For{$u \in Adj(v)$}
+						\State $dist\_temp \leftarrow dist(v) + weight(v,u)$
+						\If{$dist\_temp < dist(u)$}
+							\State $dist(u) \leftarrow dist\_temp$
+							\State $path(u) \leftarrow v$
+							\State $Q.decrease\_key(u,dist(u))$
+						\EndIf
+					\EndFor
+				\EndWhile
+				\State return G
+				\EndFunction
+			\end{algorithmic}
+		\end{center}
 
 
-	Neste pseudocódigo, por questões de simplicidade, o algoritmo só termina quando todos os vértices forem processados, sendo que o \textit{cluster} de um dado centro de distribuição \textit{CD} pode ser obtido a partir de \textit{path(CD)}. Para além disso, no programa terá que se ter em conta a quantidade de vacinas que cada centro de armazenamento tem, dado que, não adianta adicionar um centro de administração ao \textit{cluster} do centro de armazenamento mais próximo dele se este já não tiver vacinas suficientes.
+		Neste pseudocódigo, por questões de simplicidade, o algoritmo só termina quando todos os vértices forem processados, sendo que o \textit{cluster} de um dado centro de distribuição \textit{CD} pode ser obtido a partir de \textit{path(CD)}. Para além disso, no programa terá que se ter em conta a quantidade de vacinas que cada centro de armazenamento tem, dado que, não adianta adicionar um centro de administração ao \textit{cluster} do centro de armazenamento mais próximo dele se este já não tiver vacinas suficientes.
 	
 
 \chapter{Casos de utilização}
@@ -620,6 +624,10 @@ Todos os membros do grupo participaram ativamente na elaboração do trabalho, p
 	\bibitem{weiss}
 	Weiss, Mark Allen. 2013.
 	\textit{Data Structures and Algorithm analysis in C++}. 4th. Pearson.
+
+	\bibitem{slidesCAL}
+	Rossetti, R., A. P. Rocha, L. Ferreira, J. P. Fernandes, F. Ramos, G. Leão. 2021
+	\textit{Slides for Concepção e Análise de Algoritmos course in FEUP, MIEIC}.
 
 \end{thebibliography}
 
