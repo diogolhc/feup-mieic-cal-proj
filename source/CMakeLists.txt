@@ -35,3 +35,5 @@ add_executable(source main.cpp)
 
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(View graphviewer)
+
+target_include_directories(Tests PRIVATE ${Tests_FILES})
