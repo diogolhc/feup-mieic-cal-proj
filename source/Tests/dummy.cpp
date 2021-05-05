@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Graph.h"
+#include "../Graph.h"
 
 
 void test1();
