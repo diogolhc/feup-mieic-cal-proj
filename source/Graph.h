@@ -32,7 +32,6 @@ class Vertex {
 	T info;
     // Kosaraju and Tarjan elements needed
     // TODO its ok to put this elements here? Because its just for the Algorithms
-	int scc;
 	int id;
 	int low;
 	bool onStack;

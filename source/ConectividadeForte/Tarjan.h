@@ -40,9 +40,10 @@ void DFS(Graph<T> &g, Vertex<T>* s, stack<Vertex<T>*> &stack, int &sccCount, int
             if (v == s) break;
             v->onStack = false;
             v->low = s->id;
-            v->scc = s;     // TODO ISTO TA MAL, o SCC não pode ser o s pq SCC é int e s é um vértice
+            scc[sccCount].push_back(v);
         }
-        s->scc = s;
+        scc[sccCount].push_back(s);
+        sccCount++;
     }
 }
 
