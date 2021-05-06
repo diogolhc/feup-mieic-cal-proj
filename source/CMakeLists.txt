@@ -23,6 +23,11 @@ file(GLOB View_FILES CONFIGURE_DEPENDS
         "View/*.cpp"
         )
 
+file(GLOB ConectividadeForte_FILES CONFIGURE_DEPENDS
+        "ConectividadeForte/*.cpp"
+        )
+
+
 add_executable(Tests
         ${Tests_FILES}
         )
@@ -31,9 +36,14 @@ add_executable(View
         ${View_FILES}
         )
 
+add_executable(ConectividadeForte
+        ${ConectividadeForte_FILES}
+        )
+
 add_executable(source main.cpp)
 
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(View graphviewer)
+target_link_libraries(ConectividadeForte graphviewer)
 
 target_include_directories(Tests PRIVATE ${Tests_FILES})

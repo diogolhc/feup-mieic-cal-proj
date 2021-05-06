@@ -30,7 +30,9 @@ template <class T> class Graph;
 template <class T>
 class Vertex {
 	T info;
-	vector<Edge<T> *> outgoing;
+	int scc;
+    Vertex(T in);
+    vector<Edge<T> *> outgoing;
 	vector<Edge<T> *> incoming;
 
 	bool visited;  // for path finding
@@ -38,12 +40,12 @@ class Vertex {
 	double dist;   // for path finding
 	int queueIndex = 0; // required by MutablePriorityQueue
 
-	Vertex(T in);
 	void addEdge(Edge<T> *e);
 	bool operator<(Vertex<T> & vertex) const; // required by MutablePriorityQueue
 
 public:
-	T getInfo() const;
+
+    T getInfo() const;
 	vector<Edge<T> *> getIncoming() const;
 	vector<Edge<T> *> getOutgoing() const;
 	friend class Graph<T>;
@@ -120,6 +122,7 @@ double  Edge<T>::getFlow() const {
 template <class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;
+	vector< vector<Vertex<T> *> > scc;
 
 	void dijkstraShortestPath(Vertex<T> *s);
 	void bellmanFordShortestPath(Vertex<T> *s);

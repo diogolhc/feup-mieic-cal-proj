@@ -1,24 +1,44 @@
 #include <gtest/gtest.h>
 #include "../Graph.h"
+#include "../ConectividadeForte/Kosaraju.h"
 
 TEST(Tests_Test1, testKosaraju1) {
     Graph<int> g;
 
-    g.addVertex(1);
-    g.addVertex(2);
-    g.addVertex(3);
+    vector< vector< Vertex<int>* > > correct;
 
+    vector<Vertex<int>*> scc1;
+    vector<Vertex<int>*> scc2;
+    vector<Vertex<int>*> scc3;
+    vector<Vertex<int>*> scc4;
 
-    g.addEdge(1, 3, 3, 1);
-    g.addEdge(1, 2, 2, 2);
-    g.addEdge(3, 4, 1, 2);
+    scc1.push_back(g.addVertex(7));
 
-    double cost = g.minCostFlow(1, 3, INF);
+    scc2.push_back(g.addVertex(8));
 
-    EXPECT_EQ(cost, 7);
+    scc3.push_back(g.addVertex(0));
+    scc3.push_back(g.addVertex(3));
+    scc3.push_back(g.addVertex(2));
+    scc3.push_back(g.addVertex(1));
 
-    EXPECT_EQ(g.getFlow(1, 3), 3);
-    EXPECT_EQ(g.getFlow(1, 2), 1);
-    EXPECT_EQ(g.getFlow(2, 3), 1);
+    scc4.push_back(g.addVertex(4));
+    scc4.push_back(g.addVertex(6));
+    scc4.push_back(g.addVertex(5));
+
+    g.addEdge(0, 3, 0, 0);
+    g.addEdge(3, 2, 0, 0);
+    g.addEdge(2, 1, 0, 0);
+    g.addEdge(1, 0, 0, 0);
+    g.addEdge(4, 2, 0, 0);
+    g.addEdge(5, 4, 0, 0);
+    g.addEdge(4, 6, 0, 0);
+    g.addEdge(6, 5, 0, 0);
+    g.addEdge(6, 7, 0, 0);
+    g.addEdge(8, 7, 0, 0);
+
+    vector<vector<Vertex<int>*>> result = kosaraju(g);
+
+    EXPECT_EQ(correct, result);
+
 }
 
