@@ -24,7 +24,7 @@ file(GLOB View_FILES CONFIGURE_DEPENDS
         )
 
 file(GLOB ConectividadeForte_FILES CONFIGURE_DEPENDS
-        "ConectividadeForte/*.cpp"
+        "ConectividadeForte/*.h"
         )
 
 

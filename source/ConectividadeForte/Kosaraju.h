@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <stack>
+#include "../Graph.h"
+
+using namespace std;
 
 template <class T>
 vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g);

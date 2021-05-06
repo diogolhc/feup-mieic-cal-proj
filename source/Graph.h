@@ -30,7 +30,13 @@ template <class T> class Graph;
 template <class T>
 class Vertex {
 	T info;
+    // Kosaraju and Tarjan elements needed
+    // TODO its ok to put this elements here? Because its just for the Algorithms
 	int scc;
+	int id;
+	int low;
+	bool onStack;
+
     Vertex(T in);
     vector<Edge<T> *> outgoing;
 	vector<Edge<T> *> incoming;
