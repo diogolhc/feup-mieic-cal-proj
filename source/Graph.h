@@ -29,7 +29,6 @@ template <class T> class Graph;
 
 template <class T>
 class Vertex {
-	T info;
     // Kosaraju and Tarjan elements needed
     // TODO its ok to put this elements here? Because its just for the Algorithms
 	int id;
@@ -40,7 +39,6 @@ class Vertex {
     vector<Edge<T> *> outgoing;
 	vector<Edge<T> *> incoming;
 
-	bool visited;  // for path finding
 	Edge<T> *path; // for path finding
 	double dist;   // for path finding
 	int queueIndex = 0; // required by MutablePriorityQueue
@@ -49,6 +47,9 @@ class Vertex {
 	bool operator<(Vertex<T> & vertex) const; // required by MutablePriorityQueue
 
 public:
+    T info;
+    int scc;
+    bool visited;  // for path finding
 
     T getInfo() const;
 	vector<Edge<T> *> getIncoming() const;
@@ -56,6 +57,7 @@ public:
 	friend class Graph<T>;
 	friend class MutablePriorityQueue<Vertex<T>>;
 };
+
 
 
 template <class T>
@@ -95,8 +97,7 @@ vector<Edge<T> *>  Vertex<T>::getOutgoing() const {
 
 template <class T>
 class Edge {
-	Vertex<T> * orig;
-	Vertex<T> * dest;
+
 	double capacity;
 	double cost;
 	double flow;
@@ -104,6 +105,9 @@ class Edge {
 	Edge(Vertex<T> *o, Vertex<T> *d, double capacity, double cost=0, double flow=0);
 
 public:
+    Vertex<T> * orig;
+    Vertex<T> * dest;
+
 	friend class Graph<T>;
 	friend class Vertex<T>;
 	double getFlow() const;
