@@ -18,7 +18,7 @@ void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack) {
     s->setVisited(true);
     for (Edge *edge : s->getOutgoing()) {
         Vertex *dest = edge->dest;
-        if (!dest->visited) {
+        if (!dest->getVisited()) {
             DFS1(g, dest, stack);
         }
     }
@@ -26,13 +26,13 @@ void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack) {
 }
 
 // g here is transposed
-void DFS2(Graph &g, int component, Vertex *s, vector<vector<Vertex<T>*>> &scc) {
-    s->visited = true;
-    s->scc = component;
+void DFS2(Graph &g, int component, Vertex *s, vector<vector<Vertex*>> &scc) {
+    s->setVisited(true);
+    s->setSCC(component);
     scc[component].push_back(s);
-    for (Edge<T>* edge : s->getOutgoing()) {
-        Vertex<T>* dest = edge->dest;
-        if (!dest->visited) {
+    for (Edge* edge : s->getOutgoing()) {
+        Vertex* dest = edge->dest;
+        if (!dest->getVisited()) {
             DFS2(g, component, s, scc);
         }
     }
@@ -41,11 +41,11 @@ void DFS2(Graph &g, int component, Vertex *s, vector<vector<Vertex<T>*>> &scc) {
 Graph getTranspose(Graph &g) {
     Graph t;
     for (Vertex *v : g.getVertexSet()) {
-        t.addVertex(v->info);
+        t.addVertex(v->getId());
         for (Edge * edge : v->getOutgoing()) {
             Vertex* dest = edge->dest;
-            t.addVertex(dest->info);
-            t.addEdge(dest->info, v->info, 0, 0);
+            t.addVertex(dest->getId());
+            t.addEdge(dest->getId(), v->getId(), 0);
         }
     }
     return t;
@@ -57,11 +57,11 @@ vector<vector<Vertex*>> kosaraju(Graph &g) {
     int component = 0;
 
     for ( Vertex *v : g.getVertexSet()) {
-        v->visited = false;
+        v->setVisited(false);
     }
 
     for (Vertex *v : g.getVertexSet()) {
-        if (!v->visited) {
+        if (!v->getVisited()) {
             DFS1(g, v, stack);
         }
     }
@@ -69,14 +69,14 @@ vector<vector<Vertex*>> kosaraju(Graph &g) {
     Graph t = getTranspose(g);
 
     for (Vertex* v : t.getVertexSet()) {
-        v->visited = false;
+        v->setVisited(false);
     }
 
     while( !stack.empty() ) {
         Vertex *v = stack.top();
         stack.pop();
 
-        if (!v->visited) {
+        if (!v->getVisited()) {
             DFS2(t, component, v, scc);
         }
         component++;
