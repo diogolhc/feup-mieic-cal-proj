@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include "../Graph.h"
 #include "../ConectividadeForte/Kosaraju.h"
+#include <iostream>
+
+using namespace std;
+
 
 TEST(Tests_Test1, testKosaraju1) {
     Graph<int> g;
@@ -39,6 +43,5 @@ TEST(Tests_Test1, testKosaraju1) {
     vector<vector<Vertex<int>*>> result = kosaraju(g);
 
     EXPECT_EQ(correct, result);
-
 }
 

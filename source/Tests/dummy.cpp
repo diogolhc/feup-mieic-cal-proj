@@ -1,15 +1,10 @@
 #include <iostream>
-#include "../Graph.h"
+#include "gtest/gtest.h"
 
-
-void test1();
-void test2();
-void test3();
-void test4();
-
-int main() {
-
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+int main(int argc, char **argv) {
+    std::cout << "Running all tests..." << std::endl;
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
+
 

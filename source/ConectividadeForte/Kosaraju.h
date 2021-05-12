@@ -22,7 +22,7 @@ void DFS1(Graph<T> &g, Vertex<T>* s, stack<Vertex<T>*> &stack) {
     for (Edge<T> *edge : s->getOutgoing()) {
         Vertex<T> *dest = edge->dest;
         if (!dest->visited) {
-            DFS1(g, dest);
+            DFS1(g, dest, stack);
         }
     }
     stack.push(s);
@@ -43,6 +43,20 @@ void DFS2(Graph<T> &g, int component, Vertex<T> *s, vector<vector<Vertex<T>*>> &
 }
 
 template <class T>
+Graph<T> getTranspose(Graph<T> &g) {
+    Graph<T> t;
+    for (Vertex<T> *v : g.getVertexSet()) {
+        t.addVertex(v->info);
+        for (Edge<T> * edge : v->getOutgoing()) {
+            Vertex<T>* dest = edge->dest;
+            t.addVertex(dest->info);
+            t.addEdge(dest->info, v->info, 0, 0);
+        }
+    }
+    return t;
+}
+
+template <class T>
 vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g) {
     vector<vector<Vertex<T>*>> scc;
     stack<Vertex<T>*> stack;
@@ -51,12 +65,16 @@ vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g) {
     for ( Vertex<T> *v : g.getVertexSet()) {
         v->visited = false;
     }
+
     for (Vertex<T> *v : g.getVertexSet()) {
         if (!v->visited) {
             DFS1(g, v, stack);
         }
     }
-    for (Vertex<T>*v : g.getVertexSet()) {
+
+    Graph<T> t = getTranspose(g);
+
+    for (Vertex<T>*v : t.getVertexSet()) {
         v->visited = false;
     }
 
@@ -65,7 +83,7 @@ vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g) {
         stack.pop();
 
         if (!v->visited) {
-            DFS2(g, component, v);
+            DFS2(t, component, v, scc);
         }
         component++;
     }
