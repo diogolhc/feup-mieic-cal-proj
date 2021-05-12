@@ -58,8 +58,6 @@ public:
 	friend class MutablePriorityQueue<Vertex<T>>;
 };
 
-
-
 template <class T>
 Vertex<T>::Vertex(T in): info(in) {}
 

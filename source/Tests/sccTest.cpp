@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 TEST(Tests_Test1, testKosaraju1) {
     Graph<int> g;
 
