@@ -9,7 +9,7 @@ using namespace std;
 * Graph
 */
 
-Vertex * Graph::addVertex(const size_t id) {
+Vertex * Graph::addVertex(size_t id) {
     Vertex *v = findVertex(id);
     if (v != nullptr)
         return v;
@@ -18,7 +18,7 @@ Vertex * Graph::addVertex(const size_t id) {
     return v;
 }
 
-Edge* Graph::addEdge(const size_t sourc, const size_t dest, size_t weight) {
+Edge* Graph::addEdge(size_t sourc, size_t dest, size_t weight) {
     auto s = findVertex(sourc);
     auto d = findVertex(dest);
     if (s == nullptr || d == nullptr)

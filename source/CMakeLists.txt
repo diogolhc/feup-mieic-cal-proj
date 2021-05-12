@@ -23,37 +23,32 @@ file(GLOB View_FILES CONFIGURE_DEPENDS
         "View/*.cpp"
         )
 
-file(GLOB ConectividadeForte_FILES CONFIGURE_DEPENDS
-        "ConectividadeForte/*.h"
+file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
+        "Graph.cpp"
+        "algorithms/acessibility/DepthFirstSearch.cpp"
+        "algorithms/acessibility/BreathFirstSearch.cpp"
+        "algorithms/strongly-connected-components/Kosaraju.cpp"
+        "algorithms/strongly-connected-components/Tarjan.cpp"
+        "algorithms/shortest-path/Dijkstra.cpp"
+        "algorithms/shortest-path/AStar.cpp"
+        "algorithms/shortest-path/FloydWarshall.cpp"
+        "algorithms/travelling-salesman/BellmanHelpKarp.cpp"
+        "algorithms/travelling-salesman/NearestNeighbor.cpp"
+        "algorithms/vehicle-routing/MultiSourceDijkstra.cpp"
         )
 
+add_executable(source main.cpp
+        ${Algorithm_FILES}
+        )
 
 add_executable(Tests
         ${Tests_FILES}
+        ${Algorithm_FILES}
         )
 
 add_executable(View
         ${View_FILES}
         )
 
-add_executable(ConectividadeForte
-        ${ConectividadeForte_FILES})
-
-add_executable(source main.cpp Graph.cpp
-        algorithms/acessibility/DepthFirstSearch.cpp algorithms/acessibility/DepthFirstSearch.h
-        algorithms/acessibility/BreathFirstSearch.cpp algorithms/acessibility/BreathFirstSearch.h
-        algorithms/strongly-connected-components/Kosaraju.cpp algorithms/strongly-connected-components/Kosaraju.h
-        algorithms/strongly-connected-components/Tarjan.cpp algorithms/strongly-connected-components/Tarjan.h
-        algorithms/shortest-path/Dijkstra.cpp algorithms/shortest-path/Dijkstra.h
-        algorithms/shortest-path/AStar.cpp algorithms/shortest-path/AStar.h
-        algorithms/shortest-path/FloydWarshall.cpp algorithms/shortest-path/FloydWarshall.h
-        algorithms/travelling-salesman/BellmanHelpKarp.cpp algorithms/travelling-salesman/BellmanHelpKarp.h
-        algorithms/travelling-salesman/NearestNeighbor.cpp algorithms/travelling-salesman/NearestNeighbor.h
-        algorithms/vehicle-routing/MultiSourceDijkstra.cpp algorithms/vehicle-routing/MultiSourceDijkstra.h
-        )
-
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(View graphviewer)
-target_link_libraries(ConectividadeForte graphviewer)
-
-target_include_directories(Tests PRIVATE ${Tests_FILES})
