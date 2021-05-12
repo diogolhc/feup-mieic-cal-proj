@@ -4,7 +4,7 @@
 #include "GraphFiles.h"
 #include "View/View.h"
 
-#define FILES_ROOT "../../../maps" // TODO define properly (not needed now)
+#define FILES_ROOT "../maps" // TODO define properly (not needed now)
 
 using namespace std;
 
