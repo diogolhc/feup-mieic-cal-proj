@@ -32,5 +32,5 @@ TEST(shortestPath_test1, test_dijkstra){
     Dijkstra dijkstra;
     dijkstra.initialize(&graph, 0);
 
-    
+
 }
