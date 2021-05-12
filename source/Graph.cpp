@@ -80,6 +80,14 @@ void Vertex::setSCC(size_t scc) {
 }
 
 
+void Vertex::setVisited(bool visited) {
+    this->visited = visited;
+}
+
+bool Vertex::getVisited() const {
+    return this->visited
+}
+
 /**
  * Edge
  */

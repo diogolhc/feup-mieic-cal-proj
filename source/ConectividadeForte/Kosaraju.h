@@ -7,20 +7,17 @@
 
 using namespace std;
 
-template <class T>
-vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g);
+vector<vector<Vertex*>> kosaraju(Graph &g);
 
-template <class T>
-void DFS1(Graph<T> &g, Vertex<T>* s, stack<Vertex<T>*> &stack);
+void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack);
 
-template <class T>
-void DFS2(Graph<T> &g, int component, Vertex<T> *s);
+void DFS2(Graph &g, int component, Vertex *s);
 
-template <class T>
-void DFS1(Graph<T> &g, Vertex<T>* s, stack<Vertex<T>*> &stack) {
-    s->visited = true;
-    for (Edge<T> *edge : s->getOutgoing()) {
-        Vertex<T> *dest = edge->dest;
+void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack) {
+
+    s->setVisited(true);
+    for (Edge *edge : s->getOutgoing()) {
+        Vertex *dest = edge->dest;
         if (!dest->visited) {
             DFS1(g, dest, stack);
         }
@@ -29,8 +26,7 @@ void DFS1(Graph<T> &g, Vertex<T>* s, stack<Vertex<T>*> &stack) {
 }
 
 // g here is transposed
-template <class T>
-void DFS2(Graph<T> &g, int component, Vertex<T> *s, vector<vector<Vertex<T>*>> &scc) {
+void DFS2(Graph &g, int component, Vertex *s, vector<vector<Vertex<T>*>> &scc) {
     s->visited = true;
     s->scc = component;
     scc[component].push_back(s);
@@ -42,13 +38,12 @@ void DFS2(Graph<T> &g, int component, Vertex<T> *s, vector<vector<Vertex<T>*>> &
     }
 }
 
-template <class T>
-Graph<T> getTranspose(Graph<T> &g) {
-    Graph<T> t;
-    for (Vertex<T> *v : g.getVertexSet()) {
+Graph getTranspose(Graph &g) {
+    Graph t;
+    for (Vertex *v : g.getVertexSet()) {
         t.addVertex(v->info);
-        for (Edge<T> * edge : v->getOutgoing()) {
-            Vertex<T>* dest = edge->dest;
+        for (Edge * edge : v->getOutgoing()) {
+            Vertex* dest = edge->dest;
             t.addVertex(dest->info);
             t.addEdge(dest->info, v->info, 0, 0);
         }
@@ -56,30 +51,29 @@ Graph<T> getTranspose(Graph<T> &g) {
     return t;
 }
 
-template <class T>
-vector<vector<Vertex<T>*>> kosaraju(Graph<T> &g) {
-    vector<vector<Vertex<T>*>> scc;
-    stack<Vertex<T>*> stack;
+vector<vector<Vertex*>> kosaraju(Graph &g) {
+    vector<vector<Vertex*>> scc;
+    stack<Vertex*> stack;
     int component = 0;
 
-    for ( Vertex<T> *v : g.getVertexSet()) {
+    for ( Vertex *v : g.getVertexSet()) {
         v->visited = false;
     }
 
-    for (Vertex<T> *v : g.getVertexSet()) {
+    for (Vertex *v : g.getVertexSet()) {
         if (!v->visited) {
             DFS1(g, v, stack);
         }
     }
 
-    Graph<T> t = getTranspose(g);
+    Graph t = getTranspose(g);
 
-    for (Vertex<T>*v : t.getVertexSet()) {
+    for (Vertex* v : t.getVertexSet()) {
         v->visited = false;
     }
 
     while( !stack.empty() ) {
-        Vertex<T> *v = stack.top();
+        Vertex *v = stack.top();
         stack.pop();
 
         if (!v->visited) {

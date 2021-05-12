@@ -51,6 +51,8 @@ public:
     size_t getId() const;
 	std::vector<Edge *> getIncoming() const;
 	std::vector<Edge *> getOutgoing() const;
+	bool getVisited() const;
+	void setVisited(bool visited);
 	friend class Graph;
 	friend class MutablePriorityQueue<Vertex>;
 };
