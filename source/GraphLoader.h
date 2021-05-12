@@ -11,6 +11,7 @@
 
 #include "Graph.h"
 
+/*
 template<class T>
 void graphLoader(std::string node_file, std::string edge_file, Graph<T> &graph) {
     ifstream node_stream(node_file);
@@ -44,5 +45,5 @@ void graphLoader(std::string node_file, std::string edge_file, Graph<T> &graph) 
 
 }
 
-
+*/
 #endif //SOURCE_GRAPHLOADER_H

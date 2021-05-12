@@ -20,6 +20,7 @@ public:
     Vertex* findVertex(size_t id) const;
     vector<Vertex *> getVertexSet() const;
     Vertex *addVertex(size_t id);
+    bool addVertexPointer(Vertex *v);
     Edge *addEdge(size_t sourc, size_t dest, size_t weight);
 };
 

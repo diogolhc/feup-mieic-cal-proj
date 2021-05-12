@@ -1,6 +1,3 @@
-#include <vector>
-
-#include "MutablePriorityQueue.h"
 #include "Graph.h"
 
 using namespace std;
@@ -9,7 +6,19 @@ using namespace std;
 * Graph
 */
 
-Vertex * Graph::addVertex(const size_t id) {
+/**
+ * @param v Vertex to insert
+ * @return false if vertex was already on Graph, true otherwise
+ */
+bool Graph::addVertexPointer(Vertex *v) {
+    Vertex *t = findVertex(v->id);
+    if (t != nullptr)
+        return false;
+    vertexSet.push_back(v);
+    return true;
+}
+
+Vertex * Graph::addVertex(size_t id) {
     Vertex *v = findVertex(id);
     if (v != nullptr)
         return v;
@@ -18,7 +27,7 @@ Vertex * Graph::addVertex(const size_t id) {
     return v;
 }
 
-Edge* Graph::addEdge(const size_t sourc, const size_t dest, size_t weight) {
+Edge* Graph::addEdge(size_t sourc, size_t dest, size_t weight) {
     auto s = findVertex(sourc);
     auto d = findVertex(dest);
     if (s == nullptr || d == nullptr)
@@ -29,9 +38,9 @@ Edge* Graph::addEdge(const size_t sourc, const size_t dest, size_t weight) {
     return e;
 }
 
-Vertex* Graph::findVertex(const size_t id) const {
+Vertex* Graph::findVertex(size_t id) const {
     for (auto v : vertexSet)
-        if (v->id == INF)
+        if (v->id == id)
             return v;
     return nullptr;
 }
@@ -66,7 +75,6 @@ vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-
 vector<Edge *>  Vertex::getOutgoing() const {
     return this->outgoing;
 }
@@ -85,7 +93,7 @@ void Vertex::setVisited(bool visited) {
 }
 
 bool Vertex::getVisited() const {
-    return this->visited
+    return this->visited;
 }
 
 /**
