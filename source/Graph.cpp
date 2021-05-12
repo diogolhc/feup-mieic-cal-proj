@@ -15,7 +15,7 @@ Vertex * Graph::addVertex(size_t id) {
     if (v != nullptr)
         return v;
     v = new Vertex(id);
-    vertexSet.push_back(v);
+    vertexSet.insert(v);
     return v;
 }
 
@@ -40,14 +40,25 @@ Edge* Graph::addEdge(size_t sourc, size_t dest, double weight) {
 }
 
 Vertex* Graph::findVertex(size_t id) const {
-    for (auto v : vertexSet)
-        if (v->id == id)
-            return v;
-    return nullptr;
+    Vertex v = Vertex(id);
+    VertexSet::const_iterator it = vertexSet.find(&v);
+    if (it == vertexSet.end())
+        return nullptr;
+    return *it;
 }
 
-vector<Vertex *> Graph::getVertexSet() const {
+VertexSet Graph::getVertexSet() const {
     return vertexSet;
+}
+
+// maybe change latter for efficiency
+vector<Edge *> Graph::getEdges() const {
+    vector<Edge *> edges;
+    for (Vertex *v : vertexSet) {
+        edges.insert(edges.end(), v->outgoing.begin(), v->outgoing.end());
+    }
+
+    return edges;
 }
 
 
@@ -112,7 +123,7 @@ XY Vertex::getXY() {
 
 Edge::Edge(Vertex *o, Vertex *d, double weight):
         orig(o), dest(d), weight(weight) {}
-        
+
 size_t Edge::getWeight() const {
     return weight;
 }
@@ -134,7 +145,7 @@ double Coordinates::dist(Coordinates coordinates) {
     double p = 0.017453292519943295;    // pi / 180
     double a = 0.5 - cos((coordinates.lat - this->lat) * p) / 2 +
                cos(this->lat * p) * cos(coordinates.lat * p) *
-               (1 - cos((coordinates.lng - this->lng) * p)) / 2;
+               (1 - cos((coordinates.lon - this->lon) * p)) / 2;
     return 12742 * asin(sqrt(a)) * 1000; // 2 * R; R = 6371 km // in meters
 }
 

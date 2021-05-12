@@ -2,19 +2,24 @@
 #define GRAPH_H_
 
 #include <vector>
+#include <unordered_set>
 #include <limits>
 
 #include "MutablePriorityQueue.h"
 
 constexpr auto INF = std::numeric_limits<double>::max();
 
+
 class Vertex;
 class Edge;
 class Graph;
+struct VertexPFunc;
+
+typedef unordered_set<Vertex *, VertexPFunc, VertexPFunc> VertexSet;
 
 struct Coordinates {
     double lat;
-    double lng;
+    double lon;
     double dist(Coordinates coordinates);
 };
 
@@ -23,19 +28,6 @@ struct XY {
     double y;
     double dist(XY xy);
 };
-
-
-class Graph {
-    vector<Vertex *> vertexSet;
-
-public:
-    Vertex* findVertex(size_t id) const;
-    vector<Vertex *> getVertexSet() const;
-    Vertex *addVertex(size_t id);
-    Edge *addEdge(Vertex *sourc, Vertex *dest, double weight);
-    Edge *addEdge(size_t sourc, size_t dest, double weight);
-};
-
 
 class Vertex {
     std::vector<Edge *> outgoing;
@@ -88,6 +80,31 @@ public:
     size_t getWeight() const;
 	friend class Graph;
 	friend class Vertex;
+};
+
+
+struct VertexPFunc {
+    size_t operator() (Vertex const* v) const {
+        return v->getId();
+    }
+
+    bool operator() (Vertex const* v1, Vertex const* v2) const {
+        return v1->getId() == v2->getId();
+    }
+};
+
+class Graph {
+    VertexSet vertexSet;
+
+public:
+
+    Vertex* findVertex(size_t id) const;
+    VertexSet getVertexSet() const;
+    // TODO vv maybe change the way it's being done and saved...
+    vector<Edge *> getEdges() const;
+    Vertex *addVertex(size_t id);
+    Edge *addEdge(Vertex *sourc, Vertex *dest, double weight);
+    Edge *addEdge(size_t sourc, size_t dest, double weight);
 };
 
 #endif /* GRAPH_H_ */

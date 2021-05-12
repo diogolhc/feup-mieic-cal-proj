@@ -32,8 +32,6 @@ add_executable(Tests
         ${Tests_FILES}
         )
 
-add_executable(ConectividadeForte
-        ${ConectividadeForte_FILES})
 
 add_executable(source main.cpp Graph.cpp
         algorithms/acessibility/DepthFirstSearch.cpp algorithms/acessibility/DepthFirstSearch.cpp
@@ -46,9 +44,14 @@ add_executable(source main.cpp Graph.cpp
         algorithms/travelling-salesman/BellmanHelpKarp.cpp algorithms/travelling-salesman/BellmanHelpKarp.cpp
         algorithms/travelling-salesman/NearestNeighbor.cpp algorithms/travelling-salesman/NearestNeighbor.cpp
         algorithms/vehicle-routing/MultiSourceDijkstra.cpp algorithms/vehicle-routing/MultiSourceDijkstra.cpp
-        GraphFiles.cpp GraphFiles.h)
+        GraphFiles.cpp
+        View/View.cpp
+        )
+
 
 target_link_libraries(Tests gtest_main gmock_main)
-target_link_libraries(ConectividadeForte graphviewer)
+target_link_libraries(source graphviewer)
 
 target_include_directories(Tests PRIVATE ${Tests_FILES})
+
+

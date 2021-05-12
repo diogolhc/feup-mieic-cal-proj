@@ -1,4 +1,5 @@
 #include "GraphFiles.h"
+#include "Graph.h"
 
 #include <fstream>
 #include <iostream>
@@ -6,7 +7,14 @@
 using namespace std;
 
 
-GraphFile::GraphFile(const std::string &nodes_file_latlng, const std::string &edges_file) : nodes_file_latlng(nodes_file_latlng), edges_file(edges_file), loaded(false) {}
+GraphFile::GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_latlng, const std::string &edges_file, const std::string &back_ground_file) :
+    nodes_file_latlng(nodes_file_latlng),
+    edges_file(edges_file),
+    background_file(back_ground_file),
+    loaded(false),
+    scale(scale),
+    centralCoordinates(centralCoordinates)
+    {}
 
 
 Graph GraphFile::getGraph() {
@@ -21,7 +29,7 @@ void GraphFile::load() {
     ifstream edge_stream(edges_file);
 
     if (node_stream_latlng.fail() || node_stream_latlng.eof() || node_stream_latlng.bad()){
-        cout << "Failed to load node file lat lng" << endl;
+        cout << "Failed to load node file lat lon" << endl;
         exit(1);
     }
 
@@ -37,10 +45,10 @@ void GraphFile::load() {
 
     for (int i = 0; i < size; i++){
         size_t id;
-        double lat, lng;
-        node_stream_latlng >> trash >> id >> trash >> lat >> trash >> lng >> trash;
+        double lat, lon;
+        node_stream_latlng >> trash >> id >> trash >> lon >> trash >> lat >> trash;
         Vertex *v = graph.addVertex(id);
-        v->setCoordinates({.lat = lat, .lng = lng});
+        v->setCoordinates({.lat = lat, .lon = lon});
     }
     node_stream_latlng.close();
 
@@ -62,15 +70,28 @@ void GraphFile::load() {
     this->loaded = true;
 }
 
+double GraphFile::getScale() {
+    return this->scale;
+}
 
+std::string GraphFile::getbackGroundImage() {
+    return this->background_file;
+}
+
+Coordinates GraphFile::getCentralCoordinates() {
+    return this->centralCoordinates;
+}
+
+// TODO maybe get this values by a single file latter ?,
+// TODO find images and set their respective center here
 GraphFiles::GraphFiles(std::string filesDir) :
-        Porto(filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt"),
-        PortoStrongComponent(filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt"),
-        Penafiel(filesDir + "/penafiel_full_nodes_latlng.txt", filesDir + "/penafiel_full_edges.txt"),
-        PenafielStrongComponent(filesDir + "/penafiel_strong_nodes_latlng.txt", filesDir + "/penafiel_strong_edges.txt"),
-        Espinho(filesDir + "/espinho_full_nodes_latlng.txt", filesDir + "/espinho_full_edges.txt"),
-        EspinhoStrongComponent(filesDir + "/espinho_strong_nodes_latlng.txt", filesDir + "/espinho_strong_edges.txt"),
-        Portugal(filesDir + "/nodes_lat_lon_portugal.txt", filesDir + "/edges_portugal.txt")
+        Porto(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt", filesDir + "/porto.jpg"),
+        PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg"),
+        Penafiel(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405}, filesDir + "/penafiel_full_nodes_latlng.txt", filesDir + "/penafiel_full_edges.txt"),
+        PenafielStrongComponent(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405},filesDir + "/penafiel_strong_nodes_latlng.txt", filesDir + "/penafiel_strong_edges.txt"),
+        Espinho(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_full_nodes_latlng.txt", filesDir + "/espinho_full_edges.txt"),
+        EspinhoStrongComponent(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_strong_nodes_latlng.txt", filesDir + "/espinho_strong_edges.txt"),
+        Portugal(1.0/1000.0, {.lat = 38.792853, .lon = -9.122247},filesDir + "/nodes_lon_lat_portugal.txt", filesDir + "/edges_portugal.txt")
         {}
 
 void GraphFiles::load() {
@@ -83,30 +104,38 @@ void GraphFiles::load() {
     Portugal.load();
 }
 
-Graph GraphFiles::getPorto() {
-    return Porto.getGraph();
+GraphFile GraphFiles::getPorto() {
+    Porto.load();
+    return Porto;
 }
 
-Graph GraphFiles::getPortoStrongComponent() {
-    return PortoStrongComponent.getGraph();
+GraphFile GraphFiles::getPortoStrongComponent() {
+    PortoStrongComponent.load();
+    return PortoStrongComponent;
 }
 
-Graph GraphFiles::getPenafiel() {
-    return Penafiel.getGraph();
+GraphFile GraphFiles::getPenafiel() {
+    Penafiel.load();
+    return Penafiel;
 }
 
-Graph GraphFiles::getPenafielStrongComponent() {
-    return PenafielStrongComponent.getGraph();
+GraphFile GraphFiles::getPenafielStrongComponent() {
+    PenafielStrongComponent.load();
+    return PenafielStrongComponent;
 }
 
-Graph GraphFiles::getEspinho() {
-    return Espinho.getGraph();
+GraphFile GraphFiles::getEspinho() {
+    Espinho.load();
+    return Espinho;
 }
 
-Graph GraphFiles::getEspinhoStrongComponent() {
-    return EspinhoStrongComponent.getGraph();
+GraphFile GraphFiles::getEspinhoStrongComponent() {
+    EspinhoStrongComponent.load();
+    return EspinhoStrongComponent;
 }
 
-Graph GraphFiles::getPortugal() {
-    return Portugal.getGraph();
+GraphFile GraphFiles::getPortugal() {
+    Portugal.load();
+    return Portugal;
 }
+
