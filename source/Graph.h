@@ -83,6 +83,9 @@ class Edge {
     Edge(Vertex *o, Vertex *d, double weight);
 
 public:
+    Vertex * getDest() const;
+    Vertex * getOrig() const;
+    size_t getWeight() const;
 	friend class Graph;
 	friend class Vertex;
 };

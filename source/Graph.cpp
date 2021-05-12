@@ -112,7 +112,18 @@ XY Vertex::getXY() {
 
 Edge::Edge(Vertex *o, Vertex *d, double weight):
         orig(o), dest(d), weight(weight) {}
+        
+size_t Edge::getWeight() const {
+    return weight;
+}
 
+Vertex * Edge::getDest() const {
+    return dest;
+}
+
+Vertex * Edge::getOrig() const {
+    return orig;
+}
 
 /**
 *  Dists:
