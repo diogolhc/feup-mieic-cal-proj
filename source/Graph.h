@@ -12,6 +12,18 @@ class Vertex;
 class Edge;
 class Graph;
 
+struct Coordinates {
+    double lat;
+    double lng;
+    double dist(Coordinates coordinates);
+};
+
+struct XY {
+    double x;
+    double y;
+    double dist(XY xy);
+};
+
 
 class Graph {
     vector<Vertex *> vertexSet;
@@ -20,13 +32,16 @@ public:
     Vertex* findVertex(size_t id) const;
     vector<Vertex *> getVertexSet() const;
     Vertex *addVertex(size_t id);
-    Edge *addEdge(size_t sourc, size_t dest, size_t weight);
+    Edge *addEdge(Vertex *sourc, Vertex *dest, double weight);
+    Edge *addEdge(size_t sourc, size_t dest, double weight);
 };
 
 
 class Vertex {
     std::vector<Edge *> outgoing;
     std::vector<Edge *> incoming;
+    Coordinates coordinates;
+    XY xy;
 
     // Kosaraju and Tarjan elements needed
     // TODO its ok to put this elements here? Because its just for the Algorithms
@@ -46,6 +61,10 @@ class Vertex {
 
 public:
 
+    void setCoordinates(Coordinates coordinates);
+    Coordinates getCoordinates();
+    void setXY(XY xy);
+    XY getXY();
     size_t getSCC();
     void setSCC(size_t scc);
     size_t getId() const;
@@ -59,9 +78,9 @@ public:
 class Edge {
     Vertex * orig;
     Vertex * dest;
-	size_t weight;
+	double weight;
 
-    Edge(Vertex *o, Vertex *d, size_t weight);
+    Edge(Vertex *o, Vertex *d, double weight);
 
 public:
 	friend class Graph;
