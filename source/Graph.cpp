@@ -86,3 +86,15 @@ void Vertex::setSCC(size_t scc) {
 
 Edge::Edge(Vertex *o, Vertex *d, size_t weight):
         orig(o), dest(d), weight(weight) {}
+
+size_t Edge::getWeight() const {
+    return weight;
+}
+
+Vertex * Edge::getDest() const {
+    return dest;
+}
+
+Vertex * Edge::getOrig() const {
+    return orig;
+}
