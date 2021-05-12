@@ -7,14 +7,14 @@ using namespace std;
 
 
 TEST(Tests_Test1, testKosaraju1) {
-    Graph<int> g;
+    Graph g;
 
-    vector< vector< Vertex<int>* > > correct;
+    vector< vector< Vertex* > > correct;
 
-    vector<Vertex<int>*> scc1;
-    vector<Vertex<int>*> scc2;
-    vector<Vertex<int>*> scc3;
-    vector<Vertex<int>*> scc4;
+    vector<Vertex *> scc1;
+    vector<Vertex *> scc2;
+    vector<Vertex *> scc3;
+    vector<Vertex *> scc4;
 
     scc1.push_back(g.addVertex(7));
 
@@ -29,18 +29,18 @@ TEST(Tests_Test1, testKosaraju1) {
     scc4.push_back(g.addVertex(6));
     scc4.push_back(g.addVertex(5));
 
-    g.addEdge(0, 3, 0, 0);
-    g.addEdge(3, 2, 0, 0);
-    g.addEdge(2, 1, 0, 0);
-    g.addEdge(1, 0, 0, 0);
-    g.addEdge(4, 2, 0, 0);
-    g.addEdge(5, 4, 0, 0);
-    g.addEdge(4, 6, 0, 0);
-    g.addEdge(6, 5, 0, 0);
-    g.addEdge(6, 7, 0, 0);
-    g.addEdge(8, 7, 0, 0);
+    g.addEdge(0, 3, 0);
+    g.addEdge(3, 2, 0);
+    g.addEdge(2, 1, 0);
+    g.addEdge(1, 0, 0);
+    g.addEdge(4, 2, 0);
+    g.addEdge(5, 4, 0);
+    g.addEdge(4, 6, 0);
+    g.addEdge(6, 5, 0);
+    g.addEdge(6, 7, 0);
+    g.addEdge(8, 7, 0);
 
-    vector<vector<Vertex<int>*>> result = kosaraju(g);
+    vector<vector<Vertex *>> result = kosaraju(g);
 
     EXPECT_EQ(correct, result);
 }

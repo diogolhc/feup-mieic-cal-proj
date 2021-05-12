@@ -40,7 +40,7 @@ add_executable(ConectividadeForte
         ${ConectividadeForte_FILES}
         )
 
-add_executable(source main.cpp)
+add_executable(source main.cpp Graph.cpp)
 
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(View graphviewer)
