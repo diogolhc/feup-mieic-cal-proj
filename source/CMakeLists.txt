@@ -37,19 +37,8 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         "algorithms/vehicle-routing/MultiSourceDijkstra.cpp"
         )
 
-add_executable(source main.cpp Graph.cpp
-        algorithms/acessibility/DepthFirstSearch.cpp algorithms/acessibility/DepthFirstSearch.cpp
-        algorithms/acessibility/BreathFirstSearch.cpp algorithms/acessibility/BreathFirstSearch.cpp
-        algorithms/strongly-connected-components/Kosaraju.cpp algorithms/strongly-connected-components/Kosaraju.cpp
-        algorithms/strongly-connected-components/Tarjan.cpp algorithms/strongly-connected-components/Tarjan.cpp
-        algorithms/shortest-path/Dijkstra.cpp algorithms/shortest-path/Dijkstra.cpp
-        algorithms/shortest-path/AStar.cpp algorithms/shortest-path/AStar.cpp
-        algorithms/shortest-path/FloydWarshall.cpp algorithms/shortest-path/FloydWarshall.cpp
-        algorithms/travelling-salesman/BellmanHelpKarp.cpp algorithms/travelling-salesman/BellmanHelpKarp.cpp
-        algorithms/travelling-salesman/NearestNeighbor.cpp algorithms/travelling-salesman/NearestNeighbor.cpp
-        algorithms/vehicle-routing/MultiSourceDijkstra.cpp algorithms/vehicle-routing/MultiSourceDijkstra.cpp
-        GraphFiles.cpp
-        View/View.cpp
+add_executable(source main.cpp
+        ${Algorithm_FILES}
         )
 
 add_executable(Tests
@@ -64,6 +53,3 @@ add_executable(View
 target_link_libraries(View graphviewer)
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(source graphviewer)
-#target_include_directories(Tests PRIVATE ${Tests_FILES})
-
-

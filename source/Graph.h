@@ -7,7 +7,7 @@
 
 #include "MutablePriorityQueue.h"
 
-constexpr auto INF = std::numeric_limits<double>::max();
+#define INF std::numeric_limits<size_t>::max()
 
 
 class Vertex;
