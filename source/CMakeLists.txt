@@ -38,8 +38,6 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         )
         
 add_executable(source main.cpp
-        GraphFiles.cpp
-        View/View.cpp
         ${Algorithm_FILES}
         )
 

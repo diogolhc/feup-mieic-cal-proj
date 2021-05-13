@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     GraphFiles graphFiles(FILES_ROOT);
-    GraphFile Portugal = graphFiles.getPorto();
+    GraphFile Portugal = graphFiles.getPortugal();
     view(Portugal);
 
     return 0;
