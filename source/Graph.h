@@ -29,6 +29,7 @@ struct XY {
     double dist(XY xy);
 };
 
+
 class Vertex {
     std::vector<Edge *> outgoing;
     std::vector<Edge *> incoming;
@@ -55,6 +56,8 @@ public:
 
     void setCoordinates(Coordinates coordinates);
     Coordinates getCoordinates();
+    bool getVisited() const;
+    void setVisited(bool visited);
     void setXY(XY xy);
     XY getXY();
     size_t getSCC();

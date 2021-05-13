@@ -78,6 +78,14 @@ bool Vertex::operator<(const Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
 
+void Vertex::setVisited(bool visited) {
+    this->visited = visited;
+}
+
+bool Vertex::getVisited() const {
+    return this->visited;
+}
+
 
 size_t Vertex::getId() const {
     return this->id;
