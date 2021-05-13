@@ -11,7 +11,7 @@
 
 using namespace std;
 
-TEST(shortestPath_test1, test_dijkstra){
+TEST(Tests_dijkstra, test_1){
     Graph graph;
 
     graph.addVertex(0);
@@ -35,10 +35,10 @@ TEST(shortestPath_test1, test_dijkstra){
     dijkstra.run();
     unordered_map<Vertex *, Vertex *> path = dijkstra.getPath();
 
-    ASSERT_EQ(path.at(graph.findVertex(1))->getId(), 0);
-    ASSERT_EQ(path.at(graph.findVertex(2))->getId(), 0);
-    ASSERT_EQ(path.at(graph.findVertex(3))->getId(), 1);
-    ASSERT_EQ(path.at(graph.findVertex(4))->getId(), 2);
-    ASSERT_EQ(path.at(graph.findVertex(5))->getId(), 4);
+    EXPECT_EQ(path.at(graph.findVertex(1))->getId(), 0);
+    EXPECT_EQ(path.at(graph.findVertex(2))->getId(), 0);
+    EXPECT_EQ(path.at(graph.findVertex(3))->getId(), 1);
+    EXPECT_EQ(path.at(graph.findVertex(4))->getId(), 2);
+    EXPECT_EQ(path.at(graph.findVertex(5))->getId(), 4);
 
 }
