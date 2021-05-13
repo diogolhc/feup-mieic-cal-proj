@@ -57,3 +57,7 @@ void Dijkstra::run() {
         }
     }
 }
+
+unordered_map<Vertex *, Vertex *> Dijkstra::getPath() const {
+    return this->path;
+}

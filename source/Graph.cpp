@@ -31,7 +31,7 @@ Edge* Graph::addEdge(size_t sourc, size_t dest, size_t weight) {
 
 Vertex* Graph::findVertex(const size_t id) const {
     for (auto v : vertexSet)
-        if (v->id == INF)
+        if (v->id == id)
             return v;
     return nullptr;
 }
