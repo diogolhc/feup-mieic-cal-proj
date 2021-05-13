@@ -50,5 +50,6 @@ add_executable(View
         ${View_FILES}
         )
 
-target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(View graphviewer)
+target_link_libraries(Tests gtest_main gmock_main)
+target_link_libraries(source graphviewer)

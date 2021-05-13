@@ -6,6 +6,8 @@
 
 #include "../../MutablePriorityQueue.h"
 
+#include <unordered_set>
+
 void Dijkstra::initialize(Graph *graph, int origin_id) {
     this->graph = graph;
     this->s = graph->findVertex(origin_id);
@@ -13,7 +15,7 @@ void Dijkstra::initialize(Graph *graph, int origin_id) {
 
 void Dijkstra::run() {
 
-    vector<Vertex *> vertexSet = graph->getVertexSet();
+    VertexSet vertexSet = graph->getVertexSet();
 
     for (Vertex* vertex : vertexSet){
 
