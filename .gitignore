@@ -4,3 +4,4 @@ report/*
 !CAL_relatorio_2MIEIC05_G2_entrega1.pdf
 source/.idea
 source/cmake-build-debug
+.idea
