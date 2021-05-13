@@ -40,7 +40,7 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
 add_executable(source main.cpp
         ${Algorithm_FILES}
         ${View_FILES}
-        GraphLoader.h
+        GraphFiles.cpp
         )
 
 add_executable(Tests
@@ -49,7 +49,9 @@ add_executable(Tests
         )
 
 add_executable(View
+        ${Algorithm_FILES}
         ${View_FILES}
+        GraphFiles.cpp
         )
 
 target_link_libraries(View graphviewer)
