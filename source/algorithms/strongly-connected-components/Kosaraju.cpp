@@ -1,4 +1,7 @@
 #include "Kosaraju.h"
+#include <iostream>
+
+using namespace std;
 
 void Kosaraju::DFS1(Graph &g, Vertex *s, stack<Vertex *> &stack) {
     s->setVisited(true);
@@ -16,6 +19,7 @@ void Kosaraju::DFS1(Graph &g, Vertex *s, stack<Vertex *> &stack) {
 void Kosaraju::DFS2(Graph &g, int component, Vertex *s) {
     s->setVisited(true);
     s->setSCC(component);
+    sccCountMap[component]++;
 
     // Since we are going for the transposed, we search by the incoming
     // The dest of the incoming is the current Vertex
@@ -67,9 +71,14 @@ void Kosaraju::kosaraju(Graph &g) {
         stack.pop();
 
         if (!v->getVisited()) {
+            sccCountMap.push_back(0);
             DFS2(g, component, v);
+            component++;
         }
 
-        component++;
     }
+}
+
+vector<int> Kosaraju::getMap() const {
+    return this->sccCountMap;
 }

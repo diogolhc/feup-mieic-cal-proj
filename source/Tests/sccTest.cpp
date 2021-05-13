@@ -3,7 +3,7 @@
 #include "../algorithms/strongly-connected-components/Kosaraju.h"
 
 #include <iostream>
-
+#include <algorithm>
 using namespace std;
 
 TEST(Tests_Test1, testKosaraju1) {
@@ -92,7 +92,6 @@ TEST(Tests_Test2, testKosaraju2) {
     scc5.push_back(11);
     scc5.push_back(12);
 
-    g.addVertex(0);
     g.addVertex(1);
     g.addVertex(2);
     g.addVertex(3);

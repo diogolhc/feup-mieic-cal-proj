@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stack>
+#include <map>
 #include "../../Graph.h"
 
 using namespace std;
@@ -12,8 +13,9 @@ private:
     void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack);
     void DFS2(Graph &g, int component, Vertex *s);
     Graph getTranspose(Graph &g);
-
+    vector<int> sccCountMap;
 public:
+    vector<int> getMap() const;
     void kosaraju(Graph &g);
 };
 
