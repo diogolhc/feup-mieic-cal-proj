@@ -38,8 +38,6 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         )
         
 add_executable(source main.cpp
-        GraphFiles.cpp
-        View/View.cpp
         ${Algorithm_FILES}
         )
 
@@ -52,9 +50,6 @@ add_executable(View
         ${View_FILES}
         )
 
-target_link_libraries(View graphviewer)
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(source graphviewer)
-#target_include_directories(Tests PRIVATE ${Tests_FILES})
-
-
+target_link_libraries(View graphviewer)
