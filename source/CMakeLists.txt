@@ -41,6 +41,8 @@ add_executable(source main.cpp
         GraphFiles.cpp
         View/View.cpp
         ${Algorithm_FILES}
+        ${View_FILES}
+        GraphFiles.cpp
         )
 
 add_executable(Tests
@@ -49,7 +51,9 @@ add_executable(Tests
         )
 
 add_executable(View
+        ${Algorithm_FILES}
         ${View_FILES}
+        GraphFiles.cpp
         )
 
 target_link_libraries(View graphviewer)

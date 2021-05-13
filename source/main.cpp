@@ -32,7 +32,6 @@ int main() {
 
     cout << "MAX: " << max << " index: " << index << endl;
     // view(Porto);
-
     return 0;
 }
 
