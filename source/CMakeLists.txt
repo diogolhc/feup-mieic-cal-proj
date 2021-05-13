@@ -36,7 +36,7 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         "algorithms/travelling-salesman/NearestNeighbor.cpp"
         "algorithms/vehicle-routing/MultiSourceDijkstra.cpp"
         )
-
+        
 add_executable(source main.cpp
         GraphFiles.cpp
         View/View.cpp
@@ -55,3 +55,6 @@ add_executable(View
 target_link_libraries(View graphviewer)
 target_link_libraries(Tests gtest_main gmock_main)
 target_link_libraries(source graphviewer)
+#target_include_directories(Tests PRIVATE ${Tests_FILES})
+
+
