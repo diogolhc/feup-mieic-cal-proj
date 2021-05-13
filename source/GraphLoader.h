@@ -1,7 +1,3 @@
-//
-// Created by sense on 05/05/2021.
-//
-
 #ifndef SOURCE_GRAPHLOADER_H
 #define SOURCE_GRAPHLOADER_H
 
