@@ -7,8 +7,7 @@
 
 #include "MutablePriorityQueue.h"
 
-#define INF std::numeric_limits<size_t>::max()
-
+#define INF std::numeric_limits<double>::max()
 
 class Vertex;
 class Edge;
@@ -41,10 +40,9 @@ class Vertex {
     std::vector<Edge *> incoming;
     Coordinates coordinates;
     XY xy;
-    VertexType type;
 
     //Nearest Neighbor
-    bool isApplicationCenter;
+    VertexType type;
     bool ACVisited;
 
     // Kosaraju and Tarjan elements needed
@@ -55,7 +53,7 @@ class Vertex {
     size_t scc;
     bool visited;  // for path finding
     Edge *path; // for path finding
-    size_t dist;   // for path finding
+    double dist;   // for path finding
     int queueIndex = 0; // required by MutablePriorityQueue
 
     Vertex(size_t in);
@@ -80,6 +78,9 @@ public:
     bool getIsApplicationCenter() const;
     bool getACVisited() const;
     void setACVisited(bool value);
+    double getDist() const;
+    void setDist(double value);
+    void setQueueIndex(int index);
     friend class Graph;
     friend class MutablePriorityQueue<Vertex>;
 };

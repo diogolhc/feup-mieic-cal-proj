@@ -133,7 +133,7 @@ XY Vertex::getXY() {
 }
 
 bool Vertex::getIsApplicationCenter() const{
-    return this->isApplicationCenter;
+    return this->type == APPLICATION_CENTER;
 }
 
 bool Vertex::getACVisited() const{
@@ -142,6 +142,18 @@ bool Vertex::getACVisited() const{
 
 void Vertex::setACVisited(bool value) {
     this->ACVisited = value;
+}
+
+double Vertex::getDist() const{
+    return this->dist;
+}
+
+void Vertex::setDist(double value) {
+    this->dist = value;
+}
+
+void Vertex::setQueueIndex(int index) {
+    this->queueIndex = index;
 }
 
 
