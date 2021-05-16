@@ -13,7 +13,7 @@ using namespace std;
 int main() {
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPortoStrongComponent();
+    GraphFile Porto = graphFiles.getPorto();
    /* Graph g = Porto.getGraph();
 
     Kosaraju kosaraju;

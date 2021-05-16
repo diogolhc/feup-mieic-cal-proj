@@ -138,7 +138,7 @@ XY Vertex::getXY() {
  */
 
 Edge::Edge(Vertex *o, Vertex *d, double weight):
-        orig(o), dest(d), weight(weight) {}
+        orig(o), dest(d), weight(weight), passedVehicle(false) {}
 
 size_t Edge::getWeight() const {
     return weight;
@@ -150,6 +150,14 @@ Vertex * Edge::getDest() const {
 
 Vertex * Edge::getOrig() const {
     return orig;
+}
+
+void Edge::setPassedVehicle(bool passed) {
+    this->passedVehicle = passed;
+}
+
+bool Edge::getPassedVehicle() const {
+    return this->passedVehicle;
 }
 
 /**

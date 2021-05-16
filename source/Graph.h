@@ -82,6 +82,7 @@ class Edge {
     Vertex * orig;
     Vertex * dest;
     double weight;
+    bool passedVehicle;
 
     Edge(Vertex *o, Vertex *d, double weight);
 
@@ -89,6 +90,8 @@ public:
     Vertex * getDest() const;
     Vertex * getOrig() const;
     size_t getWeight() const;
+    void setPassedVehicle(bool passed);
+    bool getPassedVehicle() const;
     friend class Graph;
     friend class Vertex;
 };

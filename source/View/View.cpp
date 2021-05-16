@@ -44,8 +44,11 @@ void view(GraphFile &graphFile) {
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v));
         edge.setThickness(0.0001);
 
-        // TODO colors accordingly to properties
-        edge.setColor(GraphViewer::RED);
+        if (e->getPassedVehicle()) {
+            edge.setColor(GraphViewer::BLUE);
+        } else {
+            edge.setColor(GraphViewer::RED);
+        }
 
         idEdge++;
     }

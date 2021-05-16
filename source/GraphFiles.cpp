@@ -83,6 +83,7 @@ void GraphFile::load() {
         centers_stream >> id;
         Vertex *v = graph.findVertex(id);
         v->setType(STORAGE_CENTER);
+        this->storage_centers_ids.push_back(id);
     }
 
     centers_stream >> size;
@@ -90,6 +91,7 @@ void GraphFile::load() {
         centers_stream >> id;
         Vertex *v = graph.findVertex(id);
         v->setType(APPLICATION_CENTER);
+        this->application_centers_ids.push_back(id);
     }
 
     centers_stream.close();
@@ -106,6 +108,14 @@ std::string GraphFile::getbackGroundImage() {
 
 Coordinates GraphFile::getCentralCoordinates() {
     return this->centralCoordinates;
+}
+
+vector<size_t> GraphFile::getApplication_centers_ids() {
+    return this->application_centers_ids;
+}
+
+vector<size_t> GraphFile::getStorage_centers_ids() {
+    return this->storage_centers_ids;
 }
 
 // TODO maybe get this values by a single file latter ?,
