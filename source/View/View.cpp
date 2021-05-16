@@ -1,3 +1,4 @@
+#include <iostream>
 #include "View.h"
 #include "graphviewer.h"
 #include "../Graph.h"
@@ -10,7 +11,7 @@ void view(GraphFile &graphFile) {
     Coordinates centralCoord = graphFile.getCentralCoordinates();
     GraphViewer gv;
     gv.setScale(graphFile.getScale());
-    gv.setCenter(sf::Vector2f(centralCoord.lon, -centralCoord.lat)); // TODO pass this to attribute of GraphFile
+    gv.setCenter(sf::Vector2f(centralCoord.lon, -centralCoord.lat));
 
     GraphViewer::id_t idNode;
     double lat, lon;
@@ -20,8 +21,20 @@ void view(GraphFile &graphFile) {
         lon = v->getCoordinates().lon;
         GraphViewer::Node &node = gv.addNode(idNode, sf::Vector2f(lon, -lat));
         node.setOutlineThickness(0.0);
-        node.setSize(0.0001);
-        // TODO colors accordingly to properties
+        node.setSize(0.001);
+
+        switch (v->getType()) {
+            case NONE:
+                node.setSize(0.0); // TODO not print
+                break;
+            case STORAGE_CENTER:
+                node.setColor(GraphViewer::GREEN);
+                break;
+            case APPLICATION_CENTER:
+                node.setColor(GraphViewer::YELLOW);
+                break;
+        }
+
     }
 
     GraphViewer::id_t idEdge = 0, u, v;
@@ -46,11 +59,11 @@ void view(GraphFile &graphFile) {
         );
     }
 
-
+/*
     gv.setEnabledNodes(false); // Disable node drawing
     gv.setEnabledEdgesText(false); // Disable edge text drawing
     gv.setZipEdges(true);
-
+*/
 
     gv.createWindow(1600, 900);
     gv.join();

@@ -13,8 +13,8 @@ using namespace std;
 int main() {
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPorto();
-    Graph g = Porto.getGraph();
+    GraphFile Porto = graphFiles.getPortoStrongComponent();
+   /* Graph g = Porto.getGraph();
 
     Kosaraju kosaraju;
     kosaraju.kosaraju(g);
@@ -30,8 +30,8 @@ int main() {
         }
     }
 
-    cout << "MAX: " << max << " index: " << index << endl;
-    // view(Porto);
+    cout << "MAX: " << max << " index: " << index << endl;*/
+    view(Porto);
     return 0;
 }
 

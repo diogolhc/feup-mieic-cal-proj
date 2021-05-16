@@ -7,13 +7,14 @@
 using namespace std;
 
 
-GraphFile::GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_latlng, const std::string &edges_file, const std::string &back_ground_file) :
+GraphFile::GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_latlng, const std::string &edges_file, const std::string &back_ground_file, const std::string &centers_file) :
     nodes_file_latlng(nodes_file_latlng),
     edges_file(edges_file),
     background_file(back_ground_file),
     loaded(false),
     scale(scale),
-    centralCoordinates(centralCoordinates)
+    centralCoordinates(centralCoordinates),
+    centers_file(centers_file)
     {}
 
 
@@ -27,6 +28,7 @@ Graph GraphFile::getGraph() {
 void GraphFile::load() {
     ifstream node_stream_latlng(nodes_file_latlng);
     ifstream edge_stream(edges_file);
+    ifstream centers_stream(centers_file);
 
     if (node_stream_latlng.fail() || node_stream_latlng.eof() || node_stream_latlng.bad()){
         cout << "Failed to load node file lat lon" << endl;
@@ -35,6 +37,11 @@ void GraphFile::load() {
 
     if (edge_stream.fail() || edge_stream.eof() || edge_stream.bad()){
         cout << "Failed to load edge file" << endl;
+        exit(1);
+    }
+
+    if (centers_stream.fail() || centers_stream.eof() || centers_stream.bad()){
+        cout << "Failed to load centers file" << endl;
         exit(1);
     }
 
@@ -49,6 +56,7 @@ void GraphFile::load() {
         node_stream_latlng >> trash >> id >> trash >> lon >> trash >> lat >> trash;
         Vertex *v = graph.addVertex(id);
         v->setCoordinates({.lat = lat, .lon = lon});
+        v->setType(NONE);
     }
     node_stream_latlng.close();
 
@@ -67,6 +75,24 @@ void GraphFile::load() {
     }
 
     edge_stream.close();
+
+
+    size_t id;
+    centers_stream >> size;
+    for (int i = 0; i < size; i++) {
+        centers_stream >> id;
+        Vertex *v = graph.findVertex(id);
+        v->setType(STORAGE_CENTER);
+    }
+
+    centers_stream >> size;
+    for (int i = 0; i < size; i++) {
+        centers_stream >> id;
+        Vertex *v = graph.findVertex(id);
+        v->setType(APPLICATION_CENTER);
+    }
+
+    centers_stream.close();
     this->loaded = true;
 }
 
@@ -84,9 +110,9 @@ Coordinates GraphFile::getCentralCoordinates() {
 
 // TODO maybe get this values by a single file latter ?,
 // TODO find images and set their respective center here
-GraphFiles::GraphFiles(std::string filesDir) :
-        Porto(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt", filesDir + "/porto.jpg"),
-        PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg"),
+GraphFiles::GraphFiles(const std::string &filesDir) :
+        Porto(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_centers.txt"),
+        PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_centers.txt"),
         Penafiel(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405}, filesDir + "/penafiel_full_nodes_latlng.txt", filesDir + "/penafiel_full_edges.txt"),
         PenafielStrongComponent(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405},filesDir + "/penafiel_strong_nodes_latlng.txt", filesDir + "/penafiel_strong_edges.txt"),
         Espinho(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_full_nodes_latlng.txt", filesDir + "/espinho_full_edges.txt"),

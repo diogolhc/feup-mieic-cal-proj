@@ -9,12 +9,13 @@ private:
     std::string nodes_file_latlng; // (id, lat, lon)
     std::string edges_file; // (id1, id2)
     std::string background_file;
+    std::string centers_file;
     Graph graph;
     bool loaded;
     double scale;
     Coordinates centralCoordinates;
 public:
-    GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_lat_lng, const std::string &edges_file, const std::string &back_ground_file="");
+    GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_lat_lng, const std::string &edges_file, const std::string &back_ground_file="", const std::string &centers_file="");
     void load();
     Graph getGraph();
     double getScale();
@@ -37,7 +38,7 @@ private:
     GraphFile Portugal;
 
 public:
-    GraphFiles(std::string filesDir);
+    GraphFiles(const std::string &filesDir);
     void load();
 
     // getters will load the respective graph if not loaded before

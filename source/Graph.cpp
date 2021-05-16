@@ -66,7 +66,7 @@ vector<Edge *> Graph::getEdges() const {
  * Vertex
  */
 
-Vertex::Vertex(size_t id): id(id) {}
+Vertex::Vertex(size_t id): id(id), type(NONE) {}
 
 
 void Vertex::addEdge(Edge *e) {
@@ -89,6 +89,14 @@ bool Vertex::getVisited() const {
 
 size_t Vertex::getId() const {
     return this->id;
+}
+
+VertexType Vertex::getType() const {
+    return this->type;
+}
+
+void Vertex::setType(VertexType type) {
+    this->type = type;
 }
 
 vector<Edge *> Vertex::getIncoming() const {

@@ -17,6 +17,12 @@ struct VertexPFunc;
 
 typedef unordered_set<Vertex *, VertexPFunc, VertexPFunc> VertexSet;
 
+enum VertexType {
+    STORAGE_CENTER,
+    APPLICATION_CENTER,
+    NONE
+};
+
 struct Coordinates {
     double lat;
     double lon;
@@ -35,6 +41,7 @@ class Vertex {
     std::vector<Edge *> incoming;
     Coordinates coordinates;
     XY xy;
+    VertexType type;
 
     //Nearest Neighbor
     bool isApplicationCenter;
@@ -46,7 +53,6 @@ class Vertex {
     int low;
     bool onStack;
     size_t scc;
-
     bool visited;  // for path finding
     Edge *path; // for path finding
     size_t dist;   // for path finding
@@ -67,6 +73,8 @@ public:
     size_t getSCC();
     void setSCC(size_t scc);
     size_t getId() const;
+    VertexType getType() const;
+    void setType(VertexType type);
     std::vector<Edge *> getIncoming() const;
     std::vector<Edge *> getOutgoing() const;
     bool getIsApplicationCenter() const;
