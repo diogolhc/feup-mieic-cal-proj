@@ -46,7 +46,7 @@ Graph Kosaraju::getTranspose(Graph &g) {
     return t;
 }
 
-void Kosaraju::kosaraju(Graph &g) {
+void Kosaraju::run(Graph &g) {
     stack<Vertex*> stack;
     int component = 0;
 
