@@ -28,7 +28,7 @@ std::vector<Vertex *> NearestNeighbor::run() {
 
         Vertex * s1 = v;
 
-        v = dijkstra.getNearestAC();
+        v = dijkstra.getNearestAC(application_center_ids);
 
         v->setACVisited(true);
 

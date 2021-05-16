@@ -4,6 +4,9 @@
 
 #include <unordered_set>
 #include <iostream>
+#include <algorithm>
+
+using namespace std;
 
 void Dijkstra::initialize(Graph *graph, int origin_id) {
     this->graph = graph;
@@ -59,7 +62,7 @@ void Dijkstra::changeOriginId(int origin_id) {
 }
 
 
-Vertex *Dijkstra::getNearestAC() {
+Vertex *Dijkstra::getNearestAC(std::vector<size_t> application_center_ids) {
 
     VertexSet vertexSet = graph->getVertexSet();
 
@@ -92,7 +95,8 @@ Vertex *Dijkstra::getNearestAC() {
 
         v = vertexQueue.extractMin();
 
-        if (v->getIsApplicationCenter() && !v->getACVisited() && v->getCluster() == s->getCluster()){
+        if (v->getIsApplicationCenter() && !v->getACVisited() && v->getCluster() == s->getCluster() &&
+        find(application_center_ids.begin(), application_center_ids.end(), v->getId()) != application_center_ids.end()){
             cout << "saiu aqui" << endl;
             break;
         }
