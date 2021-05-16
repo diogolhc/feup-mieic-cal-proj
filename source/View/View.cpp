@@ -26,6 +26,12 @@ void view(GraphFile &graphFile) {
         switch (v->getType()) {
             case NONE:
                 node.setSize(0.0); // TODO not print
+                /*if (v->getCluster() == 53578) // TODO this is just to debug
+                    node.setColor(GraphViewer::MAGENTA);
+                else if (v->getCluster() == 11847)
+                    node.setColor(GraphViewer::ORANGE);
+                else
+                    node.setColor(GraphViewer::BLACK);*/
                 break;
             case STORAGE_CENTER:
                 node.setColor(GraphViewer::GREEN);
@@ -43,12 +49,20 @@ void view(GraphFile &graphFile) {
         v = e->getDest()->getId();
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v));
 
+
         if (e->getPassedVehicle()) {
-            edge.setColor(GraphViewer::BLUE);
+            if (e->getDest()->getCluster() == 53578 && 53578 == e->getOrig()->getCluster()) // TODO this is just to debug
+                edge.setColor(GraphViewer::BLUE);
+            else if (e->getDest()->getCluster() == 11847 && 11847 == e->getOrig()->getCluster())
+                edge.setColor(GraphViewer::MAGENTA);
             edge.setThickness(0.0002);
         } else {
-            edge.setColor(GraphViewer::RED);
-            edge.setThickness(0.00005);
+            if (e->getDest()->getCluster() == 53578 && 53578 == e->getOrig()->getCluster()) // TODO this is just to debug
+                edge.setColor(GraphViewer::BLUE);
+            else if (e->getDest()->getCluster() == 11847 && 11847 == e->getOrig()->getCluster())
+                edge.setColor(GraphViewer::MAGENTA);
+            //edge.setColor(GraphViewer::RED);
+            edge.setThickness(0.00001);
         }
 
         idEdge++;

@@ -41,6 +41,9 @@ class Vertex {
     Coordinates coordinates;
     XY xy;
 
+    //MultiDijkstra
+    size_t cluster;
+
     //Nearest Neighbor
     VertexType type;
     bool ACVisited;
@@ -81,6 +84,8 @@ public:
     double getDist() const;
     void setDist(double value);
     void setQueueIndex(int index);
+    void setCluster(size_t cluster);
+    size_t getCluster() const;
     friend class Graph;
     friend class MutablePriorityQueue<Vertex>;
 };

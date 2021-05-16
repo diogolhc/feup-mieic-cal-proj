@@ -6,12 +6,13 @@
 #include "Graph.h"
 #include "algorithms/acessibility/BreathFirstSearch.h"
 #include "algorithms/acessibility/DepthFirstSearch.h"
+#include "algorithms/vehicle-routing/MultiSourceDijkstra.h"
 
 #include "GraphFiles.h"
 #include "View/View.h"
 
 
-#define FILES_ROOT "../maps" // TODO define properly (not needed now)
+#define FILES_ROOT "../maps"
 
 using namespace std;
 
@@ -22,31 +23,57 @@ int main() {
 
     Graph graph = Porto.getGraph();
 
-    vector<size_t> application_center_ids = Porto.getApplication_centers_ids();
-    size_t origin_id = Porto.getStorage_centers_ids().at(0);
+    Kosaraju kosas;
+    kosas.run(graph);
 
-    NearestNeighbor nearestNeighbor;
-
-    nearestNeighbor.initialize(&graph, origin_id, application_center_ids);
-    vector<Vertex *> res = nearestNeighbor.run();
-
-
-    int count = 0;
-
-    for (int i = 0; i < res.size() - 1; i++) {
-
-        Vertex *v1 = res.at(i);
-        Vertex *v2 = res.at(i + 1);
-
-        for (Edge *edge : v1->getOutgoing()) {
-            if (edge->getDest() == v2) {
-                count++;
-                edge->setPassedVehicle(true);
-                break;
-            }
-        }
+    vector<Vertex *> starts;
+    for (size_t id: Porto.getStorage_centers_ids()) {
+        starts.push_back(graph.findVertex(id));
     }
 
+    MultiSourceDijkstra multiSourceDijkstra(&graph, starts);
+    multiSourceDijkstra.run();
+
+    unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
+
+    for (pair<size_t, std::set<size_t>> cluster: clusters) {
+        cout << cluster.first << endl;
+        for (size_t id : cluster.second) {
+            cout << id << " ";
+        }
+        cout << "\n";
+    }
+
+
+    for (pair<size_t, std::set<size_t>> cluster: clusters) {
+        vector<size_t> clustersV;
+        std::copy(cluster.second.begin(), cluster.second.end(), std::back_inserter(clustersV));
+
+        NearestNeighbor nearestNeighbor;
+        nearestNeighbor.initialize(&graph, cluster.first, clustersV);
+
+        vector<Vertex *> res = nearestNeighbor.run();
+
+
+        int count = 0;
+
+        for (int i = 0; i < res.size() - 1; i++) {
+
+            Vertex *v1 = res.at(i);
+            Vertex *v2 = res.at(i + 1);
+
+            for (Edge *edge : v1->getOutgoing()) {
+                if (edge->getDest() == v2) {
+                    count++;
+                    edge->setPassedVehicle(true);
+                    break;
+                }
+            }
+        }
+
+    }
+
+/*
     Kosaraju kosaraju;
     BreathFirstSearch bfs;
     DepthFirstSearch dfs;
@@ -65,7 +92,7 @@ int main() {
     // Getting number of milliseconds as a double.
     duration<double, std::milli> ms_double = t2 - t1;
     std::cout << ms_double.count() << "ms";
-
+*/
     /*
     using std::chrono::high_resolution_clock;
     using std::chrono::duration_cast;

@@ -1,7 +1,3 @@
-//
-// Created by sense on 12/05/2021.
-//
-
 #ifndef SOURCE_DIJKSTRA_H
 #define SOURCE_DIJKSTRA_H
 
@@ -12,7 +8,7 @@
 class Dijkstra {
     Vertex * s;
     Graph * graph;
-    unordered_map<Vertex *, long double> dist;
+    unordered_map<Vertex *, double> dist;
     unordered_map<Vertex *, Vertex *> path;
 public:
     void initialize(Graph * graph, int origin_id);

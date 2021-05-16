@@ -1,6 +1,6 @@
 import random
 
-count = 10
+count = 30
 
 with open("porto_strong_nodes_latlng.txt", "r") as f:
     l = f.readlines()

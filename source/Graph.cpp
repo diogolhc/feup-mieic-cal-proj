@@ -66,7 +66,7 @@ vector<Edge *> Graph::getEdges() const {
  * Vertex
  */
 
-Vertex::Vertex(size_t id): id(id), type(NONE) {}
+Vertex::Vertex(size_t id): id(id), type(NONE), cluster(0) {}
 
 
 void Vertex::addEdge(Edge *e) {
@@ -154,6 +154,14 @@ void Vertex::setDist(double value) {
 
 void Vertex::setQueueIndex(int index) {
     this->queueIndex = index;
+}
+
+void Vertex::setCluster(size_t cluster) {
+    this->cluster = cluster;
+}
+
+size_t Vertex::getCluster() const {
+    return this->cluster;
 }
 
 

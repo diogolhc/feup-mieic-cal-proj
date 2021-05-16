@@ -1,7 +1,3 @@
-//
-// Created by sense on 12/05/2021.
-//
-
 #include "Dijkstra.h"
 
 #include "../../MutablePriorityQueue.h"
@@ -22,7 +18,7 @@ void Dijkstra::run() {
 
         auto vertexDist = dist.find(vertex);
         if (vertexDist != dist.end()) vertexDist->second = INF;
-        else dist.insert(pair<Vertex *, std::size_t>(vertex, INF));
+        else dist.insert(pair<Vertex *, double>(vertex, INF));
 
         auto vertexPath = path.find(vertex);
         if (vertexPath != path.end()) vertexPath->second = NULL;
@@ -96,7 +92,8 @@ Vertex *Dijkstra::getNearestAC() {
 
         v = vertexQueue.extractMin();
 
-        if (v->getIsApplicationCenter() && !v->getACVisited()){
+        if (v->getIsApplicationCenter() && !v->getACVisited() && v->getCluster() == s->getCluster()){
+            cout << "saiu aqui" << endl;
             break;
         }
 
@@ -104,8 +101,6 @@ Vertex *Dijkstra::getNearestAC() {
 
             Vertex * destinationVertex = edge->getDest();
 
-            int val = dist.at(destinationVertex);
-            int val2 = dist.at(v);
 
             if (dist.at(destinationVertex) > dist.at(v) + edge->getWeight()){
                 dist.at(destinationVertex) = dist.at(v) + edge->getWeight();
