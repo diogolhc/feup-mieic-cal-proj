@@ -2,6 +2,7 @@
 #define SOURCE_DIJKSTRA_H
 
 #include "../../Graph.h"
+#include "../../agents/Truck.h"
 
 #include <unordered_map>
 
@@ -14,7 +15,7 @@ public:
     void initialize(Graph * graph, int origin_id);
     void run();
     void changeOriginId(int origin_id);
-    Vertex * getNearestAC(std::vector<size_t> application_center_ids);
+    Vertex * getNearestAC(Truck * truck);
     unordered_map<Vertex *, Vertex *> getPath() const;
 };
 

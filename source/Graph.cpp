@@ -192,6 +192,10 @@ bool Edge::getPassedVehicle() const {
     return this->passedVehicle;
 }
 
+void Edge::passTruck(Truck *truck) {
+    this->passedTrucks.push_back(truck);
+}
+
 /**
 *  Dists:
 */

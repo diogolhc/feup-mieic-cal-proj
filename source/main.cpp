@@ -19,7 +19,7 @@ using namespace std;
 int main() {
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPorto();
+    GraphFile Porto = graphFiles.getPortoStrongComponent();
 
     Graph graph = Porto.getGraph();
 
@@ -36,31 +36,25 @@ int main() {
 
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
 
-    for (pair<size_t, std::set<size_t>> cluster: clusters) {
-        cout << cluster.first << endl;
-        for (size_t id : cluster.second) {
-            cout << id << " ";
-        }
-        cout << "\n";
-    }
-
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
         for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
-            storageCenter.addApplicationCenter(ApplicationCenter(graph.findVertex(id)));
+            ApplicationCenter applicationCenter(graph.findVertex(id));
+            storageCenter.addApplicationCenter(applicationCenter);
         }
     }
 
+    for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
+        storageCenter.initTruckAC();
+    }
 
-    for (pair<size_t, std::set<size_t>> cluster: clusters) {
-        
-        vector<size_t> clustersV;
-        std::copy(cluster.second.begin(), cluster.second.end(), std::back_inserter(clustersV));
+    for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
+
+        std::vector<ApplicationCenter> acc = storageCenter.getAcCluster();
 
         NearestNeighbor nearestNeighbor;
-        nearestNeighbor.initialize(&graph, cluster.first, clustersV);
+        nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &storageCenter.getTrucks().at(0));
 
         vector<Vertex *> res = nearestNeighbor.run();
-
 
         int count = 0;
 
@@ -78,6 +72,12 @@ int main() {
             }
         }
 
+    }
+
+    for (StorageCenter & storageCenter : Porto.getStorageCenters()){
+        for (Truck & truck : storageCenter.getTrucks()){
+            cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
+        }
     }
 
 /*

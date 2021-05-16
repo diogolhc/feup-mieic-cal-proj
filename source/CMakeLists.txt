@@ -25,6 +25,10 @@ file(GLOB View_FILES CONFIGURE_DEPENDS
 
 file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         "Graph.cpp"
+        "agents/ApplicationCenter.cpp"
+        "agents/StorageCenter.cpp"
+        "agents/Truck.cpp"
+        "GraphFiles.cpp"
         "algorithms/acessibility/DepthFirstSearch.cpp"
         "algorithms/acessibility/BreathFirstSearch.cpp"
         "algorithms/strongly-connected-components/Kosaraju.cpp"
@@ -38,12 +42,10 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         )
 
 add_executable(source main.cpp
-        GraphFiles.cpp
         View/View.cpp
         ${Algorithm_FILES}
         ${View_FILES}
-        GraphFiles.cpp
-        agents/ApplicationCenter.cpp agents/ApplicationCenter.h agents/StorageCenter.cpp agents/StorageCenter.h agents/Truck.cpp agents/Truck.h)
+        )
 
 add_executable(Tests
         ${Tests_FILES}

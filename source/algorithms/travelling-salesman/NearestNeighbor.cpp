@@ -11,10 +11,10 @@
 
 using namespace std;
 
-void NearestNeighbor::initialize(Graph *graph, size_t origin_id, const vector<size_t> &application_center_ids) {
+void NearestNeighbor::initialize(Graph *graph, size_t origin_id, Truck * truck) {
     this->graph = graph;
     this->s = graph->findVertex(origin_id);
-    this->application_center_ids = application_center_ids;
+    this->truck = truck;
 }
 
 std::vector<Vertex *> NearestNeighbor::run() {
@@ -24,21 +24,19 @@ std::vector<Vertex *> NearestNeighbor::run() {
     Dijkstra dijkstra;
     dijkstra.initialize(graph, v->getId());
 
-    while(!application_center_ids.empty()){
+    int count1 = 0;
+
+    vector<ApplicationCenter *> aclist = truck->getACList();
+
+    while(count1 < aclist.size()){
 
         Vertex * s1 = v;
 
-        v = dijkstra.getNearestAC(application_center_ids);
+        v = dijkstra.getNearestAC(truck);
 
         v->setACVisited(true);
 
-        auto iter_v = find(application_center_ids.begin(), application_center_ids.end(), v->getId());
-
-        if (iter_v == application_center_ids.end()){
-            cerr << "ERROR NearestNeighbor l:36" << endl;
-        }
-
-        application_center_ids.erase(iter_v);
+        count1++;
 
         unordered_map<Vertex *, Vertex *> path = dijkstra.getPath();
 
@@ -59,6 +57,22 @@ std::vector<Vertex *> NearestNeighbor::run() {
     }
 
     this->running_path.push_back(v);
+
+    std::vector<Vertex *> & res = running_path;
+
+    for (int i = 0; i < res.size() - 1; i++) {
+
+        Vertex *v1 = res.at(i);
+        Vertex *v2 = res.at(i + 1);
+
+        for (Edge *edge : v1->getOutgoing()) {
+            if (edge->getDest() == v2) {
+                edge->passTruck(truck);
+                truck->setDistanceCovered(truck->getDistanceCovered() + edge->getWeight());
+                break;
+            }
+        }
+    }
 
 
     return running_path;

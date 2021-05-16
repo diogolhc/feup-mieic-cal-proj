@@ -63,6 +63,6 @@ void MultiSourceDijkstra::run() {
 
 }
 
-unordered_map<std::size_t, std::set<size_t>> MultiSourceDijkstra::getClusters() const {
+unordered_map<std::size_t, std::set<size_t>> & MultiSourceDijkstra::getClusters(){
     return this->clusters;
 }

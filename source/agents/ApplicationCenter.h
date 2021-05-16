@@ -11,7 +11,7 @@ class ApplicationCenter {
     Vertex * vertex;
     int vaccinesNeeded;
 public:
-    explicit ApplicationCenter(Vertex * vertex);
+    explicit ApplicationCenter(Vertex * vertex1);
     Vertex * getVertex() const;
 };
 

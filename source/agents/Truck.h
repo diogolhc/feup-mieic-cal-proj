@@ -7,7 +7,9 @@
 
 #include <vector>
 
-#include "ApplicationCenter.h"
+//#include "ApplicationCenter.h"
+
+class ApplicationCenter;
 
 class Truck {
     double distanceCovered;

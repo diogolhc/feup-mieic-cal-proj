@@ -1,6 +1,7 @@
 #include "Dijkstra.h"
 
 #include "../../MutablePriorityQueue.h"
+#include "../../agents/ApplicationCenter.h"
 
 #include <unordered_set>
 #include <iostream>
@@ -62,9 +63,11 @@ void Dijkstra::changeOriginId(int origin_id) {
 }
 
 
-Vertex *Dijkstra::getNearestAC(std::vector<size_t> application_center_ids) {
+Vertex *Dijkstra::getNearestAC(Truck * truck) {
 
     VertexSet vertexSet = graph->getVertexSet();
+
+    vector<ApplicationCenter *> aclist = truck->getACList();
 
     for (Vertex* vertex : vertexSet){
 
@@ -95,16 +98,25 @@ Vertex *Dijkstra::getNearestAC(std::vector<size_t> application_center_ids) {
 
         v = vertexQueue.extractMin();
 
-        if (v->getIsApplicationCenter() && !v->getACVisited() && v->getCluster() == s->getCluster() &&
-        find(application_center_ids.begin(), application_center_ids.end(), v->getId()) != application_center_ids.end()){
-            cout << "saiu aqui" << endl;
-            break;
+        if (v->getIsApplicationCenter() && !v->getACVisited() && v->getCluster() == s->getCluster()){
+
+            bool found = false;
+
+            for (ApplicationCenter *applicationCenter : aclist){
+                Vertex * vertex = applicationCenter->getVertex();
+                if (vertex->getId() == v->getId()){
+                    cout << "saiu aqui" << endl;
+                    found  = true;
+                    break;
+                }
+            }
+
+            if (found) break;
         }
 
         for (Edge * edge : v->getOutgoing()){
 
             Vertex * destinationVertex = edge->getDest();
-
 
             if (dist.at(destinationVertex) > dist.at(v) + edge->getWeight()){
                 dist.at(destinationVertex) = dist.at(v) + edge->getWeight();

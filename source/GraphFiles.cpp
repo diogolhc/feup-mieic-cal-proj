@@ -84,7 +84,7 @@ void GraphFile::load() {
         Vertex *v = graph.findVertex(id);
         v->setType(STORAGE_CENTER);
         this->storage_centers_ids.push_back(id);
-        this->storageCenters.emplace_back(v);
+        this->storageCenters.emplace_back(v, vector<Truck>(1, Truck(0)) ); //TODO change this
 
     }
 

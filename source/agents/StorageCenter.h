@@ -5,7 +5,6 @@
 #ifndef SOURCE_STORAGECENTER_H
 #define SOURCE_STORAGECENTER_H
 
-#include "../Graph.h"
 #include "ApplicationCenter.h"
 #include "Truck.h"
 
@@ -16,10 +15,12 @@ class StorageCenter {
     std::vector<Truck> trucks;
     Vertex * vertex;
 public:
-    explicit StorageCenter(Vertex * vertex);
+    explicit StorageCenter(Vertex * vertex, const vector<Truck> & trucks);
     void addApplicationCenter(const ApplicationCenter & applicationCenter);
     Vertex * getVertex() const;
     std::vector<ApplicationCenter>& getAcCluster();
+    void initTruckAC();
+    std::vector<Truck> & getTrucks();
 };
 
 

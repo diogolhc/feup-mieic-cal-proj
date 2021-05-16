@@ -6,18 +6,19 @@
 #define SOURCE_NEARESTNEIGHBOR_H
 
 #include "../../Graph.h"
+#include "../../agents/Truck.h"
 
 #include <vector>
 
 class NearestNeighbor {
 
     std::vector<Vertex *> running_path;
-    std::vector<size_t> application_center_ids;
+    Truck * truck;
     Vertex * s;
     Graph * graph;
 
 public:
-    void initialize(Graph * graph, size_t origin_id, const std::vector<size_t>& application_center_ids);
+    void initialize(Graph * graph, size_t origin_id, Truck * truck);
     std::vector<Vertex *> run(); //returns visiting order of the vertex
 };
 

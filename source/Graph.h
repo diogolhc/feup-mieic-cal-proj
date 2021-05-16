@@ -1,10 +1,11 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include <vector>
-#include <unordered_set>
 #include <limits>
+#include <unordered_set>
+#include <vector>
 
+#include "agents/Truck.h"
 #include "MutablePriorityQueue.h"
 
 #define INF std::numeric_limits<double>::max()
@@ -96,7 +97,7 @@ class Edge {
     Vertex * dest;
     double weight;
     bool passedVehicle;
-
+    vector<Truck *> passedTrucks;
     Edge(Vertex *o, Vertex *d, double weight);
 
 public:
@@ -105,6 +106,7 @@ public:
     size_t getWeight() const;
     void setPassedVehicle(bool passed);
     bool getPassedVehicle() const;
+    void passTruck(Truck * truck);
     friend class Graph;
     friend class Vertex;
 };

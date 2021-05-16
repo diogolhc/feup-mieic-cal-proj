@@ -4,8 +4,9 @@
 
 #include "StorageCenter.h"
 
-StorageCenter::StorageCenter(Vertex *vertex) {
+StorageCenter::StorageCenter(Vertex *vertex, const vector<Truck> & trucks) {
     this->vertex = vertex;
+    this->trucks = trucks;
 }
 
 void StorageCenter::addApplicationCenter(const ApplicationCenter &applicationCenter) {
@@ -20,4 +21,19 @@ Vertex *StorageCenter::getVertex() const{
     return vertex;
 }
 
+void StorageCenter::initTruckAC(){
+
+    Truck & truck = this->trucks.at(0);
+
+    for (ApplicationCenter & applicationCenter : this->AcCluster){
+
+        truck.addApplicationCenter(&applicationCenter);
+
+    }
+
+}
+
+std::vector<Truck> &StorageCenter::getTrucks() {
+    return trucks;
+}
 

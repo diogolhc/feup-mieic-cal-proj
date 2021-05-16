@@ -4,8 +4,8 @@
 
 #include "ApplicationCenter.h"
 
-ApplicationCenter::ApplicationCenter(Vertex *vertex) {
-    this->vertex = vertex;
+ApplicationCenter::ApplicationCenter(Vertex *vertex1) {
+    this->vertex = vertex1;
 }
 
 Vertex *ApplicationCenter::getVertex() const {
