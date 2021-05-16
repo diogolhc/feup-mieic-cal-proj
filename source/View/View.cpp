@@ -42,12 +42,13 @@ void view(GraphFile &graphFile) {
         u = e->getOrig()->getId();
         v = e->getDest()->getId();
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v));
-        edge.setThickness(0.0001);
 
         if (e->getPassedVehicle()) {
             edge.setColor(GraphViewer::BLUE);
+            edge.setThickness(0.0002);
         } else {
             edge.setColor(GraphViewer::RED);
+            edge.setThickness(0.00005);
         }
 
         idEdge++;

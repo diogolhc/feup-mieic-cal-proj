@@ -132,6 +132,30 @@ XY Vertex::getXY() {
     return this->xy;
 }
 
+bool Vertex::getIsApplicationCenter() const{
+    return this->type == APPLICATION_CENTER;
+}
+
+bool Vertex::getACVisited() const{
+    return this->ACVisited;
+}
+
+void Vertex::setACVisited(bool value) {
+    this->ACVisited = value;
+}
+
+double Vertex::getDist() const{
+    return this->dist;
+}
+
+void Vertex::setDist(double value) {
+    this->dist = value;
+}
+
+void Vertex::setQueueIndex(int index) {
+    this->queueIndex = index;
+}
+
 
 /**
  * Edge
