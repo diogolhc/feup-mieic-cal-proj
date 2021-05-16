@@ -43,7 +43,7 @@ add_executable(source main.cpp
         ${Algorithm_FILES}
         ${View_FILES}
         GraphFiles.cpp
-        )
+        agents/ApplicationCenter.cpp agents/ApplicationCenter.h agents/StorageCenter.cpp agents/StorageCenter.h agents/Truck.cpp agents/Truck.h)
 
 add_executable(Tests
         ${Tests_FILES}
