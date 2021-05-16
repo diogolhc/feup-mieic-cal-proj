@@ -6,6 +6,7 @@
 
 Truck::Truck(int vaccinesLeft) {
     this->vaccinesLeft = vaccinesLeft;
+    this->distanceCovered = 0;
 }
 
 std::vector<ApplicationCenter *> &Truck::getACList() {

@@ -12,7 +12,7 @@
 #include <vector>
 
 class StorageCenter {
-    std::vector<ApplicationCenter> AcCLuster;
+    std::vector<ApplicationCenter> AcCluster;
     std::vector<Truck> trucks;
     Vertex * vertex;
 public:

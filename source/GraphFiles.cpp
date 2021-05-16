@@ -84,6 +84,8 @@ void GraphFile::load() {
         Vertex *v = graph.findVertex(id);
         v->setType(STORAGE_CENTER);
         this->storage_centers_ids.push_back(id);
+        this->storageCenters.emplace_back(v);
+
     }
 
     centers_stream >> size;
@@ -116,6 +118,10 @@ vector<size_t> GraphFile::getApplication_centers_ids() {
 
 vector<size_t> GraphFile::getStorage_centers_ids() {
     return this->storage_centers_ids;
+}
+
+vector<StorageCenter> &GraphFile::getStorageCenters() {
+    return this->storageCenters;
 }
 
 // TODO maybe get this values by a single file latter ?,

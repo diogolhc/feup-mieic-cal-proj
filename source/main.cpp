@@ -27,8 +27,8 @@ int main() {
     kosas.run(graph);
 
     vector<Vertex *> starts;
-    for (size_t id: Porto.getStorage_centers_ids()) {
-        starts.push_back(graph.findVertex(id));
+    for (const StorageCenter & storageCenter: Porto.getStorageCenters()) {
+        starts.push_back(storageCenter.getVertex());
     }
 
     MultiSourceDijkstra multiSourceDijkstra(&graph, starts);
@@ -44,8 +44,15 @@ int main() {
         cout << "\n";
     }
 
+    for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
+        for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
+            storageCenter.addApplicationCenter(ApplicationCenter(graph.findVertex(id)));
+        }
+    }
+
 
     for (pair<size_t, std::set<size_t>> cluster: clusters) {
+        
         vector<size_t> clustersV;
         std::copy(cluster.second.begin(), cluster.second.end(), std::back_inserter(clustersV));
 
