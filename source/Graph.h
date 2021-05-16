@@ -36,6 +36,10 @@ class Vertex {
     Coordinates coordinates;
     XY xy;
 
+    //Nearest Neighbor
+    bool isApplicationCenter;
+    bool ACVisited;
+
     // Kosaraju and Tarjan elements needed
     // TODO its ok to put this elements here? Because its just for the Algorithms
     int id;
@@ -65,6 +69,9 @@ public:
     size_t getId() const;
     std::vector<Edge *> getIncoming() const;
     std::vector<Edge *> getOutgoing() const;
+    bool getIsApplicationCenter() const;
+    bool getACVisited() const;
+    void setACVisited(bool value);
     friend class Graph;
     friend class MutablePriorityQueue<Vertex>;
 };

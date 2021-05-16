@@ -17,6 +17,8 @@ class Dijkstra {
 public:
     void initialize(Graph * graph, int origin_id);
     void run();
+    void changeOriginId(int origin_id);
+    Vertex * getNearestAC();
     unordered_map<Vertex *, Vertex *> getPath() const;
 };
 

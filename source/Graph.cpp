@@ -124,6 +124,18 @@ XY Vertex::getXY() {
     return this->xy;
 }
 
+bool Vertex::getIsApplicationCenter() const{
+    return this->isApplicationCenter;
+}
+
+bool Vertex::getACVisited() const{
+    return this->ACVisited;
+}
+
+void Vertex::setACVisited(bool value) {
+    this->ACVisited = value;
+}
+
 
 /**
  * Edge
