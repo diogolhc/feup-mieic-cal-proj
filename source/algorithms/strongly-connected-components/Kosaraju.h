@@ -16,7 +16,7 @@ private:
     vector<int> sccCountMap;
 public:
     vector<int> getMap() const;
-    void kosaraju(Graph &g);
+    void run(Graph &g);
 };
 
 

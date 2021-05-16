@@ -47,7 +47,7 @@ void view(GraphFile &graphFile) {
     }
 
 
-    gv.setEnabledNodes(false); // Disable node drawing
+    gv.setEnabledNodes(true); // Disable node drawing
     gv.setEnabledEdgesText(false); // Disable edge text drawing
     gv.setZipEdges(true);
 

@@ -49,7 +49,7 @@ TEST(Tests_Test1, testKosaraju1) {
     g.addEdge(8, 7, 0);
 
     Kosaraju k;
-    k.kosaraju(g);
+    k.run(g);
 
     EXPECT_NE(g.findVertex(7)->getSCC(), g.findVertex(8)->getSCC());
     EXPECT_NE(g.findVertex(8)->getSCC(), g.findVertex(0)->getSCC());
@@ -123,7 +123,7 @@ TEST(Tests_Test2, testKosaraju2) {
     g.addEdge(12, 10, 0);
 
     Kosaraju kosaraju;
-    kosaraju.kosaraju(g);
+    kosaraju.run(g);
 
     EXPECT_NE(g.findVertex(1)->getSCC(), g.findVertex(2)->getSCC());
     EXPECT_NE(g.findVertex(1)->getSCC(), g.findVertex(4)->getSCC());
