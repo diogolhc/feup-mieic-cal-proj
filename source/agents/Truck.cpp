@@ -45,6 +45,11 @@ Truck::Truck(int vaccinesLeft, const std::vector<ApplicationCenter *> &newACList
     this->vaccinesLeft = vaccinesLeft;
     this->distanceCovered = 0;
     this->ACList= newACList;
+    this->color = COLOR_VECTOR.at(rand() % COLOR_VECTOR.size());
+}
+
+GraphViewer::Color Truck::getColor() const {
+    return this->color;
 }
 
 

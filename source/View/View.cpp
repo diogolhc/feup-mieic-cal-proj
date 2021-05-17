@@ -28,10 +28,10 @@ void view(GraphFile &graphFile) {
                 node.setSize(0.0); // TODO not print
                 break;
             case STORAGE_CENTER:
-                node.setColor(GraphViewer::GREEN);
+                node.setColor(GraphViewer::LIGHT_GRAY);
                 break;
             case APPLICATION_CENTER:
-                node.setColor(GraphViewer::YELLOW);
+                node.setColor(GraphViewer::DARK_GRAY);
                 break;
         }
 
@@ -45,19 +45,19 @@ void view(GraphFile &graphFile) {
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
-        if (e->getPassedVehicle()) {
-            if (e->getDest()->getCluster() == 53578 && 53578 == e->getOrig()->getCluster()) // TODO this is just to debug
-                edge.setColor(GraphViewer::BLUE);
-            else if (e->getDest()->getCluster() == 11847 && 11847 == e->getOrig()->getCluster())
-                edge.setColor(GraphViewer::MAGENTA);
-            edge.setThickness(0.00004);
-        } else {
-            if (e->getDest()->getCluster() == 53578 && 53578 == e->getOrig()->getCluster()) // TODO this is just to debug
-                edge.setColor(GraphViewer::BLUE);
-            else if (e->getDest()->getCluster() == 11847 && 11847 == e->getOrig()->getCluster())
-                edge.setColor(GraphViewer::MAGENTA);
-            //edge.setColor(GraphViewer::RED);
+        std::vector<Truck*> trucks = e->getPassedTrucks();
+
+        if (trucks.size() == 0){
+            edge.setColor(GraphViewer::BLACK);
             edge.setThickness(0.00001);
+        }
+        else if (trucks.size() == 1){
+            edge.setColor(trucks.at(0)->getColor());
+            edge.setThickness(0.00005);
+        }
+        else{
+            edge.setColor(GraphViewer::RED);
+            edge.setThickness(0.00005);
         }
 
         idEdge++;

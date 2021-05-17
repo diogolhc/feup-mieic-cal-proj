@@ -8,6 +8,16 @@
 #include <vector>
 
 //#include "ApplicationCenter.h"
+#include "graphviewer.h"
+
+static const std::vector<GraphViewer::Color> COLOR_VECTOR = { GraphViewer::GREEN,
+                                                              GraphViewer::YELLOW,
+                                                              GraphViewer::BLUE,
+                                                              GraphViewer::MAGENTA,
+                                                              GraphViewer::CYAN,
+                                                              GraphViewer::PINK,
+                                                              GraphViewer::ORANGE
+};
 
 class ApplicationCenter;
 
@@ -15,6 +25,7 @@ class Truck {
     double distanceCovered;
     int vaccinesLeft;
     std::vector<ApplicationCenter *> ACList;
+    GraphViewer::Color color;
 public:
     explicit Truck(int vaccinesLeft);
     explicit Truck(int vaccinesLeft, const std::vector<ApplicationCenter *> & newACList);
@@ -25,6 +36,7 @@ public:
     void setDistanceCovered(double distance);
     int getVaccinesLeft() const;
     bool useVaccines(int numVaccines);
+    GraphViewer::Color getColor() const;
 };
 
 

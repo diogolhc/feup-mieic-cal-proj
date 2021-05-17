@@ -196,6 +196,10 @@ void Edge::passTruck(Truck *truck) {
     this->passedTrucks.push_back(truck);
 }
 
+vector<Truck *> & Edge::getPassedTrucks(){
+    return this->passedTrucks;
+}
+
 /**
 *  Dists:
 */

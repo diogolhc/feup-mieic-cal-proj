@@ -106,6 +106,7 @@ public:
     size_t getWeight() const;
     void setPassedVehicle(bool passed);
     bool getPassedVehicle() const;
+    std::vector<Truck *> & getPassedTrucks();
     void passTruck(Truck * truck);
     friend class Graph;
     friend class Vertex;

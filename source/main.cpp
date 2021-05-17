@@ -79,6 +79,7 @@ void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<Appli
 
 
 int main() {
+    srand(time(0));
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
     GraphFile Porto = graphFiles.getPorto();
