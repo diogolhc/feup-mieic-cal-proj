@@ -18,20 +18,20 @@
 using namespace std;
 
 // res is empty
-void splitApplicationCentersSameCluster(std::vector<ApplicationCenter> original, std::vector< vector<ApplicationCenter> > &res) {
+void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
     res.clear();
     for (size_t i = 0; i < 4; i++)
-        res.push_back({});
+        res.emplace_back();
 
     sort(original.begin(), original.end(), SortByLat());
 
-    double latLeft = original.at(0).getVertex()->getCoordinates().lat;
-    double latRight = original.at(original.size() - 1).getVertex()->getCoordinates().lat;
-    double latCenter = latRight - latLeft;
+    double latLeft = original.at(0)->getVertex()->getCoordinates().lat;
+    double latRight = original.at(original.size() - 1)->getVertex()->getCoordinates().lat;
+    double latCenter = latLeft + (latRight - latLeft)/2;
 
 
     size_t i = 0;
-    while (original.at(i).getVertex()->getCoordinates().lat < latCenter) {
+    while (original.at(i)->getVertex()->getCoordinates().lat < latCenter) {
         res.at(0).push_back(original.at(i));
         i++;
     }
@@ -44,16 +44,16 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter> original,
     sort(res.at(0).begin(), res.at(0).end(), SortByLng());
     sort(res.at(1).begin(), res.at(1).end(), SortByLng());
 
-    double lngLeft0 = res.at(0).at(0).getVertex()->getCoordinates().lon;
-    double lngLeft1 = res.at(1).at(0).getVertex()->getCoordinates().lon;
-    double lngRight0 = res.at(0).at(res.at(0).size()-1).getVertex()->getCoordinates().lon;
-    double lngRight1 = res.at(1).at(res.at(1).size()-1).getVertex()->getCoordinates().lon;
+    double lngLeft0 = res.at(0).at(0)->getVertex()->getCoordinates().lon;
+    double lngLeft1 = res.at(1).at(0)->getVertex()->getCoordinates().lon;
+    double lngRight0 = res.at(0).at(res.at(0).size()-1)->getVertex()->getCoordinates().lon;
+    double lngRight1 = res.at(1).at(res.at(1).size()-1)->getVertex()->getCoordinates().lon;
 
-    double lngCenter0 = lngRight0 - lngLeft0;
-    double lngCenter1 = lngRight1 - lngLeft1;
+    double lngCenter0 = lngLeft0 + (lngRight0 - lngLeft0)/2;
+    double lngCenter1 = lngLeft1 + (lngRight1 - lngLeft1)/2;
 
     i = 0;
-    while (res.at(0).at(i).getVertex()->getCoordinates().lon < lngCenter0) {
+    while (res.at(0).at(i)->getVertex()->getCoordinates().lon < lngCenter0) {
         res.at(2).push_back(res.at(0).at(i));
         i++;
     }
@@ -61,7 +61,7 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter> original,
     res.at(0).erase(res.at(0).begin(), res.at(0).begin() + i);
 
     i = 0;
-    while (res.at(1).at(i).getVertex()->getCoordinates().lon < lngCenter1) {
+    while (res.at(1).at(i)->getVertex()->getCoordinates().lon < lngCenter1) {
         res.at(3).push_back(res.at(1).at(i));
         i++;
     }
@@ -69,6 +69,13 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter> original,
     res.at(1).erase(res.at(1).begin(), res.at(1).begin() + i);
 }
 
+void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<ApplicationCenter *> > res){
+
+    for (vector<ApplicationCenter*> & v : res){
+        if (v.empty()) continue;
+        storageCenter.addTruck(v);
+    }
+}
 
 
 int main() {
@@ -97,36 +104,41 @@ int main() {
             storageCenter.addApplicationCenter(applicationCenter);
         }
     }
+    cout << "here" << endl;
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
-        storageCenter.initTruckAC();
+        std::vector<ApplicationCenter *> original;
+        for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster()) original.push_back(&applicationCenter);
+        std::vector< vector<ApplicationCenter *> > res;
+        splitApplicationCentersSameCluster(original, res);
+        assignGridToTrucks(storageCenter, res);
     }
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
 
-        std::vector<ApplicationCenter> acc = storageCenter.getAcCluster();
+        for (Truck & truck : storageCenter.getTrucks()){
+            std::vector<ApplicationCenter> acc = storageCenter.getAcCluster();
 
-        NearestNeighbor nearestNeighbor;
-        nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &storageCenter.getTrucks().at(0));
+            NearestNeighbor nearestNeighbor;
+            nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &truck);
+            vector<Vertex *> res = nearestNeighbor.run();
 
-        vector<Vertex *> res = nearestNeighbor.run();
+            int count = 0;
 
-        int count = 0;
+            for (int i = 0; i < res.size() - 1; i++) {
 
-        for (int i = 0; i < res.size() - 1; i++) {
+                Vertex *v1 = res.at(i);
+                Vertex *v2 = res.at(i + 1);
 
-            Vertex *v1 = res.at(i);
-            Vertex *v2 = res.at(i + 1);
-
-            for (Edge *edge : v1->getOutgoing()) {
-                if (edge->getDest() == v2) {
-                    count++;
-                    edge->setPassedVehicle(true);
-                    break;
+                for (Edge *edge : v1->getOutgoing()) {
+                    if (edge->getDest() == v2) {
+                        count++;
+                        edge->setPassedVehicle(true);
+                        break;
+                    }
                 }
             }
         }
-
     }
 
     for (StorageCenter & storageCenter : Porto.getStorageCenters()){

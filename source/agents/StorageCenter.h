@@ -20,6 +20,7 @@ public:
     Vertex * getVertex() const;
     std::vector<ApplicationCenter>& getAcCluster();
     void initTruckAC();
+    void addTruck(const std::vector<ApplicationCenter *> & newACList);
     std::vector<Truck> & getTrucks();
 };
 

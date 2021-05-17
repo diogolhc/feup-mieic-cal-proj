@@ -17,11 +17,11 @@ public:
 
 
 struct SortByLat {
-    inline bool operator() (const ApplicationCenter &left, const ApplicationCenter &right) const;
+    bool operator() (ApplicationCenter * left,  ApplicationCenter * right) const;
 };
 
 struct SortByLng {
-    inline bool operator() (const ApplicationCenter &left, const ApplicationCenter &right) const;
+    bool operator() (ApplicationCenter * left,  ApplicationCenter * right) const;
 };
 
 #endif //SOURCE_APPLICATIONCENTER_H

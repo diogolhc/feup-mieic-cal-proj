@@ -14,11 +14,11 @@ Vertex *ApplicationCenter::getVertex() const {
 
 
 
-bool SortByLat::operator() (const ApplicationCenter &left, const ApplicationCenter &right) const {
-    return left.getVertex()->getCoordinates().lat < right.getVertex()->getCoordinates().lat;
+bool SortByLat::operator() (ApplicationCenter * left,  ApplicationCenter * right) const {
+    return left->getVertex()->getCoordinates().lat < right->getVertex()->getCoordinates().lat;
 }
 
 
-bool SortByLng::operator() (const ApplicationCenter &left, const ApplicationCenter &right) const {
-    return left.getVertex()->getCoordinates().lon < right.getVertex()->getCoordinates().lon;
+bool SortByLng::operator() (ApplicationCenter * left,  ApplicationCenter * right) const {
+    return left->getVertex()->getCoordinates().lon < right->getVertex()->getCoordinates().lon;
 }

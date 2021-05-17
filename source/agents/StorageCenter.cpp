@@ -37,3 +37,7 @@ std::vector<Truck> &StorageCenter::getTrucks() {
     return trucks;
 }
 
+void StorageCenter::addTruck(const std::vector<ApplicationCenter *> & newACList) {
+    this->trucks.emplace_back(0, newACList);
+}
+

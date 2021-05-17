@@ -37,4 +37,14 @@ bool Truck::useVaccines(int numVaccines) {
     return false;
 }
 
+void Truck::setACList(const std::vector<ApplicationCenter *> & newACList) {
+    this->ACList= newACList;
+}
+
+Truck::Truck(int vaccinesLeft, const std::vector<ApplicationCenter *> &newACList) {
+    this->vaccinesLeft = vaccinesLeft;
+    this->distanceCovered = 0;
+    this->ACList= newACList;
+}
+
 
