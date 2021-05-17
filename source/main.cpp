@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 
+#include <algorithm>
 #include "algorithms/travelling-salesman/NearestNeighbor.h"
 #include "algorithms/strongly-connected-components/Kosaraju.h"
 #include "Graph.h"
@@ -16,10 +17,64 @@
 
 using namespace std;
 
+// res is empty
+void splitApplicationCentersSameCluster(std::vector<ApplicationCenter> original, std::vector< vector<ApplicationCenter> > &res) {
+    res.clear();
+    for (size_t i = 0; i < 4; i++)
+        res.push_back({});
+
+    sort(original.begin(), original.end(), SortByLat());
+
+    double latLeft = original.at(0).getVertex()->getCoordinates().lat;
+    double latRight = original.at(original.size() - 1).getVertex()->getCoordinates().lat;
+    double latCenter = latRight - latLeft;
+
+
+    size_t i = 0;
+    while (original.at(i).getVertex()->getCoordinates().lat < latCenter) {
+        res.at(0).push_back(original.at(i));
+        i++;
+    }
+
+    while (i < original.size()) {
+        res.at(1).push_back(original.at(i));
+        i++;
+    }
+
+    sort(res.at(0).begin(), res.at(0).end(), SortByLng());
+    sort(res.at(1).begin(), res.at(1).end(), SortByLng());
+
+    double lngLeft0 = res.at(0).at(0).getVertex()->getCoordinates().lon;
+    double lngLeft1 = res.at(1).at(0).getVertex()->getCoordinates().lon;
+    double lngRight0 = res.at(0).at(res.at(0).size()-1).getVertex()->getCoordinates().lon;
+    double lngRight1 = res.at(1).at(res.at(1).size()-1).getVertex()->getCoordinates().lon;
+
+    double lngCenter0 = lngRight0 - lngLeft0;
+    double lngCenter1 = lngRight1 - lngLeft1;
+
+    i = 0;
+    while (res.at(0).at(i).getVertex()->getCoordinates().lon < lngCenter0) {
+        res.at(2).push_back(res.at(0).at(i));
+        i++;
+    }
+
+    res.at(0).erase(res.at(0).begin(), res.at(0).begin() + i);
+
+    i = 0;
+    while (res.at(1).at(i).getVertex()->getCoordinates().lon < lngCenter1) {
+        res.at(3).push_back(res.at(1).at(i));
+        i++;
+    }
+
+    res.at(1).erase(res.at(1).begin(), res.at(1).begin() + i);
+}
+
+
+
 int main() {
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPortoStrongComponent();
+    GraphFile Porto = graphFiles.getPorto();
 
     Graph graph = Porto.getGraph();
 
