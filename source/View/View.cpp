@@ -39,8 +39,10 @@ void view(GraphFile &graphFile) {
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph.getEdges()) {
-        u = e->getOrig()->getId();
-        v = e->getDest()->getId();
+        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
+        v = e->getOrig()->getId();
+        u = e->getDest()->getId();
+
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
         if (e->getPassedVehicle()) {
