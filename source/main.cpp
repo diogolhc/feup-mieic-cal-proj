@@ -19,6 +19,9 @@ using namespace std;
 
 // res is empty
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
+    if (original.size() == 0)
+        return;
+
     res.clear();
     for (size_t i = 0; i < 4; i++)
         res.emplace_back();
@@ -82,7 +85,7 @@ int main() {
     srand(time(0));
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPorto();
+    GraphFile Porto = graphFiles.getPenafiel();
 
     Graph graph = Porto.getGraph();
 
@@ -94,10 +97,13 @@ int main() {
         starts.push_back(storageCenter.getVertex());
     }
 
+
     MultiSourceDijkstra multiSourceDijkstra(&graph, starts);
+
     multiSourceDijkstra.run();
 
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
+
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
         for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
@@ -105,14 +111,19 @@ int main() {
             storageCenter.addApplicationCenter(applicationCenter);
         }
     }
-    cout << "here" << endl;
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
         std::vector<ApplicationCenter *> original;
-        for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster()) original.push_back(&applicationCenter);
-        std::vector< vector<ApplicationCenter *> > res;
-        splitApplicationCentersSameCluster(original, res);
-        assignGridToTrucks(storageCenter, res);
+        for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
+            original.push_back(&applicationCenter);
+
+        if (original.empty()) {
+            storageCenter.getVertex()->setType(NOT_USED_SC);
+        } else {
+            std::vector< vector<ApplicationCenter *> > res;
+            splitApplicationCentersSameCluster(original, res);
+            assignGridToTrucks(storageCenter, res);
+        }
     }
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
@@ -141,6 +152,7 @@ int main() {
             }
         }
     }
+
 
     for (StorageCenter & storageCenter : Porto.getStorageCenters()){
         for (Truck & truck : storageCenter.getTrucks()){

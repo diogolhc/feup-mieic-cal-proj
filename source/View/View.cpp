@@ -28,10 +28,16 @@ void view(GraphFile &graphFile) {
                 node.setSize(0.0); // TODO not print
                 break;
             case STORAGE_CENTER:
-                node.setColor(GraphViewer::LIGHT_GRAY);
+                node.setColor(GraphViewer::GREEN);
                 break;
             case APPLICATION_CENTER:
-                node.setColor(GraphViewer::DARK_GRAY);
+                node.setColor(GraphViewer::YELLOW);
+                break;
+            case NOT_REACHABLE_AC:
+                node.setColor(GraphViewer::RED);
+                break;
+            case NOT_USED_SC:
+                node.setColor(GraphViewer::ORANGE);
                 break;
         }
 

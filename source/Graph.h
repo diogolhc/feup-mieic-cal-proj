@@ -19,7 +19,9 @@ typedef unordered_set<Vertex *, VertexPFunc, VertexPFunc> VertexSet;
 
 enum VertexType {
     STORAGE_CENTER,
+    NOT_USED_SC,
     APPLICATION_CENTER,
+    NOT_REACHABLE_AC,
     NONE
 };
 

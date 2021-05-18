@@ -57,8 +57,13 @@ void MultiSourceDijkstra::run() {
 
     // TODO optimize this
     for (Vertex * v : vertexSet) {
-        if (v->getType() == APPLICATION_CENTER)
-            clusters.at(v->getCluster()).insert(v->getId());
+        if (v->getType() == APPLICATION_CENTER) {
+            if (v->getCluster() == 0) {
+                v->setType(NOT_REACHABLE_AC);
+            } else {
+                clusters.at(v->getCluster()).insert(v->getId());
+            }
+        }
     }
 
 }
