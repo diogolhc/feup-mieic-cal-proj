@@ -19,57 +19,64 @@ using namespace std;
 
 // res is empty
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
-    if (original.size() == 0)
+    if (original.empty())
         return;
 
     res.clear();
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < 2; i++)
         res.emplace_back();
 
-    sort(original.begin(), original.end(), SortByLat());
+    double latMin = 361;
+    double latMax = -361;
+    double lngMin = 361;
+    double lngMax = -361;
 
-    double latLeft = original.at(0)->getVertex()->getCoordinates().lat;
-    double latRight = original.at(original.size() - 1)->getVertex()->getCoordinates().lat;
-    double latCenter = latLeft + (latRight - latLeft)/2;
+    for (const ApplicationCenter *applicationCenter : original) {
+        double lat = applicationCenter->getVertex()->getCoordinates().lat;
+        double lng = applicationCenter->getVertex()->getCoordinates().lon;
+        if (lat > latMax)
+            latMax = lat;
+        else if (lat < latMin)
+            latMin = lat;
 
-
-    size_t i = 0;
-    while (original.at(i)->getVertex()->getCoordinates().lat < latCenter) {
-        res.at(0).push_back(original.at(i));
-        i++;
+        if (lng > lngMax)
+            lngMax = lng;
+        else if (lng < lngMin)
+            lngMin = lng;
     }
 
-    while (i < original.size()) {
-        res.at(1).push_back(original.at(i));
-        i++;
+    double latDiff = latMax - latMin;
+    double lngDiff = lngMax - lngMin;
+
+    if (latDiff > lngDiff) {
+        sort(original.begin(), original.end(), SortByLat());
+
+        double latCenter = latMin + latDiff/2;
+        size_t i = 0;
+        while (i < original.size() && original.at(i)->getVertex()->getCoordinates().lat < latCenter) {
+            res.at(0).push_back(original.at(i));
+            i++;
+        }
+
+        for (; i < original.size(); i ++) {
+            res.at(1).push_back(original.at(i));
+        }
+
+    } else {
+        sort(original.begin(), original.end(), SortByLng());
+
+        double lngCenter = lngMin + lngDiff/2;
+        size_t i = 0;
+        while (i < original.size() && original.at(i)->getVertex()->getCoordinates().lon < lngCenter) {
+            res.at(0).push_back(original.at(i));
+            i++;
+        }
+
+        for (; i < original.size(); i ++) {
+            res.at(1).push_back(original.at(i));
+        }
+
     }
-
-    sort(res.at(0).begin(), res.at(0).end(), SortByLng());
-    sort(res.at(1).begin(), res.at(1).end(), SortByLng());
-
-    double lngLeft0 = res.at(0).at(0)->getVertex()->getCoordinates().lon;
-    double lngLeft1 = res.at(1).at(0)->getVertex()->getCoordinates().lon;
-    double lngRight0 = res.at(0).at(res.at(0).size()-1)->getVertex()->getCoordinates().lon;
-    double lngRight1 = res.at(1).at(res.at(1).size()-1)->getVertex()->getCoordinates().lon;
-
-    double lngCenter0 = lngLeft0 + (lngRight0 - lngLeft0)/2;
-    double lngCenter1 = lngLeft1 + (lngRight1 - lngLeft1)/2;
-
-    i = 0;
-    while (res.at(0).at(i)->getVertex()->getCoordinates().lon < lngCenter0) {
-        res.at(2).push_back(res.at(0).at(i));
-        i++;
-    }
-
-    res.at(0).erase(res.at(0).begin(), res.at(0).begin() + i);
-
-    i = 0;
-    while (res.at(1).at(i)->getVertex()->getCoordinates().lon < lngCenter1) {
-        res.at(3).push_back(res.at(1).at(i));
-        i++;
-    }
-
-    res.at(1).erase(res.at(1).begin(), res.at(1).begin() + i);
 }
 
 void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<ApplicationCenter *> > res){
@@ -85,7 +92,7 @@ int main() {
     srand(time(0));
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPenafiel();
+    GraphFile Porto = graphFiles.getPorto();
 
     Graph graph = Porto.getGraph();
 
