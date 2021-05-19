@@ -2,10 +2,12 @@
 #include "AStar.h"
 
 
-AStar::AStar(Graph *graph, Vertex *source, Vertex *dest) : graph(graph), s(source), d(dest), ran(false) {}
+AStar::AStar(Graph *graph, Vertex *source, Vertex *dest) : graph(graph), s(source), d(dest), ran(false), vertexViewedCount(0) {}
 
 
 void AStar::run() {
+    this->vertexViewedCount = 0;
+
     if (this->s == nullptr || this->d == nullptr)
         return;
 
@@ -33,6 +35,8 @@ void AStar::run() {
 
     while(!vertexQueue.empty()){
         v = vertexQueue.extractMin();
+        this->vertexViewedCount++;
+        v->setVisited(true);
 
         if (v->getId() == d->getId()) {
             break;
@@ -69,10 +73,14 @@ std::list<Edge *> AStar::getPath() const {
             return std::list<Edge *>(); //No path found
         }
         res.push_front(p.first);
-        p.first->setPassedVehicle(true); // TODO this is just to debug
+        p.first->setPassedShortestPath(true);
 
         v = p.second;
     }
 
     return res;
+}
+
+size_t AStar::getVertexViewedCount() const {
+    return this->vertexViewedCount;
 }

@@ -5,7 +5,8 @@
 
 enum viewState {
     SCC,
-    DISTRIBUTION
+    DISTRIBUTION,
+    SHORTEST_PATH
 };
 
 // TODO should this be a class?

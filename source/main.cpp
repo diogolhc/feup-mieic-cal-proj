@@ -8,6 +8,7 @@
 #include "algorithms/acessibility/BreathFirstSearch.h"
 #include "algorithms/acessibility/DepthFirstSearch.h"
 #include "algorithms/vehicle-routing/MultiSourceDijkstra.h"
+#include "algorithms/shortest-path/AStar.h"
 
 #include "GraphFiles.h"
 #include "View/View.h"
@@ -142,6 +143,17 @@ int main() {
 
     Graph graph = Porto.getGraph();
 
+    //A*
+    Vertex *source = graph.findVertex(14432);
+    Vertex *dest = graph.findVertex(30030);
+
+    AStar aStar(&graph, source, dest);
+    aStar.run();
+    if (aStar.getPath().empty())
+        cout << "No possible path\n";
+    cout << "A* vertex count viewed: " << aStar.getVertexViewedCount() << endl; // TODO fazer semelhante ao Dijkstra para dar para comparar tempos de execução e vertices analizados de modo a tirar umas conclusões empiricas para o relatório
+
+    /*
     Kosaraju kosas;
     kosas.run(graph);
 
@@ -216,7 +228,7 @@ int main() {
 
     std::cout << ms_double.count() << "ms";
      */
-
+/*
     size_t idx = 0;
     int max = 0;
     vector<std::size_t > sccMap = kosas.getMap();
@@ -226,10 +238,10 @@ int main() {
             max = sccMap[i];
         }
     }
+*/
+    viewState state = SHORTEST_PATH;
 
-    viewState state = DISTRIBUTION;
-
-    view(Porto, state, idx);
+    view(Porto, state);
 
     return 0;
 }

@@ -1,5 +1,6 @@
 #include <vector>
 #include <math.h>
+#include <iostream>
 
 #include "MutablePriorityQueue.h"
 #include "Graph.h"
@@ -172,7 +173,7 @@ size_t Vertex::getCluster() const {
  */
 
 Edge::Edge(Vertex *o, Vertex *d, double weight):
-        orig(o), dest(d), weight(weight), passedVehicle(false) {}
+        orig(o), dest(d), weight(weight), passedShortestPath(false) {}
 
 size_t Edge::getWeight() const {
     return weight;
@@ -186,12 +187,12 @@ Vertex * Edge::getOrig() const {
     return orig;
 }
 
-void Edge::setPassedVehicle(bool passed) {
-    this->passedVehicle = passed;
+void Edge::setPassedShortestPath(bool passed) {
+    this->passedShortestPath = passed;
 }
 
-bool Edge::getPassedVehicle() const {
-    return this->passedVehicle;
+bool Edge::getPassedShortestPath() const {
+    return this->passedShortestPath;
 }
 
 void Edge::passTruck(Truck *truck) {

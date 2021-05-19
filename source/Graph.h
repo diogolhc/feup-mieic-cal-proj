@@ -102,7 +102,7 @@ class Edge {
     Vertex * orig;
     Vertex * dest;
     double weight;
-    bool passedVehicle;
+    bool passedShortestPath;
     vector<Truck *> passedTrucks;
     Edge(Vertex *o, Vertex *d, double weight);
 
@@ -110,8 +110,8 @@ public:
     Vertex * getDest() const;
     Vertex * getOrig() const;
     size_t getWeight() const;
-    void setPassedVehicle(bool passed);
-    bool getPassedVehicle() const;
+    void setPassedShortestPath(bool passed);
+    bool getPassedShortestPath() const;
     std::vector<Truck *> & getPassedTrucks();
     void passTruck(Truck * truck);
     void removeTruck(Truck * truck);

@@ -14,10 +14,12 @@ private:
     bool ran;
     unordered_map<Vertex *, double> dist;
     unordered_map<Vertex *, std::pair<Edge*, Vertex *> > path;
+    size_t vertexViewedCount;
 public:
     AStar(Graph *graph, Vertex *source, Vertex *dest);
     void run();
     std::list<Edge *> getPath() const;
+    size_t getVertexViewedCount() const;
 };
 
 

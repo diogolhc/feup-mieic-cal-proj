@@ -99,10 +99,50 @@ void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentId
 
         idEdge++;
     }
-
 }
 
-// TODO adapt as needed (eg. colors)
+void viewShortestPath(GraphViewer &gv, const Graph &graph) {
+    GraphViewer::id_t idNode;
+
+    double lat, lon;
+
+    for (Vertex *v : graph.getVertexSet()) {
+        idNode = v->getId();
+        lat = v->getCoordinates().lat;
+        lon = v->getCoordinates().lon;
+        GraphViewer::Node &node = gv.addNode(idNode, sf::Vector2f(lon, -lat));
+        node.setOutlineThickness(0.0);
+
+        if (v->getVisited()) {
+            node.setColor(GraphViewer::GREEN);
+            node.setSize(0.0001);
+        } else {
+            node.setSize(0.0);
+        }
+
+    }
+
+    GraphViewer::id_t idEdge = 0, u, v;
+    for (Edge *e : graph.getEdges()) {
+        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
+        v = e->getOrig()->getId();
+        u = e->getDest()->getId();
+
+        GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
+
+        if (e->getPassedShortestPath()) {
+            edge.setColor(GraphViewer::RED);
+            edge.setThickness(0.00005);
+        } else {
+            edge.setColor(GraphViewer::BLACK);
+            edge.setThickness(0.00001);
+        }
+
+        idEdge++;
+    }
+}
+
+
 void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentIdx) {
     Graph graph = graphFile.getGraph();
     Coordinates centralCoord = graphFile.getCentralCoordinates();
@@ -116,6 +156,9 @@ void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentId
             break;
         case DISTRIBUTION:
             viewDistribution(gv, graph);
+            break;
+        case SHORTEST_PATH:
+            viewShortestPath(gv, graph);
             break;
     }
 
