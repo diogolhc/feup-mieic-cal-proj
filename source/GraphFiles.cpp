@@ -18,10 +18,10 @@ GraphFile::GraphFile(double scale, const Coordinates &centralCoordinates, const 
     {}
 
 
-Graph GraphFile::getGraph() {
+Graph* GraphFile::getGraph() {
     if (!this->loaded)
         this->load();
-    return graph;
+    return &graph;
 }
 
 
@@ -142,7 +142,7 @@ GraphFiles::GraphFiles(const std::string &filesDir) :
         EspinhoStrongComponent(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_strong_nodes_latlng.txt", filesDir + "/espinho_strong_edges.txt"),
         Portugal(1.0/1000.0, {.lat = 38.792853, .lon = -9.122247},filesDir + "/nodes_lon_lat_portugal.txt", filesDir + "/edges_portugal.txt")
         {}
-
+/*
 void GraphFiles::load() {
     Porto.load();
     PortoStrongComponent.load();
@@ -152,39 +152,38 @@ void GraphFiles::load() {
     EspinhoStrongComponent.load();
     Portugal.load();
 }
-
-GraphFile GraphFiles::getPorto() {
+*/
+GraphFile* GraphFiles::getPorto() {
     Porto.load();
-    return Porto;
+    return &Porto;
 }
 
-GraphFile GraphFiles::getPortoStrongComponent() {
+GraphFile* GraphFiles::getPortoStrongComponent() {
     PortoStrongComponent.load();
-    return PortoStrongComponent;
+    return &PortoStrongComponent;
 }
 
-GraphFile GraphFiles::getPenafiel() {
+GraphFile* GraphFiles::getPenafiel() {
     Penafiel.load();
-    return Penafiel;
+    return &Penafiel;
 }
 
-GraphFile GraphFiles::getPenafielStrongComponent() {
+GraphFile* GraphFiles::getPenafielStrongComponent() {
     PenafielStrongComponent.load();
-    return PenafielStrongComponent;
+    return &PenafielStrongComponent;
 }
 
-GraphFile GraphFiles::getEspinho() {
+GraphFile* GraphFiles::getEspinho() {
     Espinho.load();
-    return Espinho;
+    return &Espinho;
 }
 
-GraphFile GraphFiles::getEspinhoStrongComponent() {
+GraphFile* GraphFiles::getEspinhoStrongComponent() {
     EspinhoStrongComponent.load();
-    return EspinhoStrongComponent;
+    return &EspinhoStrongComponent;
 }
 
-GraphFile GraphFiles::getPortugal() {
+GraphFile* GraphFiles::getPortugal() {
     Portugal.load();
-    return Portugal;
+    return &Portugal;
 }
-

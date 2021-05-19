@@ -90,7 +90,7 @@ void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<Appli
     }
 }
 
-void recursiveTruckPath(Graph & graph, StorageCenter & storageCenter, int distLim, std::vector<ApplicationCenter *> original){
+void recursiveTruckPath(Graph *graph, StorageCenter & storageCenter, int distLim, std::vector<ApplicationCenter *> original){
 
     vector<Truck> & trucks = storageCenter.getTrucks();
 
@@ -101,7 +101,7 @@ void recursiveTruckPath(Graph & graph, StorageCenter & storageCenter, int distLi
     trucks.emplace_back(100, original);
 
     NearestNeighbor nearestNeighbor;
-    nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &trucks.at(trucks.size()-1));
+    nearestNeighbor.initialize(graph, storageCenter.getVertex()->getId(), &trucks.at(trucks.size()-1));
 
     vector<Vertex *> nnRes = nearestNeighbor.run();
 
@@ -139,47 +139,47 @@ int main() {
     srand(time(0));
     GraphFiles graphFiles(FILES_ROOT);
     /// GraphFile Portugal = graphFiles.getPortugal();
-    GraphFile Porto = graphFiles.getPorto();
+    GraphFile *Porto = graphFiles.getPorto();
 
-    Graph graph = Porto.getGraph();
-
+    Graph *graph = Porto->getGraph();
+/*
     //A*
-    Vertex *source = graph.findVertex(14432);
-    Vertex *dest = graph.findVertex(30030);
+    Vertex *source = graph->findVertex(14432);
+    Vertex *dest = graph->findVertex(30030);
 
-    AStar aStar(&graph, source, dest);
+    AStar aStar(graph, source, dest);
     aStar.run();
     if (aStar.getPath().empty())
         cout << "No possible path\n";
     cout << "A* vertex count viewed: " << aStar.getVertexViewedCount() << endl; // TODO fazer semelhante ao Dijkstra para dar para comparar tempos de execução e vertices analizados de modo a tirar umas conclusões empiricas para o relatório
+*/
 
-    /*
     Kosaraju kosas;
     kosas.run(graph);
 
     vector<Vertex *> starts;
-    for (const StorageCenter & storageCenter: Porto.getStorageCenters()) {
+    for (const StorageCenter & storageCenter: Porto->getStorageCenters()) {
         starts.push_back(storageCenter.getVertex());
     }
 
-    MultiSourceDijkstra multiSourceDijkstra(&graph, starts);
+    MultiSourceDijkstra multiSourceDijkstra(graph, starts);
 
     multiSourceDijkstra.run();
 
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
 
-    for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
+    for (StorageCenter & storageCenter: Porto->getStorageCenters()) { //TODO Maybe eliminate intermediate step
         for (size_t id : clusters.at(storageCenter.getVertex()->getId())) {
-            for (ApplicationCenter applicationCenter : Porto.getApplicationCenters()) {
+            for (ApplicationCenter applicationCenter : Porto->getApplicationCenters()) {
                 if ( applicationCenter.getVertex()->getId() == id ) {
-                    // ApplicationCenter ac(graph.findVertex(id), applicationCenter.getVaccinesNeeded());
+                    // ApplicationCenter ac(graph->findVertex(id), applicationCenter.getVaccinesNeeded());
                     storageCenter.addApplicationCenter(applicationCenter);
                 }
             }
         }
     }
 
-    for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
+    for (StorageCenter & storageCenter: Porto->getStorageCenters()) {
         std::vector<ApplicationCenter *> original;
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
@@ -187,7 +187,7 @@ int main() {
         recursiveTruckPath(graph, storageCenter, 100000, original);
     }
 
-    for (StorageCenter & storageCenter : Porto.getStorageCenters()){
+    for (StorageCenter & storageCenter : Porto->getStorageCenters()){
         cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << endl;
         for (Truck & truck : storageCenter.getTrucks()){
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
@@ -239,10 +239,11 @@ int main() {
         }
     }
 */
-    viewState state = SHORTEST_PATH;
+    viewState state = DISTRIBUTION;
 
     view(Porto, state);
-
+    cout << "end main\n";
+    cout << "Agora devem ser chamados 7 graph destructors:\n";
     return 0;
 }
 

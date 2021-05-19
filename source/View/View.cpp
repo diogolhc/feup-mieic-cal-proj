@@ -7,11 +7,11 @@
 #include "../algorithms/strongly-connected-components/Kosaraju.h"
 
 
-void viewDistribution(GraphViewer &gv, const Graph &graph) {
+void viewDistribution(GraphViewer &gv, const Graph *graph) {
 
     GraphViewer::id_t idNode;
     double lat, lon;
-    for (Vertex *v : graph.getVertexSet()) {
+    for (Vertex *v : graph->getVertexSet()) {
         idNode = v->getId();
         lat = v->getCoordinates().lat;
         lon = v->getCoordinates().lon;
@@ -39,7 +39,7 @@ void viewDistribution(GraphViewer &gv, const Graph &graph) {
     }
 
     GraphViewer::id_t idEdge = 0, u, v;
-    for (Edge *e : graph.getEdges()) {
+    for (Edge *e : graph->getEdges()) {
         // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
         v = e->getOrig()->getId();
         u = e->getDest()->getId();
@@ -66,12 +66,12 @@ void viewDistribution(GraphViewer &gv, const Graph &graph) {
 }
 
 
-void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentIdx) {
+void viewScc(GraphViewer &gv, const Graph *graph, const size_t maxSccComponentIdx) {
     GraphViewer::id_t idNode;
 
     double lat, lon;
 
-    for (Vertex *v : graph.getVertexSet()) {
+    for (Vertex *v : graph->getVertexSet()) {
         idNode = v->getId();
         lat = v->getCoordinates().lat;
         lon = v->getCoordinates().lon;
@@ -87,7 +87,7 @@ void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentId
     }
 
     GraphViewer::id_t idEdge = 0, u, v;
-    for (Edge *e : graph.getEdges()) {
+    for (Edge *e : graph->getEdges()) {
         // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
         v = e->getOrig()->getId();
         u = e->getDest()->getId();
@@ -101,12 +101,12 @@ void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentId
     }
 }
 
-void viewShortestPath(GraphViewer &gv, const Graph &graph) {
+void viewShortestPath(GraphViewer &gv, const Graph *graph) {
     GraphViewer::id_t idNode;
 
     double lat, lon;
 
-    for (Vertex *v : graph.getVertexSet()) {
+    for (Vertex *v : graph->getVertexSet()) {
         idNode = v->getId();
         lat = v->getCoordinates().lat;
         lon = v->getCoordinates().lon;
@@ -123,7 +123,7 @@ void viewShortestPath(GraphViewer &gv, const Graph &graph) {
     }
 
     GraphViewer::id_t idEdge = 0, u, v;
-    for (Edge *e : graph.getEdges()) {
+    for (Edge *e : graph->getEdges()) {
         // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
         v = e->getOrig()->getId();
         u = e->getDest()->getId();
@@ -143,11 +143,11 @@ void viewShortestPath(GraphViewer &gv, const Graph &graph) {
 }
 
 
-void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentIdx) {
-    Graph graph = graphFile.getGraph();
-    Coordinates centralCoord = graphFile.getCentralCoordinates();
+void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentIdx) {
+    Graph *graph = graphFile->getGraph();
+    Coordinates centralCoord = graphFile->getCentralCoordinates();
     GraphViewer gv;
-    gv.setScale(graphFile.getScale());
+    gv.setScale(graphFile->getScale());
     gv.setCenter(sf::Vector2f(centralCoord.lon, -centralCoord.lat));
 
     switch (state) {
@@ -162,9 +162,9 @@ void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentId
             break;
     }
 
-    if (graphFile.getbackGroundImage() != "") {
+    if (graphFile->getbackGroundImage() != "") {
         gv.setBackground(
-                graphFile.getbackGroundImage(),
+                graphFile->getbackGroundImage(),
                 sf::Vector2f(-8.7817, -41.3095), // TODO this values by attribute?
                 sf::Vector2f(1.3297, 1.0) / 7010.0f,
                 0.8

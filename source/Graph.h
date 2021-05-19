@@ -124,6 +124,7 @@ class Graph {
     VertexSet vertexSet;
 
 public:
+    ~Graph();
 
     Vertex* findVertex(size_t id) const;
     VertexSet getVertexSet() const;

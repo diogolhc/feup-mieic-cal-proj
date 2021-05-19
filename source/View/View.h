@@ -10,7 +10,7 @@ enum viewState {
 };
 
 // TODO should this be a class?
-void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentIdx = 0);
+void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentIdx = 0);
 
 
 #endif //SOURCE_VIEW_H

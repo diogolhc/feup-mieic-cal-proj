@@ -24,7 +24,7 @@ private:
 public:
     GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_lat_lng, const std::string &edges_file, const std::string &back_ground_file="", const std::string &centers_file="");
     void load();
-    Graph getGraph();
+    Graph* getGraph();
     double getScale();
     std::string getbackGroundImage() const;
     Coordinates getCentralCoordinates() const;
@@ -53,14 +53,13 @@ public:
     void load();
 
     // getters will load the respective graph if not loaded before
-    GraphFile getPorto();
-    GraphFile getPortoStrongComponent();
-    GraphFile getPenafiel();
-    GraphFile getPenafielStrongComponent();
-    GraphFile getEspinho();
-    GraphFile getEspinhoStrongComponent();
-    GraphFile getPortugal();
-
+    GraphFile* getPorto();
+    GraphFile* getPortoStrongComponent();
+    GraphFile* getPenafiel();
+    GraphFile* getPenafielStrongComponent();
+    GraphFile* getEspinho();
+    GraphFile* getEspinhoStrongComponent();
+    GraphFile* getPortugal();
 };
 
 

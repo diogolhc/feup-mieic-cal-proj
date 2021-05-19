@@ -62,6 +62,17 @@ vector<Edge *> Graph::getEdges() const {
     return edges;
 }
 
+Graph::~Graph() {
+    cout << "Graph destructor called\n";
+    for (Edge *e : this->getEdges()) {
+        delete(e);
+    }
+
+    for (Vertex *v : this->vertexSet) {
+        delete(v);
+    }
+}
+
 
 /**
  * Vertex
