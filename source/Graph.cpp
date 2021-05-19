@@ -66,6 +66,8 @@ vector<Edge *> Graph::getEdges() const {
  * Vertex
  */
 
+std::function<double(const Vertex*)> Vertex::heuristic = [](const Vertex *v) {return 0;};
+
 Vertex::Vertex(size_t id): id(id), type(NONE), cluster(0) {}
 
 
@@ -75,7 +77,7 @@ void Vertex::addEdge(Edge *e) {
 }
 
 bool Vertex::operator<(const Vertex & vertex) const {
-    return this->dist < vertex.dist;
+    return (this->dist + Vertex::heuristic(this)) < (vertex.dist + Vertex::heuristic(&vertex));
 }
 
 void Vertex::setVisited(bool visited) {
@@ -120,7 +122,7 @@ void Vertex::setCoordinates(Coordinates coordinates) {
     this->coordinates = coordinates;
 }
 
-Coordinates Vertex::getCoordinates() {
+Coordinates Vertex::getCoordinates() const {
     return this->coordinates;
 }
 

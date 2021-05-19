@@ -48,6 +48,8 @@ void Dijkstra::run() {
                 dist.at(destinationVertex) = dist.at(v) + edge->getWeight();
                 path.at(destinationVertex) = v;
 
+                destinationVertex->setDist(dist.at(destinationVertex));
+
                 vertexQueue.insertOrDecreaseKey(destinationVertex);
             }
         }

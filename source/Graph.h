@@ -4,6 +4,7 @@
 #include <limits>
 #include <unordered_set>
 #include <vector>
+#include <functional>
 
 #include "agents/Truck.h"
 #include "MutablePriorityQueue.h"
@@ -68,8 +69,11 @@ class Vertex {
 
 public:
 
+    //AStar
+    static std::function<double(const Vertex*)> heuristic;
+
     void setCoordinates(Coordinates coordinates);
-    Coordinates getCoordinates();
+    Coordinates getCoordinates() const;
     bool getVisited() const;
     void setVisited(bool visited);
     void setXY(XY xy);
