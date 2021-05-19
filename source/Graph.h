@@ -114,6 +114,7 @@ public:
     bool getPassedVehicle() const;
     std::vector<Truck *> & getPassedTrucks();
     void passTruck(Truck * truck);
+    void removeTruck(Truck * truck);
     friend class Graph;
     friend class Vertex;
 };

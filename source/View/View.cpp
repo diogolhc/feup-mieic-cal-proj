@@ -99,6 +99,7 @@ void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentId
 
         idEdge++;
     }
+
 }
 
 // TODO adapt as needed (eg. colors)

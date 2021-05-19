@@ -17,6 +17,8 @@
 
 using namespace std;
 
+const bool PASS_LIMIT_TIME = true;
+
 // res is empty
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
     if (original.empty())
@@ -87,6 +89,50 @@ void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<Appli
     }
 }
 
+void recursiveTruckPath(Graph & graph, StorageCenter & storageCenter, int distLim, std::vector<ApplicationCenter *> original){
+
+    vector<Truck> & trucks = storageCenter.getTrucks();
+
+    if (original.size() == 0){
+        return;
+    }
+
+    trucks.emplace_back(100, original);
+
+    NearestNeighbor nearestNeighbor;
+    nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &trucks.at(trucks.size()-1));
+
+    vector<Vertex *> nnRes = nearestNeighbor.run();
+
+
+    if (trucks.at(trucks.size()-1).getDistanceCovered() > distLim){
+
+        std::vector< vector<ApplicationCenter *> > res;
+        splitApplicationCentersSameCluster(original, res);
+
+        if (original.size() == res.at(0).size() || original.size() == res.at(1).size()){
+
+            if(!PASS_LIMIT_TIME){
+                trucks.at(trucks.size()-1).undo();
+                trucks.erase(trucks.end()-1);
+            }
+
+            return;
+        }
+
+        trucks.at(trucks.size()-1).undo();
+        trucks.erase(trucks.end()-1);
+
+        recursiveTruckPath(graph, storageCenter, distLim, res.at(0));
+        recursiveTruckPath(graph, storageCenter, distLim, res.at(1));
+    }
+
+
+    return;
+
+
+}
+
 
 int main() {
     srand(time(0));
@@ -98,7 +144,7 @@ int main() {
 
     Kosaraju kosas;
     kosas.run(graph);
-    /*
+
     vector<Vertex *> starts;
     for (const StorageCenter & storageCenter: Porto.getStorageCenters()) {
         starts.push_back(storageCenter.getVertex());
@@ -111,9 +157,13 @@ int main() {
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
-        for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
-            ApplicationCenter applicationCenter(graph.findVertex(id));
-            storageCenter.addApplicationCenter(applicationCenter);
+        for (size_t id : clusters.at(storageCenter.getVertex()->getId())) {
+            for (ApplicationCenter applicationCenter : Porto.getApplicationCenters()) {
+                if ( applicationCenter.getVertex()->getId() == id ) {
+                    // ApplicationCenter ac(graph.findVertex(id), applicationCenter.getVaccinesNeeded());
+                    storageCenter.addApplicationCenter(applicationCenter);
+                }
+            }
         }
     }
 
@@ -122,49 +172,16 @@ int main() {
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
 
-        if (original.empty()) {
-            storageCenter.getVertex()->setType(NOT_USED_SC);
-        } else {
-            std::vector< vector<ApplicationCenter *> > res;
-            splitApplicationCentersSameCluster(original, res);
-            assignGridToTrucks(storageCenter, res);
-        }
+        recursiveTruckPath(graph, storageCenter, 100000, original);
     }
-
-    for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
-
-        for (Truck & truck : storageCenter.getTrucks()){
-            std::vector<ApplicationCenter> acc = storageCenter.getAcCluster();
-
-            NearestNeighbor nearestNeighbor;
-            nearestNeighbor.initialize(&graph, storageCenter.getVertex()->getId(), &truck);
-            vector<Vertex *> res = nearestNeighbor.run();
-
-            int count = 0;
-
-            for (int i = 0; i < res.size() - 1; i++) {
-
-                Vertex *v1 = res.at(i);
-                Vertex *v2 = res.at(i + 1);
-
-                for (Edge *edge : v1->getOutgoing()) {
-                    if (edge->getDest() == v2) {
-                        count++;
-                        edge->setPassedVehicle(true);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
 
     for (StorageCenter & storageCenter : Porto.getStorageCenters()){
+        cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << endl;
         for (Truck & truck : storageCenter.getTrucks()){
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
         }
     }
-    */
+
 /*
     Kosaraju kosaraju;
     BreathFirstSearch bfs;
@@ -210,7 +227,7 @@ int main() {
         }
     }
 
-    viewState state = SCC;
+    viewState state = DISTRIBUTION;
 
     view(Porto, state, idx);
 

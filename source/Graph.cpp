@@ -196,10 +196,19 @@ bool Edge::getPassedVehicle() const {
 
 void Edge::passTruck(Truck *truck) {
     this->passedTrucks.push_back(truck);
+    truck->addEdge(this);
 }
 
 vector<Truck *> & Edge::getPassedTrucks(){
     return this->passedTrucks;
+}
+
+void Edge::removeTruck(Truck * truck) {
+    auto iter = find(passedTrucks.begin(), passedTrucks.end(), truck);
+
+    if (iter == passedTrucks.end()) return;
+
+    this->passedTrucks.erase(iter);
 }
 
 /**

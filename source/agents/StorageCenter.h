@@ -11,6 +11,7 @@
 #include <vector>
 
 class StorageCenter {
+    size_t vaccines;
     std::vector<ApplicationCenter> AcCluster;
     std::vector<Truck> trucks;
     Vertex * vertex;
@@ -22,6 +23,8 @@ public:
     void initTruckAC();
     void addTruck(const std::vector<ApplicationCenter *> & newACList);
     std::vector<Truck> & getTrucks();
+    void clearTrucks();
+    size_t getVaccines() const;
 };
 
 

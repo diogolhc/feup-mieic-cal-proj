@@ -78,6 +78,7 @@ void GraphFile::load() {
 
 
     size_t id;
+    int vaccines;
     centers_stream >> size;
     for (int i = 0; i < size; i++) {
         centers_stream >> id;
@@ -90,10 +91,12 @@ void GraphFile::load() {
 
     centers_stream >> size;
     for (int i = 0; i < size; i++) {
-        centers_stream >> id;
+        centers_stream >> id >> vaccines;
         Vertex *v = graph.findVertex(id);
         v->setType(APPLICATION_CENTER);
         this->application_centers_ids.push_back(id);
+        ApplicationCenter ac(v, vaccines);
+        this->applicationCenters.emplace_back(ac);
     }
 
     centers_stream.close();
@@ -104,24 +107,28 @@ double GraphFile::getScale() {
     return this->scale;
 }
 
-std::string GraphFile::getbackGroundImage() {
+std::string GraphFile::getbackGroundImage() const {
     return this->background_file;
 }
 
-Coordinates GraphFile::getCentralCoordinates() {
+Coordinates GraphFile::getCentralCoordinates() const {
     return this->centralCoordinates;
 }
 
-vector<size_t> GraphFile::getApplication_centers_ids() {
+vector<size_t> GraphFile::getApplication_centers_ids() const {
     return this->application_centers_ids;
 }
 
-vector<size_t> GraphFile::getStorage_centers_ids() {
+vector<size_t> GraphFile::getStorage_centers_ids() const {
     return this->storage_centers_ids;
 }
 
 vector<StorageCenter> &GraphFile::getStorageCenters() {
     return this->storageCenters;
+}
+
+vector<ApplicationCenter> GraphFile::getApplicationCenters() {
+    return this->applicationCenters;
 }
 
 // TODO maybe get this values by a single file latter ?,

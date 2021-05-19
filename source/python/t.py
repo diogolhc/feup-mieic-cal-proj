@@ -1,8 +1,8 @@
 import random
 
-count = 200
+count = 3
 
-with open("penafiel_full_nodes_latlng.txt", "r") as f:
+with open("porto_strong_nodes_latlng.txt", "r") as f:
     l = f.readlines()
     novos = []
     for s in l[1:]:
@@ -12,11 +12,11 @@ with open("penafiel_full_nodes_latlng.txt", "r") as f:
         novos.append(id)
 
     with open("tal.txt", "w") as g:
-        ids = []
+        g.write(str(count) + "\n")
         for _ in range(count):
             index = random.randint(0, len(novos))
-            ids.append(novos[index])
+            num = random.randint(0, 100)
+            line = str(novos[index]) + " " + str(num)
+            g.write(line + "\n")
             novos.pop(index)
         
-        g.write(str(count) + "\n")
-        g.write("\n".join(ids))

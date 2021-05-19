@@ -19,16 +19,19 @@ private:
     vector<size_t> application_centers_ids;
     vector<size_t> storage_centers_ids;
     vector<StorageCenter> storageCenters;
+    vector<ApplicationCenter> applicationCenters;
+
 public:
     GraphFile(double scale, const Coordinates &centralCoordinates, const std::string &nodes_file_lat_lng, const std::string &edges_file, const std::string &back_ground_file="", const std::string &centers_file="");
     void load();
     Graph getGraph();
     double getScale();
-    std::string getbackGroundImage();
-    Coordinates getCentralCoordinates();
-    vector<size_t> getApplication_centers_ids();
-    vector<size_t> getStorage_centers_ids();
+    std::string getbackGroundImage() const;
+    Coordinates getCentralCoordinates() const;
+    vector<size_t> getApplication_centers_ids() const;
+    vector<size_t> getStorage_centers_ids() const;
     vector<StorageCenter> & getStorageCenters();
+    vector<ApplicationCenter> getApplicationCenters();
 };
 
 

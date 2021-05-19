@@ -12,7 +12,9 @@ class ApplicationCenter {
     int vaccinesNeeded;
 public:
     explicit ApplicationCenter(Vertex * vertex1);
+    explicit ApplicationCenter(Vertex * vertex1, int vaccines);
     Vertex * getVertex() const;
+    int getVaccinesNeeded() const;
 };
 
 
