@@ -1,7 +1,10 @@
-report/*
+report/1st/*
+report/2nd/*
 !feup.png
 !CAL_relatorio_2MIEIC05_G2_entrega1.tex
 !CAL_relatorio_2MIEIC05_G2_entrega1.pdf
+!CAL_relatorio_2MIEIC05_G2_entrega2.tex
+!CAL_relatorio_2MIEIC05_G2_entrega2.pdf
 source/.idea
 source/cmake-build-debug
 .idea
