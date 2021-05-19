@@ -22,6 +22,7 @@ public:
     void initTruckAC();
     void addTruck(const std::vector<ApplicationCenter *> & newACList);
     std::vector<Truck> & getTrucks();
+    void clearTrucks();
 };
 
 

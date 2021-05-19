@@ -4,6 +4,10 @@
 
 #include "Truck.h"
 
+#include "../Graph.h"
+
+#include "ApplicationCenter.h"
+
 Truck::Truck(int vaccinesLeft) {
     this->vaccinesLeft = vaccinesLeft;
     this->distanceCovered = 0;
@@ -50,6 +54,25 @@ Truck::Truck(int vaccinesLeft, const std::vector<ApplicationCenter *> &newACList
 
 GraphViewer::Color Truck::getColor() const {
     return this->color;
+}
+
+void Truck::addEdge(Edge *edge) {
+    edgeList.push_back(edge);
+}
+
+void Truck::undo() {
+    for (Edge * edge : edgeList){
+        edge->removeTruck(this);
+    }
+    edgeList.clear();
+    this->distanceCovered = 0;
+
+    for (ApplicationCenter * applicationCenter : ACList){
+        Vertex * vertex = applicationCenter->getVertex();
+        vertex->setACVisited(false);
+        vertex->setVisited(false);
+    }
+
 }
 
 

@@ -41,3 +41,12 @@ void StorageCenter::addTruck(const std::vector<ApplicationCenter *> & newACList)
     this->trucks.emplace_back(0, newACList);
 }
 
+void StorageCenter::clearTrucks() {
+
+    for (Truck &truck: this->trucks){
+        truck.undo();
+    }
+
+    this->trucks.clear();
+}
+
