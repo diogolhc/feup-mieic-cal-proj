@@ -35,8 +35,6 @@ file(GLOB Algorithm_FILES CONFIGURE_DEPENDS
         "algorithms/strongly-connected-components/Tarjan.cpp"
         "algorithms/shortest-path/Dijkstra.cpp"
         "algorithms/shortest-path/AStar.cpp"
-        "algorithms/shortest-path/FloydWarshall.cpp"
-        "algorithms/travelling-salesman/BellmanHelpKarp.cpp"
         "algorithms/travelling-salesman/NearestNeighbor.cpp"
         "algorithms/vehicle-routing/MultiSourceDijkstra.cpp"
         )

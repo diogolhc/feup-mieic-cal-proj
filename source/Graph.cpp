@@ -127,14 +127,6 @@ Coordinates Vertex::getCoordinates() const {
     return this->coordinates;
 }
 
-void Vertex::setXY(XY xy) {
-    this->xy = xy;
-}
-
-XY Vertex::getXY() {
-    return this->xy;
-}
-
 bool Vertex::getIsApplicationCenter() const{
     return this->type == APPLICATION_CENTER;
 }
@@ -223,8 +215,4 @@ double Coordinates::dist(Coordinates coordinates) {
                cos(this->lat * p) * cos(coordinates.lat * p) *
                (1 - cos((coordinates.lon - this->lon) * p)) / 2;
     return 12742 * asin(sqrt(a)) * 1000; // 2 * R; R = 6371 km // in meters
-}
-
-double XY::dist(XY xy) {
-    return sqrt(pow(this->x - xy.x, 2) + pow(this->y - xy.y, 2));
 }

@@ -32,18 +32,11 @@ struct Coordinates {
     double dist(Coordinates coordinates);
 };
 
-struct XY {
-    double x;
-    double y;
-    double dist(XY xy);
-};
-
 
 class Vertex {
     std::vector<Edge *> outgoing;
     std::vector<Edge *> incoming;
     Coordinates coordinates;
-    XY xy;
 
     //MultiDijkstra
     size_t cluster;
@@ -53,7 +46,6 @@ class Vertex {
     bool ACVisited;
 
     // Kosaraju and Tarjan elements needed
-    // TODO its ok to put this elements here? Because its just for the Algorithms
     int id;
     int low;
     bool onStack;
@@ -76,8 +68,6 @@ public:
     Coordinates getCoordinates() const;
     bool getVisited() const;
     void setVisited(bool visited);
-    void setXY(XY xy);
-    XY getXY();
     size_t getSCC();
     void setSCC(size_t scc);
     size_t getId() const;
