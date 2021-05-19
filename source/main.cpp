@@ -98,7 +98,7 @@ int main() {
 
     Kosaraju kosas;
     kosas.run(graph);
-    /*
+
     vector<Vertex *> starts;
     for (const StorageCenter & storageCenter: Porto.getStorageCenters()) {
         starts.push_back(storageCenter.getVertex());
@@ -164,7 +164,7 @@ int main() {
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
         }
     }
-    */
+
 /*
     Kosaraju kosaraju;
     BreathFirstSearch bfs;
@@ -210,7 +210,7 @@ int main() {
         }
     }
 
-    viewState state = SCC;
+    viewState state = DISTRIBUTION;
 
     view(Porto, state, idx);
 
