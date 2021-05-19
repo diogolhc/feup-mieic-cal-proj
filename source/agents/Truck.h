@@ -30,6 +30,7 @@ class Truck {
     std::vector<Edge *> edgeList;
     GraphViewer::Color color;
 public:
+    static const int capacity = 1500;
     explicit Truck(int vaccinesLeft);
     explicit Truck(int vaccinesLeft, const std::vector<ApplicationCenter *> & newACList);
     std::vector<ApplicationCenter *> &getACList();

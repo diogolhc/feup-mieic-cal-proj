@@ -7,10 +7,12 @@
 StorageCenter::StorageCenter(Vertex *vertex, const vector<Truck> & trucks) {
     this->vertex = vertex;
     this->trucks = trucks;
+    this->vaccines = 0;
 }
 
 void StorageCenter::addApplicationCenter(const ApplicationCenter &applicationCenter) {
     this->AcCluster.push_back(applicationCenter);
+    this->vaccines += applicationCenter.getVaccinesNeeded();
 }
 
 std::vector<ApplicationCenter> &StorageCenter::getAcCluster() { //TODO using the reference so it's faster JAVA style
@@ -48,5 +50,9 @@ void StorageCenter::clearTrucks() {
     }
 
     this->trucks.clear();
+}
+
+size_t StorageCenter::getVaccines() const {
+    return this->vaccines;
 }
 

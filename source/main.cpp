@@ -157,24 +157,26 @@ int main() {
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
-        for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
-            ApplicationCenter applicationCenter(graph.findVertex(id));
-            storageCenter.addApplicationCenter(applicationCenter);
+        for (size_t id : clusters.at(storageCenter.getVertex()->getId())) {
+            for (ApplicationCenter applicationCenter : Porto.getApplicationCenters()) {
+                if ( applicationCenter.getVertex()->getId() == id ) {
+                    // ApplicationCenter ac(graph.findVertex(id), applicationCenter.getVaccinesNeeded());
+                    storageCenter.addApplicationCenter(applicationCenter);
+                }
+            }
         }
     }
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) {
-
         std::vector<ApplicationCenter *> original;
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
 
-        recursiveTruckPath(graph, storageCenter, 5000, original);
-
+        recursiveTruckPath(graph, storageCenter, 100000, original);
     }
 
-
     for (StorageCenter & storageCenter : Porto.getStorageCenters()){
+        cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << endl;
         for (Truck & truck : storageCenter.getTrucks()){
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
         }
