@@ -11,11 +11,11 @@ using namespace std;
 class Kosaraju {
 private:
     void DFS1(Graph &g, Vertex* s, stack<Vertex*> &stack);
-    void DFS2(Graph &g, int component, Vertex *s);
+    void DFS2(Graph &g, size_t component, Vertex *s);
     Graph getTranspose(Graph &g);
-    vector<int> sccCountMap;
+    vector<size_t> sccCountMap;
 public:
-    vector<int> getMap() const;
+    vector<size_t> getMap() const;
     void run(Graph &g);
 };
 

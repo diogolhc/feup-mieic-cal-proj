@@ -98,19 +98,17 @@ int main() {
 
     Kosaraju kosas;
     kosas.run(graph);
-
+    /*
     vector<Vertex *> starts;
     for (const StorageCenter & storageCenter: Porto.getStorageCenters()) {
         starts.push_back(storageCenter.getVertex());
     }
-
 
     MultiSourceDijkstra multiSourceDijkstra(&graph, starts);
 
     multiSourceDijkstra.run();
 
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
-
 
     for (StorageCenter & storageCenter: Porto.getStorageCenters()) { //TODO Maybe eliminate intermediate step
         for(size_t id : clusters.at(storageCenter.getVertex()->getId())){
@@ -166,7 +164,7 @@ int main() {
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
         }
     }
-
+    */
 /*
     Kosaraju kosaraju;
     BreathFirstSearch bfs;
@@ -202,7 +200,19 @@ int main() {
     std::cout << ms_double.count() << "ms";
      */
 
-    view(Porto);
+    size_t idx = 0;
+    int max = 0;
+    vector<std::size_t > sccMap = kosas.getMap();
+    for (int i = 0; i < sccMap.size(); i++) {
+        if (sccMap[i] > max) {
+            idx = i;
+            max = sccMap[i];
+        }
+    }
+
+    viewState state = SCC;
+
+    view(Porto, state, idx);
 
     return 0;
 }

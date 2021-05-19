@@ -16,7 +16,7 @@ void Kosaraju::DFS1(Graph &g, Vertex *s, stack<Vertex *> &stack) {
 
 
 // g here is transposed
-void Kosaraju::DFS2(Graph &g, int component, Vertex *s) {
+void Kosaraju::DFS2(Graph &g, size_t component, Vertex *s) {
     s->setVisited(true);
     s->setSCC(component);
     sccCountMap[component]++;
@@ -48,7 +48,7 @@ Graph Kosaraju::getTranspose(Graph &g) {
 
 void Kosaraju::run(Graph &g) {
     stack<Vertex*> stack;
-    int component = 0;
+    size_t component = 0;
 
     for ( Vertex *v : g.getVertexSet()) {
         v->setVisited(false);
@@ -79,6 +79,6 @@ void Kosaraju::run(Graph &g) {
     }
 }
 
-vector<int> Kosaraju::getMap() const {
+vector<size_t> Kosaraju::getMap() const {
     return this->sccCountMap;
 }

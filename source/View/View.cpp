@@ -3,15 +3,11 @@
 #include "graphviewer.h"
 #include "../Graph.h"
 #include "../GraphFiles.h"
+#include "../agents/Truck.h"
+#include "../algorithms/strongly-connected-components/Kosaraju.h"
 
 
-// TODO adapt as needed (eg. colors)
-void view(GraphFile &graphFile) {
-    Graph graph = graphFile.getGraph();
-    Coordinates centralCoord = graphFile.getCentralCoordinates();
-    GraphViewer gv;
-    gv.setScale(graphFile.getScale());
-    gv.setCenter(sf::Vector2f(centralCoord.lon, -centralCoord.lat));
+void viewDistribution(GraphViewer &gv, const Graph &graph) {
 
     GraphViewer::id_t idNode;
     double lat, lon;
@@ -40,7 +36,6 @@ void view(GraphFile &graphFile) {
                 node.setColor(GraphViewer::ORANGE);
                 break;
         }
-
     }
 
     GraphViewer::id_t idEdge = 0, u, v;
@@ -68,6 +63,60 @@ void view(GraphFile &graphFile) {
 
         idEdge++;
     }
+}
+
+
+void viewScc(GraphViewer &gv, const Graph &graph, const size_t maxSccComponentIdx) {
+    GraphViewer::id_t idNode;
+
+    double lat, lon;
+
+    for (Vertex *v : graph.getVertexSet()) {
+        idNode = v->getId();
+        lat = v->getCoordinates().lat;
+        lon = v->getCoordinates().lon;
+        GraphViewer::Node &node = gv.addNode(idNode, sf::Vector2f(lon, -lat));
+        node.setOutlineThickness(0.0);
+        node.setSize(0.0001);
+
+        if (v->getSCC() == maxSccComponentIdx) {
+            gv.getNode(idNode).setColor(GraphViewer::YELLOW);
+        } else {
+            gv.getNode(idNode).setColor(GraphViewer::BLUE);
+        }
+    }
+
+    GraphViewer::id_t idEdge = 0, u, v;
+    for (Edge *e : graph.getEdges()) {
+        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
+        v = e->getOrig()->getId();
+        u = e->getDest()->getId();
+
+        GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
+
+        edge.setColor(GraphViewer::BLACK);
+        edge.setThickness(0.00005);
+
+        idEdge++;
+    }
+}
+
+// TODO adapt as needed (eg. colors)
+void view(GraphFile &graphFile, const viewState &state, size_t maxSccComponentIdx) {
+    Graph graph = graphFile.getGraph();
+    Coordinates centralCoord = graphFile.getCentralCoordinates();
+    GraphViewer gv;
+    gv.setScale(graphFile.getScale());
+    gv.setCenter(sf::Vector2f(centralCoord.lon, -centralCoord.lat));
+
+    switch (state) {
+        case SCC:
+            viewScc(gv, graph, maxSccComponentIdx);
+            break;
+        case DISTRIBUTION:
+            viewDistribution(gv, graph);
+            break;
+    }
 
     if (graphFile.getbackGroundImage() != "") {
         gv.setBackground(
@@ -77,7 +126,6 @@ void view(GraphFile &graphFile) {
                 0.8
         );
     }
-
 /*
     gv.setEnabledNodes(false); // Disable node drawing
     gv.setEnabledEdgesText(false); // Disable edge text drawing
@@ -87,3 +135,4 @@ void view(GraphFile &graphFile) {
     gv.createWindow(1600, 900);
     gv.join();
 }
+
