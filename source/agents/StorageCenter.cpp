@@ -4,7 +4,7 @@
 
 #include "StorageCenter.h"
 
-StorageCenter::StorageCenter(Vertex *vertex, const vector<Truck> & trucks) {
+StorageCenter::StorageCenter(Vertex *vertex, const vector<Truck*> & trucks) {
     this->vertex = vertex;
     this->trucks = trucks;
     this->vaccines = 0;
@@ -25,28 +25,28 @@ Vertex *StorageCenter::getVertex() const{
 
 void StorageCenter::initTruckAC(){
 
-    Truck & truck = this->trucks.at(0);
+    Truck * truck = this->trucks.at(0);
 
     for (ApplicationCenter & applicationCenter : this->AcCluster){
 
-        truck.addApplicationCenter(&applicationCenter);
+        truck->addApplicationCenter(&applicationCenter);
 
     }
 
 }
 
-std::vector<Truck> &StorageCenter::getTrucks() {
+std::vector<Truck*> &StorageCenter::getTrucks() {
     return trucks;
 }
 
 void StorageCenter::addTruck(const std::vector<ApplicationCenter *> & newACList) {
-    this->trucks.emplace_back(0, newACList);
+    this->trucks.push_back(new Truck(0, newACList));
 }
 
 void StorageCenter::clearTrucks() {
 
-    for (Truck &truck: this->trucks){
-        truck.undo();
+    for (Truck *truck: this->trucks){
+        truck->undo();
     }
 
     this->trucks.clear();

@@ -13,16 +13,16 @@
 class StorageCenter {
     size_t vaccines;
     std::vector<ApplicationCenter> AcCluster;
-    std::vector<Truck> trucks;
+    std::vector<Truck *> trucks;
     Vertex * vertex;
 public:
-    explicit StorageCenter(Vertex * vertex, const vector<Truck> & trucks);
+    explicit StorageCenter(Vertex * vertex, const vector<Truck *> & trucks);
     void addApplicationCenter(const ApplicationCenter & applicationCenter);
     Vertex * getVertex() const;
     std::vector<ApplicationCenter>& getAcCluster();
     void initTruckAC();
     void addTruck(const std::vector<ApplicationCenter *> & newACList);
-    std::vector<Truck> & getTrucks();
+    std::vector<Truck *> & getTrucks();
     void clearTrucks();
     size_t getVaccines() const;
 };

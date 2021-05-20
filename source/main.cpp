@@ -90,23 +90,23 @@ void assignGridToTrucks(StorageCenter & storageCenter, std::vector< vector<Appli
     }
 }
 
-void recursiveTruckPath(Graph *graph, StorageCenter & storageCenter, int distLim, std::vector<ApplicationCenter *> original){
+void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, int distLim, std::vector<ApplicationCenter *> original){
 
-    vector<Truck> & trucks = storageCenter.getTrucks();
+    vector<Truck*> & trucks = storageCenter->getTrucks();
 
     if (original.size() == 0){
         return;
     }
 
-    trucks.emplace_back(100, original);
+    trucks.push_back(new Truck(100, original));
 
     NearestNeighbor nearestNeighbor;
-    nearestNeighbor.initialize(graph, storageCenter.getVertex()->getId(), &trucks.at(trucks.size()-1));
+    nearestNeighbor.initialize(graph, storageCenter->getVertex()->getId(), trucks.at(trucks.size()-1));
 
     vector<Vertex *> nnRes = nearestNeighbor.run();
 
 
-    if (trucks.at(trucks.size()-1).getDistanceCovered() > distLim){
+    if (trucks.at(trucks.size()-1)->getDistanceCovered() > distLim){
 
         std::vector< vector<ApplicationCenter *> > res;
         splitApplicationCentersSameCluster(original, res);
@@ -114,14 +114,14 @@ void recursiveTruckPath(Graph *graph, StorageCenter & storageCenter, int distLim
         if (original.size() == res.at(0).size() || original.size() == res.at(1).size()){
 
             if(!PASS_LIMIT_TIME){
-                trucks.at(trucks.size()-1).undo();
+                trucks.at(trucks.size()-1)->undo();
                 trucks.erase(trucks.end()-1);
             }
 
             return;
         }
 
-        trucks.at(trucks.size()-1).undo();
+        trucks.at(trucks.size()-1)->undo();
         trucks.erase(trucks.end()-1);
 
         recursiveTruckPath(graph, storageCenter, distLim, res.at(0));
@@ -184,13 +184,13 @@ int main() {
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
 
-        recursiveTruckPath(graph, storageCenter, 100000, original);
+        recursiveTruckPath(graph, &storageCenter, 1000, original);
     }
 
     for (StorageCenter & storageCenter : Porto->getStorageCenters()){
         cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << endl;
-        for (Truck & truck : storageCenter.getTrucks()){
-            cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck.getDistanceCovered() << endl;
+        for (Truck * truck : storageCenter.getTrucks()){
+            cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck->getDistanceCovered() << endl;
         }
     }
 
