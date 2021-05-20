@@ -39,12 +39,12 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> origina
         double lng = applicationCenter->getVertex()->getCoordinates().lon;
         if (lat > latMax)
             latMax = lat;
-        else if (lat < latMin)
+        if (lat < latMin)
             latMin = lat;
 
         if (lng > lngMax)
             lngMax = lng;
-        else if (lng < lngMin)
+        if (lng < lngMin)
             lngMin = lng;
     }
 
