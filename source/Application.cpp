@@ -55,7 +55,7 @@ void Application::run() {
 void Application::selectMap() {
     string ans;
     while (true) {
-        cout << "Select one of the following maps: porto, porto_strong, penafiel, penafiel_strong.\n"; //TODO
+        cout << "Select one of the following maps: porto, porto_strong, penafiel, penafiel_strong, espinho, espinho_strong.\n"; //TODO
         cout << "> ";
         cin >> ans;
 
@@ -74,9 +74,11 @@ void Application::selectMap() {
             this->graphFileSelected = this->graphFiles.getPenafiel();
         } else if (ans == "penafiel_strong") {
             this->graphFileSelected = this->graphFiles.getPenafielStrongComponent();
-        }
-        // TODO add the rest
-        else {
+        } else if (ans == "espinho") {
+            this->graphFileSelected = this->graphFiles.getEspinho();
+        } else if (ans == "espinho_strong") {
+            this->graphFileSelected = this->graphFiles.getEspinhoStrongComponent();
+        } else {
             cout << "Unknown map" << endl;
             continue;
         }
