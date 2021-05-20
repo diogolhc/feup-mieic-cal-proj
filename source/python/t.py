@@ -1,8 +1,8 @@
 import random
 
-count = 3
+count = 23
 
-with open("porto_strong_nodes_latlng.txt", "r") as f:
+with open("penafiel_strong_nodes_latlng.txt", "r") as f:
     l = f.readlines()
     novos = []
     for s in l[1:]:

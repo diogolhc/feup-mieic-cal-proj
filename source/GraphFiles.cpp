@@ -134,9 +134,9 @@ vector<ApplicationCenter> GraphFile::getApplicationCenters() {
 // TODO find images and set their respective center here
 GraphFiles::GraphFiles(const std::string &filesDir) :
         Porto(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_centers.txt"),
-        PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_centers.txt"),
+        PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_strong_centers.txt"),
         Penafiel(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405}, filesDir + "/penafiel_full_nodes_latlng.txt", filesDir + "/penafiel_full_edges.txt", "", filesDir + "/penafiel_centers.txt"),
-        PenafielStrongComponent(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405},filesDir + "/penafiel_strong_nodes_latlng.txt", filesDir + "/penafiel_strong_edges.txt", "", filesDir + "/penafiel_centers.txt"),
+        PenafielStrongComponent(1.0/7000.0, {.lat = 41.202739, .lon = -8.298405},filesDir + "/penafiel_strong_nodes_latlng.txt", filesDir + "/penafiel_strong_edges.txt", "", filesDir + "/penafiel_strong_centers.txt"),
         Espinho(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_full_nodes_latlng.txt", filesDir + "/espinho_full_edges.txt"),
         EspinhoStrongComponent(1.0/7000.0, {.lat = 41.004374, .lon = -8.583490},filesDir + "/espinho_strong_nodes_latlng.txt", filesDir + "/espinho_strong_edges.txt"),
         Portugal(1.0/1000.0, {.lat = 38.792853, .lon = -9.122247},filesDir + "/nodes_lon_lat_portugal.txt", filesDir + "/edges_portugal.txt")

@@ -43,7 +43,7 @@ add_executable(source main.cpp
         View/View.cpp
         ${Algorithm_FILES}
         ${View_FILES}
-        )
+        Application.cpp Application.h MultiDepotVehicleRouting.cpp MultiDepotVehicleRouting.h)
 
 add_executable(Tests
         ${Tests_FILES}
