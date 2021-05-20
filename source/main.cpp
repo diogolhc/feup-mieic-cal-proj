@@ -107,12 +107,7 @@ void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, int distLim
 
 
     if (trucks.at(trucks.size()-1)->getDistanceCovered() > distLim){
-
-        std::vector< vector<ApplicationCenter *> > res;
-        splitApplicationCentersSameCluster(original, res);
-
-        if (original.size() == res.at(0).size() || original.size() == res.at(1).size()){
-
+        if (original.size() == 1) {
             if(!PASS_LIMIT_TIME){
                 trucks.at(trucks.size()-1)->undo();
                 trucks.erase(trucks.end()-1);
@@ -121,16 +116,15 @@ void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, int distLim
             return;
         }
 
+        std::vector< vector<ApplicationCenter *> > res;
+        splitApplicationCentersSameCluster(original, res);
+
         trucks.at(trucks.size()-1)->undo();
         trucks.erase(trucks.end()-1);
 
         recursiveTruckPath(graph, storageCenter, distLim, res.at(0));
         recursiveTruckPath(graph, storageCenter, distLim, res.at(1));
     }
-
-
-    return;
-
 
 }
 
