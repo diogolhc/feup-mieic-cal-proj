@@ -174,6 +174,7 @@ int main() {
                 if ( applicationCenter.getVertex()->getId() == id ) {
                     // ApplicationCenter ac(graph->findVertex(id), applicationCenter.getVaccinesNeeded());
                     storageCenter.addApplicationCenter(applicationCenter);
+                    break;
                 }
             }
         }
