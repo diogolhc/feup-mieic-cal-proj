@@ -130,6 +130,18 @@ vector<ApplicationCenter> GraphFile::getApplicationCenters() {
     return this->applicationCenters;
 }
 
+void GraphFile::reset() {
+    for (StorageCenter & storageCenter : this->storageCenters){
+        storageCenter.clearTrucks();
+        storageCenter.clearApplicationCenters();
+    }
+    /*for (Edge * edge : this->graph.getEdges()){
+        edge->resetTrucks();
+        edge->setPassedShortestPath(false);
+    }*/
+
+}
+
 // TODO maybe get this values by a single file latter ?,
 // TODO find images and set their respective center here
 GraphFiles::GraphFiles(const std::string &filesDir) :

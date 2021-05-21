@@ -148,7 +148,7 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim) {
 
     // TODO this should be done outside in the outer class
     for (StorageCenter & storageCenter : graphFile->getStorageCenters()){
-        cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << endl;
+        cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << " Number of application centers: " << storageCenter.getAcClusterSize() << endl;
         for (Truck * truck : storageCenter.getTrucks()){
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck->getDistanceCovered() << endl;
         }

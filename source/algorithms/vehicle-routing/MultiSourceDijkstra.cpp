@@ -17,6 +17,8 @@ void MultiSourceDijkstra::run() {
         if (vertexDist != dist.end()) vertexDist->second = INF;
         else dist.insert(pair<Vertex *, double>(vertex, INF));
 
+        vertex->setDist(INF);
+
         auto vertexPath = path.find(vertex);
         if (vertexPath != path.end()) vertexPath->second = NULL;
         else path.insert(pair<Vertex *, Vertex *>(vertex, NULL));
@@ -29,6 +31,7 @@ void MultiSourceDijkstra::run() {
     MutablePriorityQueue<Vertex> vertexQueue;
     for (Vertex *v : this->starts) {
         dist.at(v) = 0;
+        v->setDist(0);
         vertexQueue.insert(v);
         v->setCluster(v->getId());
         clusters[v->getId()] = std::set<size_t>();
@@ -44,6 +47,7 @@ void MultiSourceDijkstra::run() {
 
                 if (v->getSCC() == destinationVertex->getSCC()) {
                     dist.at(destinationVertex) = dist.at(v) + edge->getWeight();
+                    destinationVertex->setDist(v->getDist() + edge->getWeight());
                     path.at(destinationVertex) = v;
 
                     destinationVertex->setCluster(v->getCluster());

@@ -168,6 +168,7 @@ void Application::distributeSubMenu() {
 void Application::distributeAndShow(double timeLim) {
     multiDepotVehicleRouting(this->graphFileSelected, timeLim);
     view(this->graphFileSelected, DISTRIBUTION);
+    this->graphFileSelected->reset();
 }
 
 

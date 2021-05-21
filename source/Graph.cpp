@@ -215,6 +215,10 @@ void Edge::removeTruck(Truck * truck) {
     this->passedTrucks.erase(iter);
 }
 
+void Edge::resetTrucks() {
+    this->passedTrucks.clear();
+}
+
 /**
 *  Dists:
 */
