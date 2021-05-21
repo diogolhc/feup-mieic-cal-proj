@@ -583,6 +583,29 @@ O nosso programa deve permitir as seguintes funcionalidades:
 
 
 \chapter{Funcionalidades e cenários implementados}
+O nosso programa vai acompanhado dos seguintes mapas: Porto, Espinho, Penafiel e correspondentes componentes
+fortemente conexas de cada um dos referidos. \par
+
+Nestes mapas é possível realizar as seguintes operações:
+\begin{itemize}
+	\item Dar load aos mapas sendo esta operação seguida da visualização dos mesmos com as localizações dos centros
+		de aplicação e armazenamento.
+	\item Determinar as componentes fortemente conexas do grafo, sendo mostrado posteriormente a diferentes cores
+		a SCC maior das restantes mais pequenas.
+	\item Determinar o caminho mais curto entre dois vértices, sendo mostrado posteriormente o caminho, os vertices visitados
+		pelo algoritmo, e a contagem de vértices visitados. //TODO mencionar dijkstra/astar e adicionar dijkstra interface para comparar
+	\item Fazer a distribuição das vacinas completamente, tendo que ser passado ainda como input o tempo limite de conservação em minutos das vacinas.
+		É feita a atribuição de rotas para carrinhas desde os centros de armazenamento até aos centros de aplicação,
+		sendo posteriormente mostrada a distancia percorrida por cada carrinha. Para além disto, é mostrado o grafo utilizado
+		da seguinte forma: Centros de aplicação a amarelo quando na sua componente fortemente conexa esta presente pelo menos um centro de distribuição, vermelho caso contrário;
+		Centros de distribuição a verde quando na sua componente fortemente conexa está presente pelo menos um centro de aplicação, laranja caso contrário;
+		A cada carrinha é atribuida uma cor aleatoriamente que é usada para colorir as arestas por onde ela passa. Se numa aresta passar mais que uma vez uma carrinha, mesmo que seja a mesma,
+		essa aresta é colorida a vermelho para dar essa indicação.
+
+		//TODO adicionar mais cenas(?)
+
+\end{itemize}
+
 
 
 \chapter{Estruturas de dados utilizadas}
