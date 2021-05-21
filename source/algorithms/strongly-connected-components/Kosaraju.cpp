@@ -52,6 +52,7 @@ void Kosaraju::run(Graph *g) {
 
     for ( Vertex *v : g->getVertexSet()) {
         v->setVisited(false);
+        v->setSCC(0);
     }
 
     for (Vertex *v : g->getVertexSet()) {
