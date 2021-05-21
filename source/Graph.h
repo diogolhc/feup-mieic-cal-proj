@@ -105,6 +105,7 @@ public:
     std::vector<Truck *> & getPassedTrucks();
     void passTruck(Truck * truck);
     void removeTruck(Truck * truck);
+    void resetTrucks();
     friend class Graph;
     friend class Vertex;
 };

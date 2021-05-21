@@ -47,6 +47,7 @@ void StorageCenter::clearTrucks() {
 
     for (Truck *truck: this->trucks){
         truck->undo();
+        delete truck;
     }
 
     this->trucks.clear();
@@ -54,5 +55,13 @@ void StorageCenter::clearTrucks() {
 
 size_t StorageCenter::getVaccines() const {
     return this->vaccines;
+}
+
+void StorageCenter::clearApplicationCenters() {
+    this->AcCluster.clear();
+}
+
+int StorageCenter::getAcClusterSize() const{
+    return AcCluster.size();
 }
 

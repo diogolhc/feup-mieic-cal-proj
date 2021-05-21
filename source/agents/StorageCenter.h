@@ -25,6 +25,8 @@ public:
     std::vector<Truck *> & getTrucks();
     void clearTrucks();
     size_t getVaccines() const;
+    void clearApplicationCenters();
+    int getAcClusterSize() const;
 };
 
 
