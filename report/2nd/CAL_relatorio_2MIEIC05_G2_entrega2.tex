@@ -223,6 +223,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	Para tal, poderemos usar o algoritmo de \textit{Kosaraju} ou o algoritmo de \textit{Tarjan}, cujo objetivo é encontrar as componentes fortemente conexas de um grafo dirigido, isto é, encontrar conjuntos de vértices onde todos os vértices desse conjunto são atingíveis a partir de qualquer outro vértice pertencente a esse mesmo conjunto.
 	
 		\subsection{\textit{Kosaraju algorithm}}
+		\label{algo:kosaraju}
 		O algoritmo de \textit{Kosaraju} é um algoritmo de complexidade linear cujo objetivo é encontrar componentes fortemente conexas de um grafo. O algoritmo foi sugerido por \textit{Sambasiva Kosaraju} em 1978, contudo apenas foi publicado independentemente em 1981 por \textit{Micha Sarir}. \cite{kosaraju} \par
 		Este algoritmo consiste em fazer primeiro uma pesquisa em profundidade (\textit{DFS}), colocando os vértices visitados numa \textit{stack}, após ter sido feita a chamada recursiva \textit{DFS} aos seus vértices adjacentes; posteriormente, fazer o reverso do grafo, isto é, mudar a direção de todas as arestas do grafo; numa terceira fase, retirar elementos um a um da \textit{stack} (\textit{pop}) enquanto esta não estiver vazia. Sendo V o elemento retirado (\textit{popped}), aplicar a pesquisa em profundidade \textit{DFS} começando no vértice V; após este 2.º  \textit{DFS}, todos os vértices visitados irão formar uma componente fortemente conexa. \par
 		Este algoritmo tem complexidade temporal \(O(|V| + |E|)\), pelo que se revela um bom algoritmo para este objetivo.
@@ -583,6 +584,7 @@ O nosso programa deve permitir as seguintes funcionalidades:
 
 
 \chapter{Funcionalidades e cenários implementados}
+\label{func}
 O nosso programa vai acompanhado dos seguintes mapas: Porto, Espinho, Penafiel e correspondentes componentes
 fortemente conexas de cada um dos referidos. \par
 
@@ -590,8 +592,8 @@ Nestes mapas é possível realizar as seguintes operações:
 \begin{itemize}
 	\item Dar load aos mapas sendo esta operação seguida da visualização dos mesmos com as localizações dos centros
 		de aplicação e armazenamento.
-	\item Determinar as componentes fortemente conexas do grafo, sendo mostrado posteriormente a diferentes cores
-		a SCC maior das restantes mais pequenas.
+	\item Determinar as componentes fortemente conexas do grafo, sendo mostrado posteriormente a amarelo a componente maior e, a azul,
+		todas as restantes componentes.
 	\item Determinar o caminho mais curto entre dois vértices, sendo mostrado posteriormente o caminho, os vertices visitados
 		pelo algoritmo, e a contagem de vértices visitados.
 		//TODO mencionar dijkstra/astar e adicionar dijkstra interface para comparar
@@ -648,6 +650,42 @@ a resolução do problema. \par
 
 
 \chapter{Análise da conectividade do grafo}
+De acordo com o a informação dada no problema, pode haver obras na via pública que podem tornar algumas zonas inacessíveis.
+Mais do que isto, torna-se ainda necessário que não só uma carrinha de deistribuição consegue chegar aos centro de
+aplicação aos quais se pretende levar as vacinas, mas também que tenha caminho de volta. Para este fim recorreu-se
+ao algoritmo de \hyperref[algo:kosaraju]{Kosaraju} que dividiu o grafo dado em componentes fortemente
+conexas de modo a fazer a distribuição de vacinas de centros de armazenamento para centros de aplicação que pertencem
+à mesma componente fortemente conexa de modo a assegurar que existe um caminho de volta. \par
+
+Utilizando a interface do nosso programa é possível visualizar de forma distinta os vertices pertencentes à
+componente fortemente conexa maior das restantes componentes conexas, sendo que estas últimas são em grande número
+e cada uma com reduzido número de vértices. \par
+Nas imagens que se seguem, como já mencionado em \hyperref[func]{Funcionalidades e cenários implementados}, 
+a componente maior é mostrada a amarelo e as restantes a azul.
+
+
+\section{Mapa do Porto}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/portoSCC.png}
+
+
+\section{Mapa da componente fortemente conexa do Porto}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/portoStrongSCC.png}
+
+
+\section{Mapa do Espinho}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/espinhoSCC.png}
+
+
+\section{Mapa da componente fortemente conexa do Espinho}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/espinhoStrongSCC.png}
+
+
+\section{Mapa do Penafiel}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/penafielSCC.png}
+
+
+\section{Mapa da componente fortemente conexa do Penafiel}
+\includegraphics[width=1.0\textwidth]{./imgs/scc/penafielStrongSCC.png}
 
 
 
