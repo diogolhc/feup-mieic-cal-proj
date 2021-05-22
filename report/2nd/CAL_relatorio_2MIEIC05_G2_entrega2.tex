@@ -152,6 +152,7 @@ De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicaçã
 
 
 \chapter{Perspetivas de solução}
+\label{perspetivas}
 O problema proposto é semelhante ao \textit{Travelling Salesman Problem}, colocando agora mais opções para o percurso tomado, tal como a existência de várias carrinhas e de vários centros de armazenamento de onde estas saem. Este problema (\textit{TSP}) enquadra-se nos problemas \textit{NP-Hard} cujo objetivo é encontrar o menor caminho (em termos de tempo e custo) que passe por todos os pontos de interesse. \par
 O facto de termos vários centros de distribuição leva a que este problema vá ao encontro da generalização do \textit{Vehicle routing problem}, ou seja, entramos no âmbito de \textit{Multi-depot vehicle routing problem}.
 
@@ -264,6 +265,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 					\For{$v \in V$}
 						\State $DFS1(G,s)$
 					\EndFor
+					\State $G = getTranspose(G)$
 					\For{$v \in V$}
 						\State $visit(s) \leftarrow false$
 					\EndFor
@@ -442,6 +444,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	
 	
 	\section{\textit{Travelling Salesman Problem}}
+	\label{perspetivas:tsp}
 	Este é o problema de encontrar o caminho mais curto e eficiente para o Salesman de forma a passar em todos os seus pontos de interesse. Existem diferentes métodos usados para resolver este problema, entre eles:
 	\begin{itemize}
 		\item \textit{Brute-Force}
@@ -538,6 +541,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	
 	
 	\section{\textit{Multi-depot Vehicle routing Problem}}
+	\label{perpetivas:mdvrp}
 	\textit{Multi-depot vehicle routing problem} é uma generalização do \textit{Vehicle routing problem} no qual, para além de haver vários veículos, existem também vários armazéns, sendo este o problema com que estamos a lidar para fazer a distribuição das vacinas. \par
 	A abordagem que seguiremos será fazer \textit{clustering} dos centros de aplicação pelos centros de armazenamento de forma a subdividir este problema mais complexo em múltiplos subproblemas do \textit{Vehicle Routing problem}. \par
 	
@@ -652,6 +656,30 @@ a resolução do problema. \par
 
 
 \chapter{Algoritmos efetivamente implementados}
+Para a solução do problema proposto, foram implementados parte dos algoritmos descritos em \hyperref[perspetivas]{Perspetivas de solução}. \par
+
+Para efetuar a análise da Acessibilidade, foram implementados os algoritmos \hyperref[algo:dfs]{DFS} e \hyperref[algo:bfs]{BFS}. \par
+
+Para a análise da complexidade da Conectividade forte do grafo, foi implementado o algoritmo \hyperref[algo:kosaraju]{Kosaraju} uma vez que 
+se mostrou, em relação ao algoritmo \hyperref[algo:tarjan]{Tarjan}, mais adequado pela sua simplicidade e eficácia. Por outro lado, devido à
+estrutura do Grafo utilizada, foi possível implementar este algoritmo sem a necessidade de criar o grafo transposto descrito no pseudocódigo,
+uma vez que eram guardadas as arestas pela sua direção. \par
+
+Para o cálculo do Caminho mais curto, foram implementados os algoritmos \hyperref[algo:dijkstra]{Dijkstra} e \hyperref[algo:astar]{Astar}. 
+Uma vez que estes algoritmos são algoritmos gananciosos e garantem a solução ótima com os grafos utilizados, foram feitas alterações nos mesmos de modo a
+que, quando se atinge o ponto de interesse mais próximo, estes terminam, de forma a evitar a análise de vértices sem interesse e, portanto, melhorar a sua eficiência.
+Uma vez que o algoritmo \hyperref[algo:floydwarshall]{Floyd-Warshall} tem uma complexidade muito elevada \( O(|V|^3) \), descartou-se a sua utilização
+para a resolução do problema proposto. \par
+
+De forma a resolver o \hyperref[perspetivas:tsp]{Travelling Salesman Problem} descartou-se a utilização do algoritmo \hyperref[algo:bellmanheldkarp]{Bellman-Held-Karp} uma vez que apresenta
+uma complexidade muito elevada de \( O(|V|^3*2^(|V|)) \), pelo que foi implementado o algoritmo \hyperref[algo:nn]{Nearest neighbor}.
+Tal como descrito no tópico do algoritmo \hyperref[algo:nn]{Nearest neighbor}, este algoritmo foi adaptado e, em vez de ser escolhido o vértice adjacente
+mais próximo, é escolhido o ponto de interesse mais próximo. \par
+
+Uma vez que podem haver vários centros de distribuição, foi necessário resolver o \hyperref[perspetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. Tal como 
+descrito na seccão \hyperref[perspetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}. \par 
+
+
 
 
 
