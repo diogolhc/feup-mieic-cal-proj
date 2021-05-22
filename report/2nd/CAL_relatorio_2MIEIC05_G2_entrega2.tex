@@ -524,8 +524,8 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	
 	\section{\textit{Vehicle routing Problem}}
 	\textit{Vehicle routing problem} pode ser considerado um \textit{Travelling Salesman Problem} (\textit{TSP}) com vários \textit{Salesman}, sendo os \textit{Salesman} os veículos e como o tradicional \textit{TSP} tem diversos destinos pelos quais tem de passar. O objetivo é distribuir pelos diversos veículos os destinos de forma que todos sejam visitados, sendo esta distribuição otimizada de forma que o tempo total de distribuição (de todos os percursos aquele que demorar mais tempo) seja o menor possível. \par
-	Para fazer esta distribuição de destinos a veículos existem diversos métodos, entre eles os heurísticos. O método a ser utilizado será um algoritmo genético. \par
-	Com a distribuição feita (e até mesmo para a função de \textit{fitness} para o algoritmo genético) para cada instância de veículo e respetivos destinos temos um subproblema de \textit{Travelling Salesman}. Resolve-se este problema de forma a obter o caminho mais pequeno possível.
+	Para fazer esta distribuição de destinos a veículos existem diversos métodos, entre eles os heurísticos. \par
+	Com a distribuição feita para cada instância de veículo e respetivos destinos temos um subproblema de \textit{Travelling Salesman}. Resolve-se este problema de forma a obter o caminho mais pequeno possível.
 	
 	
 	\section{\textit{Multi-depot Vehicle routing Problem}}
@@ -633,7 +633,7 @@ utilizada. \par
 
 De modo a tornar os algoritmos que necessitam de filas prioridades (\textit{queues}) mais eficazes, foi utilizada uma implementação
 de uma fila de prioridades mutável, \textit{MutablePriorityQueue.h}, fornecida nas aulas práticas. Esta estrutura mostrou
-ser eficaz e útil na implementação de algoritmos de caminho mais curo, nomeadamente o \textit{Dijkstra} e o \textit{A*}. \par
+ser eficaz e útil na implementação de algoritmos de caminho mais curto, nomeadamente o \textit{Dijkstra} e o \textit{A*}. \par
 
 De forma geral, foram ainda implementadas diversas classes como \textit{ApplicationCenter} e \textit{StorageCenter} de modo a facilitar
 a resolução do problema. \par
