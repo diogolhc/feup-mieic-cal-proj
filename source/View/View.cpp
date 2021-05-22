@@ -132,7 +132,7 @@ void viewShortestPath(GraphViewer &gv, const Graph *graph) {
 
         if (e->getPassedShortestPath()) {
             edge.setColor(GraphViewer::RED);
-            edge.setThickness(0.00005);
+            edge.setThickness(0.00003);
         } else {
             edge.setColor(GraphViewer::BLACK);
             edge.setThickness(0.00001);

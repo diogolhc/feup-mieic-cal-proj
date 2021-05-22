@@ -6,22 +6,19 @@
 #include "algorithms/strongly-connected-components/Kosaraju.h"
 #include "MultiDepotVehicleRouting.h"
 #include "algorithms/shortest-path/AStar.h"
+#include "algorithms/shortest-path/Dijkstra.h"
 
 using namespace std;
 
 
 Application::Application(const string &files_root) : graphFiles(files_root) {}
 
-/**
- * TODO os grafos não estão a dar o reset necessário para dar para fazer varias vezes a distribuição no mesmo grafo
- */
-
 void Application::run() {
     bool exit = false;
     this->selectMap();
 
     while (!exit) {
-        this->selectOpearation();
+        this->selectOperation();
 
         string ans;
         while (true) {
@@ -83,13 +80,13 @@ void Application::selectMap() {
             continue;
         }
 
-        view(graphFileSelected, DISTRIBUTION); // TODO add another state for VANILLA
+        view(graphFileSelected, DISTRIBUTION);
         break;
     }
 }
 
 
-void Application::selectOpearation() {
+void Application::selectOperation() {
     string ans;
     while (true) {
         cout << "Select one of the following operations: scc, distribute_vaccines, shortest_path.\n"; //TODO
@@ -110,9 +107,9 @@ void Application::selectOpearation() {
             this->distributeSubMenu();
             break;
         } else if (ans == "shortest_path") {
-            this->aStarSubMenu(); // TODO add shortestPathSubMenu() if Dijkstra can be called from interface so that user can choose which one to call
+            this->shortestPathSubMenu(); //
             break;
-        } // TODO add the rest
+        }
         else {
             cout << "Unknown operation on map" << endl;
             continue;
@@ -120,6 +117,66 @@ void Application::selectOpearation() {
 
     }
 }
+
+void Application::shortestPathSubMenu(){
+    Graph *graph = this->graphFileSelected->getGraph();
+
+    size_t source, dest;
+
+    Vertex *s;
+    Vertex *d;
+
+    while (true) {
+        cout << "Insert source id and destination id: <source> <destination>\n";
+        cout << "> ";
+        cin >> source >> dest;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            continue;
+        }
+        cin.ignore(9999, '\n');
+
+        s = graph->findVertex(source);
+        d = graph->findVertex(dest);
+
+        if (s == nullptr || d == nullptr) {
+            cout << "Invalid ids\n";
+        } else {
+            break;
+        }
+    }
+
+    string shortestAlgo;
+
+    while (true) {
+        cout << "What algorithm do you wish to use? dijkstra or astar\n";
+        cout << "> ";
+        cin >> shortestAlgo;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            continue;
+        }
+        cin.ignore(9999, '\n');
+
+        if (shortestAlgo == "dijkstra") {
+            dijkstraAndShow(s, d);
+            break;
+        }
+        else if (shortestAlgo == "astar"){
+            aStarAndShow(s, d);
+            break;
+        }
+        else {
+            cout << "Invalid input\n";
+        }
+    }
+
+}
+
 
 
 void Application::calculateAndShowSCC() {
@@ -210,8 +267,19 @@ void Application::aStarAndShow(Vertex *source, Vertex *dest) {
     if (aStar.getPath().empty())
         cout << "No possible path\n";
     cout << "A* vertex count viewed: " << aStar.getVertexViewedCount() << endl;
-    // TODO fazer semelhante ao Dijkstra para dar para comparar tempos de execução e vertices analizados de modo a tirar umas conclusões empiricas para o relatório
 
+    view(this->graphFileSelected, SHORTEST_PATH);
+}
+
+void Application::dijkstraAndShow(Vertex *source, Vertex *dest) {
+    Graph *graph = this->graphFileSelected->getGraph();
+
+    Dijkstra dijkstra;
+    dijkstra.initialize(graph, source->getId());
+    dijkstra.find(dest->getId());
+    if (dijkstra.getPath().at(dest) == nullptr)
+        cout << "No possible path\n";
+    cout << "Dijkstra vertex count viewed: " << dijkstra.getVertexViewedCount() << endl;
     view(this->graphFileSelected, SHORTEST_PATH);
 }
 
