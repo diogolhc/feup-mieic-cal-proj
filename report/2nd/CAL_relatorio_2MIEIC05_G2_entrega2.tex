@@ -160,6 +160,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	Para a analisar, poderemos usar algoritmos tal como o \textit{depth-first-search} (\textit{DFS}) ou \textit{breadth-first-search} (\textit{BFS}), que nos indicam os componentes conexos de um grafo.
 
 		\subsection{\textit{Depth-First-Search algorithm}}
+		\label{algo:dfs}
 		Método de busca não-informada que avança através da expansão do primeiro nó encontrado no grafo avançando em profundidade até o objetivo ser encontrado ou já não existirem nós não visitados que sejam adjacentes; chegando a este ponto faz-se \textit{backtracking} e ao encontrar um nó com arestas cujos destinos não tenham sido ainda visitados o processo repete-se. Desta forma, este algoritmo tem uma complexidade temporal de \( O(|V| + |E|) \).
 
 		\begin{center}
@@ -192,6 +193,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 		\end{center}
 
 		\subsection{\textit{Breath-First-Search algorithm}}
+		\label{algo:bfs}
 		É também um método de busca não-informada que expande sequencialmente todos os vértices do grafo. Por cada vértice o algoritmo itera por todas as arestas deste e garante que nenhum vértice é visitado mais do que uma vez. Desta forma, este algoritmo tem uma complexidade temporal de \( O(|V| + |E|)\).
 
 		\begin{center}
@@ -279,6 +281,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 
 		\subsection{\textit{Tarjan's algorithm}}
+		\label{algo:tarjan}
 		O algoritmo de \textit{Tarjan} é outro algoritmo que poderemos usar para estudar a conectividade do grafo. Proposto em 1972 por \textit{Robert Tarjan} \cite{tarjan}, o algoritmo consiste em encontrar as componentes fortemente conexas a partir duma exploração em profundidade (\textit{DFS}) começando num vértice arbitrário. Atribuindo \textit{ids} e um \textit{low-link value} aos vértices utilizando uma \textit{stack}, o algoritmo agrupa os vértices que pertencem à mesma componente fortemente conexa na chamada recursiva da \textit{DFS}.
 
 		\begin{center}
@@ -333,6 +336,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	Desta forma, pretende-se, com os seguintes algoritmos, determinar o caminho mais curto entre um vértice de origem e um vértice de destino.
 
 		\subsection{\textit{Dijkstra algorithm}}
+		\label{algo:dijkstra}
 		O algoritmo de \textit{Dijkstra} é talvez o mais conhecido algoritmo para calcular o caminho mais curto, sendo que parte do pressuposto que não há arestas negativas. \par
 		Primeiramente, todos os vértices são marcados com distância infinita até ao vértice de origem, exceto o próprio, que é marcado com distância 0. Após isso, fazem-se sucessivas visitas aos vértices adjacentes \( V_{adj} \)  do vértice \(V_p\) com distância menor e atualiza-se a distância mínima a eles passando pelo vértice considerado \(V_p\) e a aresta que os conecta. Assim, este algoritmo, utilizando uma fila de prioridade de mínimos, tem uma complexidade temporal \(O((|V|+|E|)\cdot log|V|)\), apesar de poder ser melhorada para \(O(|V|\cdot log|V|)\) utilizando \textit{Fibonacci Heaps}.
 
@@ -367,6 +371,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 
 		\subsection{\textit{A* algorithm}}
+		\label{algo:astar}
 		O algoritmo \textit{A*} \cite{astar} é também um algoritmo bastante conhecido de caminho mais curto, sendo este uma extensão do algoritmo de \textit{Dijkstra} usando métodos heurísticos. Trata-se de uma pesquisa informada que averigua primeiro os caminhos mais promissores, fazendo uso de uma função heurística \textit{h}. \par
 		Em termos simples, enquanto que o algoritmo de \textit{Dijkstra} seleciona o próximo vértice a averiguar pelo mínimo de distância até ele, o algoritmo \textit{A*} escolhe o vértice v que minimiza \(f(v) = dist(v) + h(v)\) sendo \textit{h(v)} a função heurística. Para \textit{h(v)} pode ser usado, por exemplo, a distância euclidiana de v até ao vértice final. Confirma-se, ainda, que o algoritmo de \textit{Dijkstra} é um caso particular do algoritmo \textit{A*} em que \( h(v) = 0 \). Desta forma, a complexidade do algoritmo \textit{A*} é semelhante à complexidade do algoritmo de \textit{Dijkstra} apenas com uma pequena ponderação dependendo da função \textit{h(v)} usada.
 
@@ -403,6 +408,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 
 		\subsection{\textit{Floyd-Warshall algorithm}}
+		\label{algo:floydwarshall}
 		O algoritmo de \textit{Floyd-Warshall}, publicado independentemente por \textit{R. W. Floyd} e \textit{S. Warshall} em 1962 difere nos mencionados anteriormente no facto de encontrar o caminho mais curto entre todos os vértices numa única execução. O algoritmo mantém uma matriz de distâncias que vai sendo atualizada à medida que vão sendo considerados diferentes vértices intermédios. \par
 		Este algoritmo tem uma complexidade temporal de \( O(|V|^3)\) e espacial de \( O(|V|^2)\).
 
@@ -444,6 +450,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	\end{itemize}
 
 		\subsection{\textit{Bellman-Held-Karp algorithm}}
+		\label{algo:bellmanheldkarp}
 		Uma possível solução exata para este problema é a utilização do algoritmo de \textit{Bellman-Held-Karp}. \par
 		Este algoritmo foi proposto independentemente em 1962 por \textit{Richard Bellman}, \textit{Michael Held} e por \textit{Richard Karp} e consiste na utilização de programação dinâmica, resolvendo o exercício geral e mais complexo a partir da resolução de subproblemas do mesmo, isto é, a solução do problema pode ser obtida a partir das soluções dos seus subproblemas. \par
 		Este algoritmo oferece-nos uma complexidade temporal relativamente boa (inferior à complexidade da abordagem \textit{brute-force} que é de ordem fatorial) de \( O(|V|^2 \cdot 2^{|V|})\) mas, por outro lado, tem uma complexidade espacial \( O(|V| \cdot 2^{|V|})\), ambas no pior caso. \cite{bellmanheldkarp} \par
@@ -474,6 +481,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 
 		\subsection{\textit{Nearest neighbor (NN) algorithm}}
+		\label{algo:nn}
 		O \textit{Nearest neighbor (NN) algorithm} \cite{nearestneighbor} foi um dos primeiros métodos usados para resolver o \textit{TSP}. Passa por escolher um ponto onde começar e escolhe o vértice adjacente a este cuja aresta que os ligue tenha menor peso e ainda não tenha sido visitado. \par
 		No caso em concreto deste trabalho, em vez de escolher o vértice adjacente mais próximo, é escolhido o ponto de interesse mais próximo, que pode ser, por exemplo, obtido usando o algoritmo \textit{A*} com origem no vértice atual. Outra possibilidade será a de condensar o grafo de input para um outro, cujos únicos vértices são os pontos de interesse (\textit{POI}), ou seja, os centros de armazenamento e os centros de aplicação. \par
 		O resultado é a ordem pela qual os vértices foram visitados. \par
@@ -534,6 +542,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	A abordagem que seguiremos será fazer \textit{clustering} dos centros de aplicação pelos centros de armazenamento de forma a subdividir este problema mais complexo em múltiplos subproblemas do \textit{Vehicle Routing problem}. \par
 	
 		\subsection{\textit{Multi-source Dijkstra}}
+		\label{algo:msdijkstra}
 		O método usado para fazer os clusters será fazer múltiplas pesquisas em largura “simultaneamente” a partir de todos os centros de armazenamento até todos os centros de distribuição estarem no \textit{cluster} de um centro de armazenamento. Este método acaba por ser uma variante do algoritmo de \textit{Dijkstra} com múltiplas origens.
 
 
