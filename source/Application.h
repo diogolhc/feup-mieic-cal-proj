@@ -11,12 +11,14 @@ private:
     GraphFile* graphFileSelected = nullptr;
 
     void selectMap();
-    void selectOpearation();
+    void selectOperation();
     void calculateAndShowSCC();
     void distributeSubMenu();
     void distributeAndShow(double timeLim);
     void aStarSubMenu();
     void aStarAndShow(Vertex *source, Vertex *dest);
+    void dijkstraAndShow(Vertex *source, Vertex *dest);
+    void shortestPathSubMenu();
 public:
     explicit Application(const string &files_root);
     void run();
