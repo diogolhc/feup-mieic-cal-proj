@@ -19,6 +19,10 @@ void MultiSourceDijkstra::run() {
 
         vertex->setDist(INF);
 
+        vertex->setVisited(false);
+
+        vertex->setQueueIndex(0);
+
         auto vertexPath = path.find(vertex);
         if (vertexPath != path.end()) vertexPath->second = NULL;
         else path.insert(pair<Vertex *, Vertex *>(vertex, NULL));

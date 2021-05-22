@@ -24,6 +24,12 @@ void Dijkstra::run() {
         if (vertexDist != dist.end()) vertexDist->second = INF;
         else dist.insert(pair<Vertex *, double>(vertex, INF));
 
+        vertex->setDist(INF);
+
+        vertex->setVisited(false);
+
+        vertex->setQueueIndex(0);
+
         auto vertexPath = path.find(vertex);
         if (vertexPath != path.end()) vertexPath->second = NULL;
         else path.insert(pair<Vertex *, Vertex *>(vertex, NULL));
@@ -76,7 +82,12 @@ Vertex *Dijkstra::getNearestAC(Truck * truck) {
         auto vertexDist = dist.find(vertex);
         if (vertexDist != dist.end()) vertexDist->second = INF;
         else dist.insert(pair<Vertex *, double>(vertex, INF));
+
         vertex->setDist(INF);
+
+        vertex->setVisited(false);
+
+        vertex->setQueueIndex(0);
 
         auto vertexPath = path.find(vertex);
         if (vertexPath != path.end()) vertexPath->second = NULL;
