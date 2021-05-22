@@ -614,12 +614,41 @@ Nestes mapas é possível realizar as seguintes operações:
 
 
 \chapter{Estruturas de dados utilizadas}
+De modo a resolver o problema em mãos foi necessário recorrer a diversas estruturas de dados. De modo a ter uma representação
+dos grafos foi utilizado um \textit{hash-set} dos vértices sendo utilizado o seu id, único, como hash. Com esta representação
+dos vértices num \textit{hash-set} foi possível reduzir o tempo de pesquisa de um vértice dado o seu id de \( O(N) \) conseguido
+usando uma representação baseada em vetores para \( O(1) \). \par
+
+Para guardar as arestas decidiu-se manter em cada vertice o conjunto de arestas que têm esse vértice como origem e um outro
+conjunto de arestas que têm esse vértice como destino. Dado que estes conjuntos são sempre bastante pequenos dada a natureza
+dos grafos (grafos de cidades) e uma vez que a operação mais comum sobre estes conjuntos de arestas é iterar por elas todas, 
+um simples vetor mostra-se eficaz. \par
+
+Tanto nos vértices como nas arestas, para além dos atributos "obrigatórios" como ids e pesos, tornou-se necessário manter 
+atributos relacionados com o problema, nomeadamente: id da componente conexa forte a que pertence cada vértice, coordenadas dos
+vértices em latitude e longitude, tipo de vértice (se é um centro e se sim, de que tipo). Também se mostrou necessário que 
+cada vértice tivesse o id do cluster (de notar que cluster \( \neq \) componente conexa forte) em que se encontra e que também cada
+aresta mantivesse o registo das carrinhas que por la passaram, de modo a facilitar a representação visual posterior do grafo na interface
+utilizada. \par
+
+De modo a tornar os algoritmos que necessitam de filas prioridades (\textit{queues}) mais eficazes, foi utilizada uma implementação
+de uma fila de prioridades mutável, \textit{MutablePriorityQueue.h}, fornecida nas aulas práticas. Esta estrutura mostrou
+ser eficaz e útil na implementação de algoritmos de caminho mais curo, nomeadamente o \textit{Dijkstra} e o \textit{A*}. \par
+
+De forma geral, foram ainda implementadas diversas classes como \textit{ApplicationCenter} e \textit{StorageCenter} de modo a facilitar
+a resolução do problema. \par
 
 
 \chapter{Algoritmos efetivamente implementados}
 
 
+
 \chapter{Análise de complexidade dos algoritmos implementados}
+
+
+
+\chapter{Análise da conectividade do grafo}
+
 
 
 \chapter{Conclusão}
