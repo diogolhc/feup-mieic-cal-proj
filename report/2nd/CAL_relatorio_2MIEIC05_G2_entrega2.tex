@@ -850,7 +850,7 @@ pelo que se confirma a complexidade teórica analisada face aos grafos utilizado
 
 
 \section{Multi-source Dijkstra algorithm}
-Tal como descrito na secção \hyperref[algo:algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Tal como descrito na secção \hyperref[algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -862,6 +862,26 @@ O gráfico representado de seguida mostra os resultados obtidos em ordem à comp
 
 Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
 analisada face aos grafos utilizados.
+
+\section{Solução do Problema}
+De forma a resolver o problema proposto, foram conjugados os algoritmos descritos acima: de modo a verificar se temos caminho de ida e de volta entre
+os centros de distribuição e aplicação aplica-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, obtendo-se as componentes fortemente conexas; De seguida, fez-se 
+a distribuição dos centros de aplicação aos respetivos centros de distribuição, formando-se clusters, com a utilização do algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra};
+posteriormente, para se obter o percurso desde os centros de distribuição aos respetivos centros de aplicação onde as carrinhas irão distribuir as vacinas,
+utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}.
+Uma vez que esta implementação final é uma junção, em sequência, de vários algoritmos, a ordem da sua complexidade temporal será igual à ordem da complexidade temporal
+do algoritmo com maior complexidade temporal. Assim, a complexidade temporal da implementação será da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \).
+Para confirmar esta complexidade, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica esperada:
+
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{./imgs/charts/MDVRPTimeComplexity.png}
+	\centering
+	\caption{Tempo de execução da solução final em ordem a $|POI|\cdot (|V|+|E|)\cdot \log |V|$.}
+\end{figure}
+
+Os resultados obtidos foram aproximadamente lineares, pelo que se confirma a complexidade teórica analisada
+face aos grafos utilizados.
 
 
 \chapter{Análise da conectividade do grafo}
