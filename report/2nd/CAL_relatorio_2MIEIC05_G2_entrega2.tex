@@ -785,7 +785,8 @@ analisada face aos grafos utilizados.
 
 
 \section{Kosaraju algorithm}
-Tal como descrito na secção \hyperref[algo:kosaraju]{3.2.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Tal como descrito na secção \hyperref[algo:kosaraju]{3.2.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a sua complexidade espacial 
+é da ordem \(O(|V|\) uma vez que consiste na execução de duas pesquisas em profundidade (\hyperref[algo:dfs]{DFS}) e guarda os vértices visitados numa stack.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -801,14 +802,15 @@ analisada face aos grafos utilizados.
 
 
 \section{Dijkstra algorithm}
-Tal como descrito na secção \hyperref[algo:dijkstra]{3.3.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Tal como descrito na secção \hyperref[algo:dijkstra]{3.3.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a complexidade
+espacial da ordem \(O(|V|\) uma vez que se tem de guardar o path e a distância dos vértices.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
 \begin{figure}[H]
 	\includegraphics[width=0.6\textwidth]{./imgs/charts/DijkstraTime.png}
 	\centering
-	\caption{Tempo de execução do algoritmo de Kosaraju em ordem a $(|V|+|E|)\cdot \log |V|$.}
+	\caption{Tempo de execução do algoritmo de Dijkstra em ordem a $(|V|+|E|)\cdot \log |V|$.}
 \end{figure}
 
 
@@ -817,7 +819,8 @@ analisada face aos grafos utilizados.
 
 
 \section{A* algorithm}
-Tal como descrito na secção \hyperref[algo:astar]{3.3.2}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Tal como descrito na secção \hyperref[algo:astar]{3.3.2}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a complexidade espacial
+é da ordem \(O(|V|\) uma vez que, tal como no algoritmo de \hyperref[algo:dijkstra]{Dijkstra}, tem de se guardar o path e a distância dos vértices.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -833,11 +836,11 @@ analisada face aos grafos utilizados.
 
 
 \section{Nearest Neighbor algorithm}
-O Algoritmo Nearest Neighbor implementado não tem a complexidade temporal teórica de \( O(|V|^2)\) analisada na secção \hyperref[algo:nn]{3.4.2}, uma vez que foi feita a 
-adaptação descrita na seccão \hyperref[implementedAlgos]{Algoritmos efetivamente implementados}. Desta forma, o algoritmo irá percorrer \(|POI|\) vezes o algoritmo de Dijkstra
-para obter o ponto de interesse mais próximo não visitado ao ponto de interesse atual. Desta forma, terá uma complexidade da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \).
-Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
-O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+O Algoritmo Nearest Neighbor implementado tem complexidade espacial de \(O(|V|)\) tal como descrito na secção \hyperref[algo:nn]{3.4.2}, contudo não tem a complexidade temporal teórica de \( O(|V|^2)\) 
+analisada na mesma, uma vez que foi feita a adaptação descrita na seccão \hyperref[implementedAlgos]{Algoritmos efetivamente implementados}. Desta forma, o algoritmo 
+irá percorrer \(|POI|\) vezes o algoritmo de Dijkstra para obter o ponto de interesse mais próximo não visitado ao ponto de interesse atual. Assim, terá uma complexidade 
+da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \). Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em 
+cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC). O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
 \begin{figure}[H]
 	\includegraphics[width=0.6\textwidth]{./imgs/charts/NNTimeComplexity.png}
@@ -851,7 +854,8 @@ pelo que se confirma a complexidade teórica analisada face aos grafos utilizado
 
 
 \section{Multi-source Dijkstra algorithm}
-Tal como descrito na secção \hyperref[algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Tal como descrito na secção \hyperref[algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a sua complexidade espacial
+é da ordem de \(O(|V|\), uma vez que guarda os vértices não visitados e cuja distância foi atualizada.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -871,14 +875,14 @@ a distribuição dos centros de aplicação aos respetivos centros de distribui�
 posteriormente, para se obter o percurso desde os centros de distribuição aos respetivos centros de aplicação onde as carrinhas irão distribuir as vacinas,
 utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}.
 Uma vez que esta implementação final é uma junção, em sequência, de vários algoritmos, a ordem da sua complexidade temporal será igual à ordem da complexidade temporal
-do algoritmo com maior complexidade temporal. Assim, a complexidade temporal da implementação será da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \).
+do algoritmo com maior complexidade temporal. Assim, a complexidade temporal da implementação será da ordem de \( O(\log|POI| \cdot |POI| \cdot ((|V| + |E|)\cdot \log|V|)) \).
 Para confirmar esta complexidade, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica esperada:
 
 \begin{figure}[H]
 	\includegraphics[width=0.6\textwidth]{./imgs/charts/MDVRPTimeComplexity.png}
 	\centering
-	\caption{Tempo de execução da solução final em ordem a $|POI|\cdot (|V|+|E|)\cdot \log |V|$.}
+	\caption{Tempo de execução da solução final em ordem a $O(\log|POI| \cdot |POI| \cdot ((|V| + |E|)\cdot \log|V|))$.}
 \end{figure}
 
 Os resultados obtidos foram aproximadamente lineares, pelo que se confirma a complexidade teórica analisada
