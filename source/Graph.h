@@ -48,7 +48,6 @@ class Vertex {
     // Kosaraju and Tarjan elements needed
     int id;
     int low;
-    bool onStack;
     size_t scc;
     bool visited;  // for path finding
     Edge *path; // for path finding
@@ -126,10 +125,8 @@ class Graph {
 
 public:
     ~Graph();
-
     Vertex* findVertex(size_t id) const;
     VertexSet getVertexSet() const;
-    // TODO vv maybe change the way it's being done and saved...
     vector<Edge *> getEdges() const;
     Vertex *addVertex(size_t id);
     Edge *addEdge(Vertex *sourc, Vertex *dest, double weight);

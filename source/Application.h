@@ -24,5 +24,4 @@ public:
 
 };
 
-
 #endif //SOURCE_APPLICATION_H

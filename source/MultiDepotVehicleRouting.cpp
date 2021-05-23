@@ -5,7 +5,7 @@
 #include "algorithms/strongly-connected-components/Kosaraju.h"
 #include "algorithms/vehicle-routing/MultiSourceDijkstra.h"
 
-// res is cleared
+// res works as the "return" its value are cleared
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
     if (original.empty())
         return;
@@ -63,7 +63,6 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> origina
         for (; i < original.size(); i ++) {
             res.at(1).push_back(original.at(i));
         }
-
     }
 }
 
@@ -103,7 +102,6 @@ void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, double dist
         recursiveTruckPath(graph, storageCenter, distLim, passLimitTime, res.at(0));
         recursiveTruckPath(graph, storageCenter, distLim, passLimitTime, res.at(1));
     }
-
 }
 
 
@@ -124,7 +122,7 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim, bool passLim
 
     unordered_map<std::size_t, std::set<size_t>> clusters = multiSourceDijkstra.getClusters();
 
-    for (StorageCenter & storageCenter: graphFile->getStorageCenters()) { //TODO Maybe eliminate intermediate step
+    for (StorageCenter & storageCenter: graphFile->getStorageCenters()) {
         for (size_t id : clusters.at(storageCenter.getVertex()->getId())) {
             for (ApplicationCenter applicationCenter : graphFile->getApplicationCenters()) {
                 if ( applicationCenter.getVertex()->getId() == id ) {
@@ -155,12 +153,10 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim, bool passLim
         recursiveTruckPath(graph, &storageCenter, timeLim, passLimitTime, original);
     }
 
-    // TODO this should be done outside in the outer class
     for (StorageCenter & storageCenter : graphFile->getStorageCenters()){
-        cout << "Storage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << " Number of application centers: " << storageCenter.getAcClusterSize() << endl;
+        cout << "\nStorage: " << storageCenter.getVertex()->getId() << " Vaccines: " << storageCenter.getVaccines() << " Number of application centers: " << storageCenter.getAcClusterSize() << endl;
         for (Truck * truck : storageCenter.getTrucks()){
             cout << "Truck from " << storageCenter.getVertex()->getId() << " covered : " << truck->getDistanceCovered() << endl;
         }
     }
-
 }

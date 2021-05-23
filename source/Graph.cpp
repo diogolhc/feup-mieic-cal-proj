@@ -52,13 +52,11 @@ VertexSet Graph::getVertexSet() const {
     return vertexSet;
 }
 
-// maybe change latter for efficiency
 vector<Edge *> Graph::getEdges() const {
     vector<Edge *> edges;
     for (Vertex *v : vertexSet) {
         edges.insert(edges.end(), v->outgoing.begin(), v->outgoing.end());
     }
-
     return edges;
 }
 

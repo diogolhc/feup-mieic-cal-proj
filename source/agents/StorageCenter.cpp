@@ -15,7 +15,7 @@ void StorageCenter::addApplicationCenter(const ApplicationCenter &applicationCen
     this->vaccines += applicationCenter.getVaccinesNeeded();
 }
 
-std::vector<ApplicationCenter> &StorageCenter::getAcCluster() { //TODO using the reference so it's faster JAVA style
+std::vector<ApplicationCenter> &StorageCenter::getAcCluster() {
     return this->AcCluster;
 }
 
@@ -23,24 +23,8 @@ Vertex *StorageCenter::getVertex() const{
     return vertex;
 }
 
-void StorageCenter::initTruckAC(){
-
-    Truck * truck = this->trucks.at(0);
-
-    for (ApplicationCenter & applicationCenter : this->AcCluster){
-
-        truck->addApplicationCenter(&applicationCenter);
-
-    }
-
-}
-
 std::vector<Truck*> &StorageCenter::getTrucks() {
     return trucks;
-}
-
-void StorageCenter::addTruck(const std::vector<ApplicationCenter *> & newACList) {
-    this->trucks.push_back(new Truck(0, newACList));
 }
 
 void StorageCenter::clearTrucks() {

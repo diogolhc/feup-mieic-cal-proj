@@ -26,7 +26,7 @@ public:
     void load();
     Graph* getGraph();
     double getScale();
-    std::string getbackGroundImage() const;
+    std::string getBackGroundImage() const;
     Coordinates getCentralCoordinates() const;
     vector<StorageCenter> & getStorageCenters();
     vector<ApplicationCenter> getApplicationCenters();

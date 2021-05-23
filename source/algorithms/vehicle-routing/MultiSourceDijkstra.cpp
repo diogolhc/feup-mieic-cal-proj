@@ -56,14 +56,11 @@ void MultiSourceDijkstra::run() {
 
                     destinationVertex->setCluster(v->getCluster());
                     vertexQueue.insertOrDecreaseKey(destinationVertex);
-                } else {
-                        //TODO see what todo (noice)
                 }
             }
         }
     }
 
-    // TODO optimize this
     for (Vertex * v : vertexSet) {
         if (v->getType() == APPLICATION_CENTER) {
             if (v->getCluster() == 0) {
@@ -73,7 +70,6 @@ void MultiSourceDijkstra::run() {
             }
         }
     }
-
 }
 
 unordered_map<std::size_t, std::set<size_t>> & MultiSourceDijkstra::getClusters(){

@@ -159,10 +159,10 @@ void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentId
             break;
     }
 
-    if (graphFile->getbackGroundImage() != "") {
+    if (graphFile->getBackGroundImage() != "") {
         gv.setBackground(
-                graphFile->getbackGroundImage(),
-                sf::Vector2f(-8.7817, -41.3095), // TODO this values by attribute?
+                graphFile->getBackGroundImage(),
+                sf::Vector2f(-8.7817, -41.3095),
                 sf::Vector2f(1.3297, 1.0) / 7010.0f,
                 0.8
         );

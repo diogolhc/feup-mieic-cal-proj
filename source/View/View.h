@@ -9,8 +9,6 @@ enum viewState {
     SHORTEST_PATH
 };
 
-// TODO should this be a class?
 void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentIdx = 0);
-
 
 #endif //SOURCE_VIEW_H

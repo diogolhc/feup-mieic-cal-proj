@@ -10,9 +10,6 @@
 
 using namespace std;
 
-bool portoLoaded = false;
-
-
 Application::Application(const string &files_root) : graphFiles(files_root) {}
 
 void Application::run() {
@@ -91,7 +88,7 @@ void Application::selectMap() {
 void Application::selectOperation() {
     string ans;
     while (true) {
-        cout << "Select one of the following operations: scc, distribute_vaccines, shortest_path.\n"; //TODO
+        cout << "Select one of the following operations: scc, distribute_vaccines, shortest_path.\n";
         cout << "> ";
         cin >> ans;
 
