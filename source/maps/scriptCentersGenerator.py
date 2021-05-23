@@ -16,7 +16,7 @@ with open(region + "_strong_nodes_latlng.txt", "r") as f:
         id_list.append(id)
         
 
-    with open(region + ("_strong" if outStrong else "")  + "_centers.txt", "w") as g:
+    with open(region + ("_strong" if outStrong else "")  + "_centers_gen.txt", "w") as g:
 
         #Storage Centers generator
     
