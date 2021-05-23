@@ -62,7 +62,7 @@
 \newpage
 
 \chapter{Descrição do problema}
-De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicação VaccineRouter deve ser capaz de determinar os itinerários de distribuição de vacinas desde os centros de armazenamento até aos centros de aplicação. Como tal, pretende-se que estes itinerários não sejam demasiado extensos de forma a prevenir que o tempo de distribuição ultrapasse o tempo de conservação das vacinas.
+De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicação VaccineRouter deve ser capaz de determinar os itinerários de distribuição de vacinas desde os centros de armazenamento até aos centros de aplicação. Como tal, pretende-se que estes itinerários não sejam demasiado extensos, de forma a prevenir que o tempo de distribuição ultrapasse o tempo de conservação das vacinas.
 
 	\section{Primeira Fase}
 	Numa primeira instância, pretende-se que a aplicação seja capaz de definir um percurso para um único veículo, a sair de um único centro de armazenamento, não tendo como preocupação o tempo despendido para a distribuição das vacinas. \par
@@ -75,7 +75,8 @@ De forma a controlar a distribuição de vacinas contra a COVID-19, a aplicaçã
 	Este ponto irá levar a uma diminuição no tempo de distribuição das vacinas uma vez que teremos vários centros de armazenamento que, posteriormente, estarão mais perto de certos centros de aplicação. Este aumento de proximidade entre os vários centros (de aplicação e armazenamento) leva a que o tempo necessário para um dado veículo chegar a um centro de aplicação, saindo de um centro de armazenamento, seja menor do que o que tínhamos na primeira fase, onde uma carrinha tinha de distribuir as vacinas em todos os centros de aplicação.
 
 	\section{Terceira Fase}
-	Na terceira fase será adicionado o fator de tempo limite de distribuição e capacidade limitada das carrinhas. Tal como descrito anteriormente, as vacinas têm um tempo limitado de transporte, isto é, não podem estar muito tempo nas carrinhas que as irão distribuir (em transporte). Por outro lado, adicionando a restrição da capacidade limitada das carrinhas, poderão ocorrer casos em que mesmo que uma carrinha consiga percorrer os vários centros de aplicação no tempo pretendido, não tenha capacidade para levar as vacinas suficientes para os centros a que estava predestinada a distribuir. Isto leva, portanto, a que seja necessário adicionar mais veículos para fazer a sua distribuição a partir de um dado centro de armazenamento. \par
+	Na terceira fase será adicionado o fator de tempo limite de distribuição. Tal como descrito anteriormente, as vacinas têm um tempo limitado de transporte, isto é, 
+	não podem estar muito tempo nas carrinhas que as irão distribuir (em transporte). \par
 	O valor concreto de veículos por centro de armazenamento dependerá da performance de cada um destes, isto é, o tempo que demora a completar a distribuição. Para controlar esta condicionante, a solução passa por adicionar veículos que irão distribuir a partir desse centro, diminuindo, assim, o tempo de distribuição aos centros de aplicação associados a esse centro e, ainda, o número de veículos utilizados.
 
 
@@ -609,14 +610,14 @@ O nosso programa deve permitir as seguintes funcionalidades:
 \chapter{Funcionalidades e cenários implementados}
 \label{func}
 O nosso programa vai acompanhado dos seguintes mapas: Porto, Espinho, Penafiel e correspondentes componentes
-fortemente conexas de cada um dos referidos sendo que para a sua visualização dos mesmos é utilizada 
+fortemente conexas, sendo que para a visualização dos mesmos é utilizada 
 a ferramenta recomendada \textit{GraphViewerCpp}. \par
 
 Nestes mapas é possível realizar as seguintes operações:
 
 \section{\textit{Load} de mapas}
 Inicialmente o programa permite escolher entre um conjunto de mapas, sendo que, mesmo após dar load a um deles, é
-possível dar load a outro. Após cada load o utilizador visualiza o mapa sendo possível identificar claramente
+possível dar load a outro. Após cada load, o utilizador visualiza o mapa sendo possível identificar claramente
 os centros de distribuição e os centros de aplicação.
 
 \begin{figure}[H]
@@ -640,7 +641,8 @@ a amarelo a componente maior e, a azul, todas as restantes componentes.
 \section{Determinar caminho mais curto entre dois vértices}
 É possível determinar o caminho mais curto entre dois vértices utilizando dois algoritmos: \hyperref[algo:astar]{A*} ou \hyperref[algo:dijkstra]{Dijkstra},
 sendo mostrado posteriormente o caminho, os vertices visitados pelo algoritmo, e a contagem de vértices visitados. \par
-Desta forma é possível comparar os resultados obtidos pelos dois algoritmos nomeadamente o número de vértices que cada um processa.
+Desta forma, é possível comparar os resultados obtidos pelos dois algoritmos, nomeadamente o número de vértices que cada um processa. \par
+Analisando as imagens seguintes, comprova-se que o algoritmo \hyperref[algo:astar]{A*} processa menos vértices do que o algoritmo de \hyperref[algo:dijkstra]{Dijkstra} para obter a solução. \par
 
 
 \subsection{A* \textit{algorithm}}
@@ -663,17 +665,17 @@ Desta forma é possível comparar os resultados obtidos pelos dois algoritmos no
 
 \section{Fazer a distribuição das vacinas}
 O programa permite ainda fazer a distribuição das vacinas completamente.
-É pedido como input input o tempo limite de conservação em minutos das vacinas. Neste programa é assumido que a velocidade das carrinhas
+É pedido como input o tempo limite de conservação, em minutos, das vacinas. Neste programa é assumido que a velocidade das carrinhas
 utilizadas no transporte das vacinas é tal que é numericamente igual às distancias percorridas. Isto aconteceu por não termos dados relativos às velocidades máximas
 em cada uma das arestas. \par
 É feita a atribuição de rotas para carrinhas desde os centros de armazenamento até aos centros de aplicação,
-sendo posteriormente mostrada o tempo dispendido por cada carrinha. Para além disto, é mostrado o grafo utilizado
+sendo posteriormente mostrado o tempo dispendido por cada carrinha. Para além disto, é mostrado o grafo utilizado
 da seguinte forma: Centros de aplicação a amarelo quando na sua componente fortemente conexa está presente pelo menos um centro de armazenamento, vermelho caso contrário;
 Centros de armazenamento a verde quando na sua componente fortemente conexa está presente pelo menos um centro de aplicação, laranja caso contrário;
-A cada carrinha é atribuída uma cor aleatoriamente que é usada para identificar as arestas por onde ela passa. 
-Se numa aresta passar mais que uma vez uma carrinha, mesmo que seja a mesma, essa aresta é colorida a vermelho para dar essa indicação. \par
+A cada carrinha é atribuída uma cor aleatoriamente, que é usada para identificar as arestas por onde ela passa.
+Se numa aresta passar mais do que uma carrinha ou passar a mesma carrinha mais do que uma vez, essa aresta é colorida a vermelho para dar essa indicação. \par
 
-O programa recebe ainda um outro input que permite ao utilizador escolher se deseja visualizar os caminhos mais rápidos posssíveis mesmo que o tempo limite seja ultrapassado.
+O programa recebe ainda um outro input que permite ao utilizador escolher se deseja visualizar os caminhos mais rápidos possíveis mesmo que o tempo limite seja ultrapassado.
 Esta situação pode acontecer quando é introduzido um tempo limite extremamente baixo.
 
 \begin{figure}[H]
@@ -685,14 +687,14 @@ Esta situação pode acontecer quando é introduzido um tempo limite extremament
 
 \chapter{Estruturas de dados utilizadas}
 De modo a resolver o problema em mãos, foi necessário recorrer a diversas estruturas de dados. Para obter uma representação
-dos grafos foi utilizado um \textit{hash-set} dos vértices sendo utilizado o seu id, único, como hash. Com esta representação
+dos grafos foi utilizado um \textit{hash-set} dos vértices, sendo utilizado o seu id, único, como hash. Com esta representação
 dos vértices num \textit{hash-set} foi possível reduzir o tempo de pesquisa de um vértice específico de \( O(N) \), conseguido
 usando uma representação baseada em vetores, para \( O(1) \). \par
 
 Para guardar as arestas decidiu-se manter em cada vértice o conjunto de arestas que têm esse vértice como origem e outro
 conjunto de arestas que têm esse vértice como destino. Dada a natureza dos grafos (grafos de cidades), estes conjuntos são sempre
 bastante pequenos e, uma vez que a operação mais comum sobre as arestas é iterar por elas todas, um simples vetor mostra-se eficaz
-para a nossa representação das mesmas. \par
+para a representação das mesmas. \par
 
 Tanto nos vértices como nas arestas, para além dos atributos "obrigatórios" como ids e pesos, tornou-se necessário manter 
 atributos relacionados com o problema, nomeadamente: id da componente conexa forte a que pertence cada vértice, coordenadas dos
@@ -720,14 +722,14 @@ se mostrou, em relação ao algoritmo \hyperref[algo:tarjan]{Tarjan}, mais adequ
 estrutura do Grafo utilizada, foi possível implementar este algoritmo sem a necessidade de criar o grafo transposto descrito no pseudocódigo,
 uma vez que eram guardadas as arestas pela sua direção. \par
 
-Para o cálculo do Caminho mais curto, foram implementados os algoritmos \hyperref[algo:dijkstra]{Dijkstra} e \hyperref[algo:astar]{A*}. 
-Uma vez que estes algoritmos são algoritmos gananciosos, foram feitas alterações nos mesmos de modo a que, quando se atinge o ponto de
-interesse mais próximo, estes terminam, de forma a evitar a análise de vértices sem interesse e, portanto, melhorar a sua eficiência.
+Para o cálculo do \hyperref[perspetivas:caminhomaiscurto]{Caminho mais curto}, foram implementados os algoritmos \hyperref[algo:dijkstra]{Dijkstra} e \hyperref[algo:astar]{A*}. 
+Uma vez que estes algoritmos são gananciosos, foram feitas alterações nos mesmos de modo a que, quando se atinge o ponto de
+interesse mais próximo, estes terminem, evitando a análise de vértices sem interesse e, portanto, melhorando a sua eficiência.
 Uma vez que o algoritmo \hyperref[algo:floydwarshall]{Floyd-Warshall} tem uma complexidade muito elevada \( O(|V|^3) \), descartou-se a sua utilização
 para a resolução do problema proposto. \par
 
-De forma a resolver o \hyperref[perspetivas:tsp]{Travelling Salesman Problem} descartou-se a utilização do algoritmo \hyperref[algo:bellmanheldkarp]{Bellman-Held-Karp} uma vez que apresenta
-uma complexidade muito elevada de \( O(|V|^2 \cdot 2^{|V|}) \), pelo que foi implementado o algoritmo \hyperref[algo:nn]{Nearest neighbor}.
+De forma a resolver o \hyperref[perspetivas:tsp]{Travelling Salesman Problem} foi implementado o algoritmo \hyperref[algo:nn]{Nearest Neighbor}, descartando-se a implementação
+do algoritmo \hyperref[algo:bellmanheldkarp]{Bellman-Held-Karp}, uma vez que apresenta uma complexidade temporal muito elevada de \( O(|V|^2 \cdot 2^{|V|})\).
 Tal como descrito no tópico do algoritmo \hyperref[algo:nn]{Nearest neighbor}, este algoritmo foi adaptado e, em vez de ser escolhido o vértice adjacente
 mais próximo, é escolhido o ponto de interesse mais próximo como o demonstra o seguinte pseudo código: \par
 
@@ -783,7 +785,7 @@ mais próximo, é escolhido o ponto de interesse mais próximo como o demonstra 
 \end{center}
 
 
-Por outro lado uma vez que pode haver vários centros de distribuição, foi necessário resolver o \hyperref[perpetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. 
+Por outro lado, uma vez que pode haver vários centros de armazenamento, foi necessário resolver o \hyperref[perpetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. 
 Tal como descrito na seccão \hyperref[perpetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}.
 
 
@@ -796,7 +798,7 @@ Para tal, foram feitas análises teóricas e empíricas.
 
 \section{Depth-First-Search algorithm}
 Tal como descrito na secção \hyperref[algo:dfs]{3.1.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a complexidade espacial 
-é \(O(V)\) uma vez que a implementação utilizada deste algoritmo necessita de guardar a informação de se os nós já foram visitados ou não.
+é \(O(|V|)\), uma vez que a implementação utilizada deste algoritmo necessita de guardar a informação de se os nós já foram visitados ou não.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -813,7 +815,7 @@ analisada face aos grafos utilizados.
 
 \section{Breath-First-Search algorithm}
 Tal como descrito na secção \hyperref[algo:bfs]{3.1.2}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a sua complexidade espacial
-é de ordem constante \(O(V)\) uma vez que a implementação deste algoritmo necessita de guardar os vértices ainda não visitados numa queue.
+é de ordem constante \(O(|V|)\), uma vez que a implementação deste algoritmo necessita de guardar os vértices ainda não visitados numa \textit{queue}.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -830,7 +832,7 @@ analisada face aos grafos utilizados.
 
 \section{Kosaraju algorithm}
 Tal como descrito na secção \hyperref[algo:kosaraju]{3.2.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a sua complexidade espacial 
-é da ordem \(O(|V|\) uma vez que consiste na execução de duas pesquisas em profundidade (\hyperref[algo:dfs]{DFS}) e guarda os vértices visitados numa stack.
+é da ordem \(O(|V|)\), uma vez que consiste na execução de duas pesquisas em profundidade (\hyperref[algo:dfs]{DFS}) e guarda os vértices visitados numa stack.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -847,7 +849,7 @@ analisada face aos grafos utilizados.
 
 \section{Dijkstra algorithm}
 Tal como descrito na secção \hyperref[algo:dijkstra]{3.3.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a complexidade
-espacial da ordem \(O(|V|\) uma vez que se tem de guardar o path e a distância dos vértices.
+espacial da ordem \(O(|V|)\), uma vez que se tem de guardar o path e a distância dos vértices.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -864,7 +866,7 @@ analisada face aos grafos utilizados.
 
 \section{A* algorithm}
 Tal como descrito na secção \hyperref[algo:astar]{3.3.2}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a complexidade espacial
-é da ordem \(O(|V|\) uma vez que, tal como no algoritmo de \hyperref[algo:dijkstra]{Dijkstra}, tem de se guardar o path e a distância dos vértices.
+é da ordem \(O(|V|)\), uma vez que, tal como no algoritmo de \hyperref[algo:dijkstra]{Dijkstra}, tem de se guardar o path e a distância dos vértices.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -883,7 +885,7 @@ analisada face aos grafos utilizados.
 O Algoritmo Nearest Neighbor implementado tem complexidade espacial de \(O(|V|)\) tal como descrito na secção \hyperref[algo:nn]{3.4.2}, contudo não tem a complexidade temporal teórica de \( O(|V|^2)\) 
 analisada na mesma, uma vez que foi feita a adaptação descrita na seccão \hyperref[implementedAlgos]{Algoritmos efetivamente implementados}. Desta forma, o algoritmo 
 irá percorrer \(|POI|\) vezes o algoritmo de Dijkstra para obter o ponto de interesse mais próximo não visitado ao ponto de interesse atual. Assim, terá uma complexidade 
-da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \). Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em 
+da ordem de \( O(|POI| \cdot (|V| + |E|)\cdot \log |V|) \). Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em 
 cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC). O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
 \begin{figure}[H]
@@ -899,7 +901,7 @@ pelo que se confirma a complexidade teórica analisada face aos grafos utilizado
 
 \section{Multi-source Dijkstra algorithm}
 Tal como descrito na secção \hyperref[algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \) e a sua complexidade espacial
-é da ordem de \(O(|V|\), uma vez que guarda os vértices não visitados e cuja distância foi atualizada.
+é da ordem de \(O(|V|)\), uma vez que guarda os vértices não visitados e cuja distância foi atualizada.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -913,20 +915,23 @@ Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em rela
 analisada face aos grafos utilizados.
 
 \section{Solução do Problema}
-De forma a resolver o problema proposto, foram conjugados os algoritmos descritos acima: de modo a verificar se temos caminho de ida e de volta entre
-os centros de distribuição e aplicação aplica-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, obtendo-se as componentes fortemente conexas; De seguida, fez-se 
+De forma a resolver o problema proposto, foram conjugados os algoritmos descritos acima: de modo a verificar se existe caminho de ida e de volta entre
+os centros de distribuição e aplicação, aplicou-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, obtendo-se as componentes fortemente conexas; De seguida, fez-se 
 a distribuição dos centros de aplicação aos respetivos centros de distribuição, formando-se clusters, com a utilização do algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra};
 posteriormente, para se obter o percurso desde os centros de distribuição aos respetivos centros de aplicação onde as carrinhas irão distribuir as vacinas,
-utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}.
-Uma vez que esta implementação final é uma junção, em sequência, de vários algoritmos, a ordem da sua complexidade temporal será igual à ordem da complexidade temporal
-do algoritmo com maior complexidade temporal. Assim, a complexidade temporal da implementação será da ordem de \( O(\log|POI| \cdot |POI| \cdot ((|V| + |E|)\cdot \log|V|)) \).
+utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}. Uma vez que o objetivo do problema é distribuir as vacinas num dado tempo limite, foi feita uma divisão 
+recursiva dos centros de aplicação pertencentes ao cluster de um dado centro de distribuição. Deste modo, conseguiu-se minimizar o número de carrinhas utilizadas, cumprindo o tempo 
+de conservação das vacinas. Esta divisão foi feita a partir da coordenada cuja amplitude é maior do conjunto atual de centros de aplicação, aplicando-se aqui uma abordagem gananciosa. 
+Esta abordagem implica, assim, um aumento da complexidade num fator de $\log(|POI|)$.
+Uma vez que esta implementação final é uma junção destes vários algoritmos, acrescido do facto de se fazer a divisão descrita anteriormente, a ordem da sua complexidade temporal será igual à ordem da complexidade temporal
+do algoritmo com maior complexidade temporal multiplicada pela complexidade da divisão. Assim, a complexidade temporal da implementação será da ordem de \( O(\log|POI| \cdot |POI| \cdot (|V| + |E|)\cdot \log|V|) \).
 Para confirmar esta complexidade, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica esperada:
 
 \begin{figure}[H]
 	\includegraphics[width=0.6\textwidth]{./imgs/charts/MDVRPTimeComplexity.png}
 	\centering
-	\caption{Tempo de execução da solução final em ordem a $\log|POI| \cdot |POI| \cdot ((|V| + |E|)\cdot \log|V|)$.}
+	\caption{Tempo de execução da solução final em ordem a $\log|POI| \cdot |POI| \cdot (|V| + |E|)\cdot \log|V|$.}
 \end{figure}
 
 Os resultados obtidos foram aproximadamente lineares, pelo que se confirma a complexidade teórica analisada
@@ -934,10 +939,10 @@ face aos grafos utilizados.
 
 
 \chapter{Análise da conectividade do grafo}
-De acordo com o a informação dada no problema, pode haver obras na via pública que podem tornar algumas zonas inacessíveis.
-Mais do que isto, torna-se ainda necessário que, não só uma carrinha de distribuição consiga chegar aos centro de
-aplicação aos quais se pretende levar as vacinas, mas também que tenha caminho de volta. Para este fim, recorreu-se
-ao algoritmo de \hyperref[algo:kosaraju]{Kosaraju} que divide o grafo dado em componentes fortemente conexas.
+De acordo com a informação dada no problema, pode haver obras na via pública que podem tornar algumas zonas inacessíveis.
+Mais do que isto, torna-se ainda necessário que, não só as carrinhas de distribuição consigam chegar aos centros de
+aplicação aos quais se pretendem levar as vacinas, mas também que tenham caminho de volta. Para este fim, recorreu-se
+ao algoritmo de \hyperref[algo:kosaraju]{Kosaraju}, que divide o grafo dado nas suas componentes fortemente conexas.
 Aplicando isto ao problema em questão, é possível associar a cada centro de distribuição os respetivos Centros 
 de aplicação que, devido ao descrito em cima, têm de pertencer à mesma componente conexa. \par
 
@@ -1013,24 +1018,20 @@ necessário para distribuir as vacinas e o objetivo secundário a minimização 
 Para tal, esta implementação apoiou-se na utilização de vários algoritmos de grafos. \par
 
 O trabalho empírico realizado envolveu o cálculo do tempo que os dados algoritmos demoravam a executar numa dada situação, fazendo-se, 
-posteriormente, uma média pesada dos resultados obtidos em situações diferentes. Recolhidos estes resultados, tornou-se possível a 
-verificação das complexidades dos algoritmos implementados.
+posteriormente, uma média pesada dos resultados obtidos em situações diferentes. Recolhidos estes resultados, tornou-se possível confirmar as complexidades
+temporais teóricas dos algoritmos implementados.
 
-Para a realização da solução face ao problema descrito, fez-se, inicialmente, o estudo dos algoritmos dados nas aulas da unidade curricular de Concepção e Análise de Algoritmos do 2º Ano 
-do MIEIC, leccionada na FEUP. Posteriormente, foi feito um estudo do problema em questão e de possíveis algoritmos para a resolução do mesmo.
-Numa terceira e última fase procedeu-se à implementação da solução do problema. Esta solução consistiu na conjugação de vários algoritmos:
-de modo a verificar se temos caminho de ida e de volta entre os centros de distribuição e aplicação aplicou-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, 
-obtendo-se as componentes fortemente conexas; de seguida, fez-se a distribuição dos centros de aplicação pelos centros de distribuição em clusters, utilizando o 
-algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}; finalmente, para se obter o percurso final, onde as carrinhas saem dos centros de distribuição e distribuem
-as vacinas àos respetivos centros de aplicação, utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}. \par
+Para a realização da solução face ao problema descrito, fez-se, inicialmente, o estudo dos algoritmos dados nas aulas da unidade curricular de Concepção e Análise de Algoritmos. 
+Posteriormente, foi feito um estudo do problema em questão e de possíveis algoritmos para a resolução do mesmo.
+Numa terceira e última fase procedeu-se à implementação da solução do problema. Esta solução consistiu na conjugação de vários algoritmos.
 
 Este projeto apresenta, contudo, limitações, nomeadamente ao nível do tamanho das amostras utilizadas nas análises empíricas feitas e nas soluções obtidas. 
 O problema sobre o qual o projeto incide mostra-se de uma complexidade elevada, estando incluído na classe dos problemas NP-Hard, pelo que não é possível obter
 uma solução exata em tempo polinomial. Contudo, face aos resultados obtidos, conclui-se que a solução implementada fornece resultados bastante bons e passíveis de 
 serem usados em situações reais.
 
-Após a realização deste Trabalho, concluiu-se que a implementação de soluções para problemas de grafos aplicados a situações de vida real não é trivial, obrigando-nos a adaptar vários 
-algoritmos face aos problemas aonde serão aplicados. Desta forma, este projeto revelou-se importante para o nosso desenvolvimento individual e 
+Após a realização deste trabalho, concluiu-se que a implementação de soluções para problemas de grafos aplicados a situações de vida real não é trivial, obrigando-nos a adaptar vários 
+algoritmos face aos problemas onde serão aplicados. Desta forma, este projeto revelou-se importante para o nosso desenvolvimento individual e 
 estudantil, levando-nos a fazer várias pesquisas e implementações variadas dos algoritmos. Assim, concluiu-se que este trabalho
 é bastante pertinente face aos assuntos lecionados na unidade curricular de Concepção e Análise de Algoritmos, aumentando a nossa motivação sobre estes assuntos, uma 
 vez que realizamos soluções para problemas reais.
