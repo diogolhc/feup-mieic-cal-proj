@@ -1,11 +1,11 @@
 import random
 
-acCount = 22
+acCount = 18
 scCount = 3
 
-region = "porto"
+region = "espinho"
 
-outStrong = True
+outStrong = False
 
 with open(region + "_strong_nodes_latlng.txt", "r") as f:
     l = f.readlines()
