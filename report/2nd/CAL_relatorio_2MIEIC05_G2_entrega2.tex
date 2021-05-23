@@ -672,9 +672,61 @@ Uma vez que o algoritmo \hyperref[algo:floydwarshall]{Floyd-Warshall} tem uma co
 para a resolução do problema proposto. \par
 
 De forma a resolver o \hyperref[perspetivas:tsp]{Travelling Salesman Problem} descartou-se a utilização do algoritmo \hyperref[algo:bellmanheldkarp]{Bellman-Held-Karp} uma vez que apresenta
-uma complexidade muito elevada de \( O(|V|^3*2^(|V|)) \), pelo que foi implementado o algoritmo \hyperref[algo:nn]{Nearest neighbor}.
+uma complexidade muito elevada de \( O(|V|^2 \cdot 2^{|V|}) \), pelo que foi implementado o algoritmo \hyperref[algo:nn]{Nearest neighbor}.
 Tal como descrito no tópico do algoritmo \hyperref[algo:nn]{Nearest neighbor}, este algoritmo foi adaptado e, em vez de ser escolhido o vértice adjacente
-mais próximo, é escolhido o ponto de interesse mais próximo. \par
+mais próximo, é escolhido o ponto de interesse mais próximo como o demonstra o seguinte pseudo código: \par
+
+\begin{center}
+	\captionof{algorithm}{\textit{Nearest neighbor adapted}}
+	\begin{algorithmic}[1]
+		\State $G = (V, E)$
+		\State $POI \subseteq V$
+		\State $s \in V$\Comment{s is the starting vertex}
+		\newline
+
+		\Function{DijkstraNearestAC}{$G, s, POI$}
+		\For{$v \in V$}
+			\State $dist(v) \leftarrow INF$
+			\State $path(v) \leftarrow NULL$
+		\EndFor
+		\State $dist(s) \leftarrow 0$
+		\State $Q \leftarrow V$\Comment{Q is a min-priority queue of dist}
+		\While{$|Q| > 0$}
+			\State $v \leftarrow Q.extract\_min()$
+			\If{$v \in POI$}
+				\State $return$ $v$
+			\EndIf
+			\For{$u \in Adj(v)$}
+				\State $dist\_temp \leftarrow dist(v) + weight(v,u)$
+				\If{$dist\_temp < dist(u)$}
+					\State $dist(u) \leftarrow dist\_temp$
+					\State $path(u) \leftarrow v$
+					\State $Q.decrease\_key(u,dist(u))$
+				\EndIf
+			\EndFor
+		\EndWhile
+		\State $return$ $NULL$
+		\EndFunction
+		\newline
+
+		\Function{NN}{$G, s, POI$}
+		\State $runningPath \leftarrow \emptyset$
+		\State $count \leftarrow 0$
+
+		\While{$count < size(POI)$}
+			\State $v \leftarrow DijkstraNearestAC(G, s, POI)$\Comment{v is the nearest POI}
+			\State $count \leftarrow count + 1$
+			\State $visitedAC(v) \leftarrow true$
+			\State $runningPath.push(G.getPathFromTo(s, v))$
+			\State $POI.remove(v)$
+			\State $s \leftarrow v$
+
+		\EndWhile
+		\State $return$ $runningPath$
+		\EndFunction
+	\end{algorithmic}
+\end{center}
+
 
 Uma vez que podem haver vários centros de distribuição, foi necessário resolver o \hyperref[perspetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. Tal como 
 descrito na seccão \hyperref[perspetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}. \par 
