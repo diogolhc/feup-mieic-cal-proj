@@ -548,7 +548,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	\textit{Multi-depot vehicle routing problem} é uma generalização do \textit{Vehicle routing problem} no qual, para além de haver vários veículos, existem também vários armazéns, sendo este o problema com que estamos a lidar para fazer a distribuição das vacinas. \par
 	A abordagem que seguiremos será fazer \textit{clustering} dos centros de aplicação pelos centros de armazenamento de forma a subdividir este problema mais complexo em múltiplos subproblemas do \textit{Vehicle Routing problem}. \par
 	
-		\subsection{\textit{Multi-source Dijkstra}}
+		\subsection{\textit{Multi-source Dijkstra algorithm}}
 		\label{algo:msdijkstra}
 		O método usado para fazer os clusters será fazer múltiplas pesquisas em largura “simultaneamente” a partir de todos os centros de armazenamento até todos os centros de distribuição estarem no \textit{cluster} de um centro de armazenamento. Este método acaba por ser uma variante do algoritmo de \textit{Dijkstra} com múltiplas origens.
 
@@ -659,6 +659,7 @@ a resolução do problema. \par
 
 
 \chapter{Algoritmos efetivamente implementados}
+\label{implementedAlgos}
 Para a solução do problema proposto, foram implementados parte dos algoritmos descritos em \hyperref[perspetivas]{Perspetivas de solução}. \par
 
 Para efetuar a análise da \hyperref[perspetivas:acessibilidade]{Acessibilidade}, foram implementados os algoritmos \hyperref[algo:dfs]{DFS} e \hyperref[algo:bfs]{BFS}. \par
@@ -732,14 +733,91 @@ mais próximo, é escolhido o ponto de interesse mais próximo como o demonstra 
 
 
 Por outro lado uma vez que pode haver vários centros de distribuição, foi necessário resolver o \hyperref[perpetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. 
-Tal como descrito na seccão \hyperref[perpetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}. \par 
-
-
+Tal como descrito na seccão \hyperref[perpetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}.
 
 
 
 \chapter{Análise de complexidade dos algoritmos implementados}
 
+De forma a avaliar a qualidade da solução implementada, procedeu-se à análise da complexidade das soluções algorítmicas implementadas. 
+Para tal, foram feitas análises teóricas e empíricas.
+
+//TODO ANALISE ESPACIAL
+
+\section{Depth-First-Search algorithm}
+Tal como descrito na secção \hyperref[algo:dfs]{3.1.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/DFSTimeComplexity.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
+
+
+\section{Breath-First-Search algorithm}
+Tal como descrito na secção \hyperref[algo:bfs]{3.1.2}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/BFSTimeComplexity.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
+
+
+\section{Kosaraju algorithm}
+Tal como descrito na secção \hyperref[algo:kosaraju]{3.2.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/KosarajuTimeComplexity.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
+
+
+\section{Dijkstra algorithm}
+Tal como descrito na secção \hyperref[algo:dijkstra]{3.3.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/DijkstraTime.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
+
+
+\section{A* algorithm}
+Tal como descrito na secção \hyperref[algo:astar]{3.3.2}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/AstarTime.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
+
+
+\section{Nearest Neighbor algorithm}
+O Algoritmo Nearest Neighbor implementado não tem a complexidade temporal teórica de \( O(|V|^2)\) analisada na secção \hyperref[algo:nn]{3.4.2}, uma vez que foi feita a 
+adaptação descrita na seccão \hyperref[implementedAlgos]{Algoritmos efetivamente implementados}. Desta forma, o algoritmo irá percorrer \(|POI|\) vezes o algoritmo de Dijkstra
+para obter o ponto de interesse mais próximo não visitado ao ponto de interesse atual. Desta forma, terá uma complexidade da ordem de \( O(|POI| \cdot ((|V| + |E|)\cdot \log |V|)) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo onze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+\includegraphics[width=0.8\textwidth]{./imgs/charts/NNTimeComplexity.png}
+
+Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, 
+pelo que se confirma a complexidade teórica analisada face aos grafos utilizados.
+
+
+\section{Multi-source Dijkstra algorithm}
+Tal como descrito na secção \hyperref[algo:algo:msdijkstra]{3.6.1}, a complexidade temporal deste algoritmo é da ordem de \( O((|V| + |E|)\cdot \log |V|) \).
+Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
+O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
+
+//TODO GRAFICO MSDIJKSTRA
 
 
 \chapter{Análise da conectividade do grafo}
@@ -785,6 +863,12 @@ nos mapas da componente fortemente conexa os vértices estão todos a amarelo.
 
 \chapter{Conclusão}
 
+// TODO Mudar esta conclusão
+De forma a resolver o problema proposto foram conjugados os algoritmos descritos acima, como se explica de seguida: 
+de modo a verificar se temos caminho de ida e de volta entre os centros de distribuição e aplicação aplica-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, 
+obtendo-se as componentes fortemente conexas; de seguida, faz-se a distribuição dos centros de aplicação pelos centros de distribuição em clusters, utilizando o 
+algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}; posteriormente, para se obter o percurso final, onde as carrinhas saem dos centros de distribuição e distribuem
+as vacinas àos respetivos centros de aplicação, utiliza-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}.
 
 
 \chapter{Contribuição}
