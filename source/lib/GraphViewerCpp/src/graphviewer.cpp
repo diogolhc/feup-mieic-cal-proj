@@ -29,9 +29,6 @@ void GraphViewer::ZipEdges::append(const VertexArray &a){
 }
 const vector<Vertex>& GraphViewer::ZipEdges::getVertices() const{ return vertices; }
 
-const int DEFAULT_WIDTH  = 800;
-const int DEFAULT_HEIGHT = 600;
-
 string getPath(const string &filename){
     const size_t last_slash_idx = min(filename.rfind('\\'), filename.rfind('/'));
     if(last_slash_idx == string::npos){
@@ -65,8 +62,9 @@ void GraphViewer::createWindow(unsigned int width, unsigned int height){
     this->width  = width;
     this->height = height;
 
-    windowOpen = true;
     main_thread = new thread(&GraphViewer::run, this);
+    unique_lock<mutex> lock(isWindowOpenCVMutex);
+    isWindowOpenCV.wait(lock);
 }
 
 void GraphViewer::closeWindow(){
@@ -77,19 +75,33 @@ void GraphViewer::closeWindow(){
 }
 
 void GraphViewer::setCenter(const sf::Vector2f &center){
-    this->center = center;
+    {
+        lock_guard<mutex> lock(graphMutex);
+        this->center = center;
+    }
     if(isWindowOpen()){
         lock_guard<mutex> lock(graphMutex);
         recalculateView();
     }
 }
 
-void GraphViewer::setScale(double scale){
-    this->scale = scale;
+const sf::Vector2f &GraphViewer::getCenter() const{
+    return center;
+}
+
+void GraphViewer::setScale(float scale){
+    {
+        lock_guard<mutex> lock(graphMutex);
+        this->scale = scale;
+    }
     if(isWindowOpen()){
         lock_guard<mutex> lock(graphMutex);
         recalculateView();
     }
+}
+
+float GraphViewer::getScale() const {
+    return scale;
 }
 
 GraphViewer::Node& GraphViewer::addNode(id_t id, const sf::Vector2f &position){
@@ -159,13 +171,22 @@ void GraphViewer::removeEdge_noLock(GraphViewer::id_t id){
     if(zipEdges) updateZip();
 }
 
+void GraphViewer::setBackgroundColor(const sf::Color &color){
+    lock_guard<mutex> lock(graphMutex);
+    background_color = color;
+}
+
+const sf::Color &GraphViewer::getBackgroundColor() const {
+    return background_color;
+}
+
 void GraphViewer::setBackground(const string &path, const sf::Vector2f &position, const sf::Vector2f &scale, double alpha){
     lock_guard<mutex> lock(graphMutex);
     background_texture.loadFromFile(path);
     background_sprite.setTexture(background_texture);
     background_sprite.setPosition(position);
     background_sprite.setScale(scale);
-    background_sprite.setColor(sf::Color(255, 255, 255, alpha*255.0));
+    background_sprite.setColor(sf::Color(255, 255, 255, (unsigned char)(alpha*255.0)));
 }
 
 void GraphViewer::clearBackground(){
@@ -194,8 +215,12 @@ void GraphViewer::unlock(){ graphMutex.unlock(); }
 void GraphViewer::updateZip(){
     lock_guard<mutex> lock(graphMutex);
     zip = ZipEdges();
-    for(const auto &p: edges)
-        zip.append(*p.second->getShape());
+    for(const auto &p: edges) {
+        const Edge *e = p.second;
+        if(!e->isEnabled()) continue;
+        const VertexArray *shape = e->getShape();
+        if(shape != nullptr) zip.append(*shape);
+    }
 }
 
 void GraphViewer::run(){
@@ -213,9 +238,13 @@ void GraphViewer::run(){
     Vector2f posMouseInitial;
 
     recalculateView();
-
+    {
+        lock_guard<mutex> lock(isWindowOpenCVMutex);
+        windowOpen = true;
+        isWindowOpenCV.notify_all();
+    }
     while (window->isOpen()){
-        Event event;
+        Event event{};
         while (window->pollEvent(event)){
             switch(event.type){
                 case Event::Closed            : window->close(); break;
@@ -227,8 +256,8 @@ void GraphViewer::run(){
                             isLeftClickPressed = true;
                             centerInitial = center;
                             posMouseInitial = Vector2f(
-                                event.mouseButton.x,
-                                event.mouseButton.y
+                                (float) event.mouseButton.x,
+                                (float) event.mouseButton.y
                             );
                             break;
                         default: break;
@@ -244,13 +273,16 @@ void GraphViewer::run(){
                     break;
                 case Event::MouseMoved:
                     if(isLeftClickPressed){
-                        Vector2f mouse_pos(event.mouseMove.x, event.mouseMove.y);
+                        Vector2f mouse_pos(
+                            (float) event.mouseMove.x,
+                            (float) event.mouseMove.y
+                        );
                         center = centerInitial - (mouse_pos - posMouseInitial)*scale;
                         recalculateView();
                     }
                     break;
                 case Event::TextEntered:
-                    switch(toupper(event.text.unicode)){
+                    switch(toupper((int) event.text.unicode)){
                         case 'D': debug_mode = !debug_mode; break;
                         default: break;
                     }
@@ -270,7 +302,7 @@ void GraphViewer::run(){
 
 void GraphViewer::draw() {
     lock_guard<mutex> lock(graphMutex);
-    window->clear(Color::White);
+    window->clear(background_color);
 
     window->setView(*view);
     window->draw(background_sprite);
@@ -281,19 +313,24 @@ void GraphViewer::draw() {
         } else {
             for(const auto &edgeIt: edges){
                 const Edge &edge = *edgeIt.second;
-                window->draw(*edge.getShape());
+                if(!edge.isEnabled()) continue;
+                const VertexArray *shape = edge.getShape();
+                if(shape != nullptr) window->draw(*shape);
             }
         }
     }
     if(enabledNodes){
         for(const auto &nodeIt: nodes){
             const Node &node = *nodeIt.second;
-            window->draw(*node.getShape());
+            if(!node.isEnabled()) continue;
+            const Shape *shape = node.getShape();
+            if(shape != nullptr) window->draw(*shape);
         }
     }
     if(enabledEdges && enabledEdgesText){
         for(const auto &edgeIt: edges){
             const Edge &edge = *edgeIt.second;
+            if(!edge.isEnabled()) continue;
             if(edge.getText().getString() != "")
                 window->draw(edge.getText());
         }
@@ -301,6 +338,7 @@ void GraphViewer::draw() {
     if(enabledNodes && enabledNodesText){
         for(const auto &nodeIt: nodes){
             const Node &node = *nodeIt.second;
+            if(!node.isEnabled()) continue;
             if(node.getText().getString() != "")
                 window->draw(node.getText());
         }
@@ -315,17 +353,17 @@ void GraphViewer::draw() {
 
 void GraphViewer::drawDebug(){
     window->setView(*debug_view);
-    
+
     string debugInfo;
     debugInfo += "FPS: " + to_string(int(fps_monitor.getFPS())) + "\n";
-    
+
     if(debugInfo[debugInfo.size()-1] == '\n')
         debugInfo = debugInfo.substr(0, debugInfo.size()-1);
     debug_text.setString(debugInfo);
     Vector2f size = Vector2f(window->getSize());
     FloatRect bounds = debug_text.getLocalBounds();
     debug_text.setOrigin(0, bounds.height);
-    debug_text.setPosition(Vector2f(0.2*DEBUG_FONT_SIZE, size.y-0.7*DEBUG_FONT_SIZE));
+    debug_text.setPosition(Vector2f(0.2f*DEBUG_FONT_SIZE, size.y-0.7f*DEBUG_FONT_SIZE));
 
     window->draw(debug_text);
 }
@@ -340,15 +378,12 @@ void GraphViewer::onScroll(float delta){
 }
 
 void GraphViewer::recalculateView(){
-    Vector2f size = static_cast<Vector2f>(window->getSize());
+    Vector2f size((float) window->getSize().x, (float) window->getSize().y);
     *view = View(center, size*scale);
     *debug_view = View(FloatRect(0.0, 0.0, size.x, size.y));
-
-    auto bounds = background_sprite.getLocalBounds();
-    Vector2f scaleVec(scale*size.x/bounds.width, scale*size.y/bounds.height);
 }
 
-bool GraphViewer::isWindowOpen() {
+bool GraphViewer::isWindowOpen() const {
     lock_guard<mutex> lock(graphMutex);
     return windowOpen;
 }

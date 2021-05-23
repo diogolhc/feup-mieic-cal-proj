@@ -1,9 +1,6 @@
 #include <iostream>
 #include "View.h"
 #include "graphviewer.h"
-#include "../Graph.h"
-#include "../GraphFiles.h"
-#include "../agents/Truck.h"
 #include "../algorithms/strongly-connected-components/Kosaraju.h"
 
 
@@ -21,7 +18,7 @@ void viewDistribution(GraphViewer &gv, const Graph *graph) {
 
         switch (v->getType()) {
             case NONE:
-                node.setSize(0.0); // TODO not print
+                node.setSize(0.0);
                 break;
             case STORAGE_CENTER:
                 node.setColor(GraphViewer::GREEN);
@@ -170,11 +167,6 @@ void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentId
                 0.8
         );
     }
-/*
-    gv.setEnabledNodes(false); // Disable node drawing
-    gv.setEnabledEdgesText(false); // Disable edge text drawing
-    gv.setZipEdges(true);
-*/
 
     gv.createWindow(1600, 900);
     gv.join();
