@@ -5,9 +5,7 @@
 #include "algorithms/strongly-connected-components/Kosaraju.h"
 #include "algorithms/vehicle-routing/MultiSourceDijkstra.h"
 
-const bool PASS_LIMIT_TIME = true;
-
-// res is empty
+// res is cleared
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
     if (original.empty())
         return;
@@ -70,7 +68,7 @@ void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> origina
 }
 
 
-void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, double distLim, const std::vector<ApplicationCenter *> &original){
+void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, double distLim, bool passLimitTime, const std::vector<ApplicationCenter *> &original){
 
     vector<Truck*> & trucks = storageCenter->getTrucks();
 
@@ -88,7 +86,7 @@ void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, double dist
 
     if (trucks.at(trucks.size()-1)->getDistanceCovered() > distLim){
         if (original.size() == 1) {
-            if(!PASS_LIMIT_TIME){
+            if(!passLimitTime){
                 trucks.at(trucks.size()-1)->undo();
                 trucks.erase(trucks.end()-1);
             }
@@ -102,14 +100,14 @@ void recursiveTruckPath(Graph *graph, StorageCenter * storageCenter, double dist
         trucks.at(trucks.size()-1)->undo();
         trucks.erase(trucks.end()-1);
 
-        recursiveTruckPath(graph, storageCenter, distLim, res.at(0));
-        recursiveTruckPath(graph, storageCenter, distLim, res.at(1));
+        recursiveTruckPath(graph, storageCenter, distLim, passLimitTime, res.at(0));
+        recursiveTruckPath(graph, storageCenter, distLim, passLimitTime, res.at(1));
     }
 
 }
 
 
-void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim) {
+void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim, bool passLimitTime) {
     Graph *graph = graphFile->getGraph();
 
     Kosaraju kosaraju;
@@ -130,7 +128,6 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim) {
         for (size_t id : clusters.at(storageCenter.getVertex()->getId())) {
             for (ApplicationCenter applicationCenter : graphFile->getApplicationCenters()) {
                 if ( applicationCenter.getVertex()->getId() == id ) {
-                    // ApplicationCenter ac(graph->findVertex(id), applicationCenter.getVaccinesNeeded());
                     storageCenter.addApplicationCenter(applicationCenter);
                     break;
                 }
@@ -143,7 +140,7 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim) {
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
 
-        recursiveTruckPath(graph, &storageCenter, timeLim, original);
+        recursiveTruckPath(graph, &storageCenter, timeLim, passLimitTime, original);
     }
 
     // TODO this should be done outside in the outer class

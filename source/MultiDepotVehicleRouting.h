@@ -4,6 +4,6 @@
 #include "GraphFiles.h"
 
 
-void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim);
+void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim, bool passTimeLim);
 
 #endif //SOURCE_MULTIDEPOTVEHICLEROUTING_H
