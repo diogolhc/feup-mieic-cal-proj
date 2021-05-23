@@ -7,8 +7,6 @@ AStar::AStar(Graph *graph, Vertex *source, Vertex *dest) : graph(graph), s(sourc
 
 void AStar::run() {
 
-    cout << "Edges size " << this->graph->getEdges().size() << endl;
-
     this->vertexViewedCount = 0;
 
     if (this->s == nullptr || this->d == nullptr)

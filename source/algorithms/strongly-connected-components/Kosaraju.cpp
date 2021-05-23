@@ -14,7 +14,6 @@ void Kosaraju::DFS1(Graph *g, Vertex *s, stack<Vertex *> &stack) {
     stack.push(s);
 }
 
-// g here is transposed
 void Kosaraju::DFS2(Graph *g, size_t component, Vertex *s) {
     s->setVisited(true);
     s->setSCC(component);

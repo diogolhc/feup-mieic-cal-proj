@@ -5,7 +5,7 @@
 #include "algorithms/strongly-connected-components/Kosaraju.h"
 #include "algorithms/vehicle-routing/MultiSourceDijkstra.h"
 
-// res works as the "return" its value are cleared
+// res works as the "return", its values are cleared
 void splitApplicationCentersSameCluster(std::vector<ApplicationCenter *> original, std::vector< vector<ApplicationCenter *> > &res) {
     if (original.empty())
         return;

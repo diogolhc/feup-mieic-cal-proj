@@ -77,5 +77,3 @@ std::vector<Vertex *> NearestNeighbor::run() {
 
     return running_path;
 }
-
-

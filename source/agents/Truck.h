@@ -1,13 +1,8 @@
-//
-// Created by sense on 16/05/2021.
-//
-
 #ifndef SOURCE_TRUCK_H
 #define SOURCE_TRUCK_H
 
 #include <vector>
 
-//#include "ApplicationCenter.h"
 #include "graphviewer.h"
 
 class Edge;

@@ -1,7 +1,3 @@
-//
-// Created by sense on 16/05/2021.
-//
-
 #ifndef SOURCE_STORAGECENTER_H
 #define SOURCE_STORAGECENTER_H
 

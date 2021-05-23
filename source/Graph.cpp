@@ -1,6 +1,5 @@
 #include <vector>
 #include <math.h>
-#include <iostream>
 
 #include "MutablePriorityQueue.h"
 #include "Graph.h"
@@ -220,7 +219,6 @@ void Edge::resetTrucks() {
 *  Dists:
 */
 
-// https://stackoverflow.com/a/21623206
 double Coordinates::dist(Coordinates coordinates) {
     double p = 0.017453292519943295;    // pi / 180
     double a = 0.5 - cos((coordinates.lat - this->lat) * p) / 2 +

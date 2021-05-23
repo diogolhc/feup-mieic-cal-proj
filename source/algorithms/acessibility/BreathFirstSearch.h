@@ -5,7 +5,6 @@
 
 
 class BreathFirstSearch {
-private:
 public:
     void run(Graph &g, Vertex *source);
 };
