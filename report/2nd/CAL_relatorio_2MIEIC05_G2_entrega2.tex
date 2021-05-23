@@ -11,6 +11,7 @@
 \usepackage{fancyhdr}
 \usepackage{chngcntr}
 
+\captionsetup[figure]{font=small}
 
 \counterwithout{figure}{chapter}
 
@@ -778,7 +779,7 @@ O gráfico representado de seguida mostra os resultados obtidos em ordem à comp
 \end{figure}
 
 
-Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
 analisada face aos grafos utilizados.
 
 
@@ -810,7 +811,7 @@ O gráfico representado de seguida mostra os resultados obtidos em ordem à comp
 \end{figure}
 
 
-Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
 analisada face aos grafos utilizados.
 
 
@@ -844,7 +845,7 @@ O gráfico representado de seguida mostra os resultados obtidos em ordem à comp
 \end{figure}
 
 
-Como o gráfico indica, obteve-se uma linearidade dos resultados em relação à sua complexidade temporal, 
+Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em relação à sua complexidade temporal, 
 pelo que se confirma a complexidade teórica analisada face aos grafos utilizados.
 
 
@@ -853,7 +854,14 @@ Tal como descrito na secção \hyperref[algo:algo:msdijkstra]{3.6.1}, a complexi
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo nove vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
-//TODO GRAFICO MSDIJKSTRA
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{./imgs/charts/MSDijkstraTimeComplexity.png}
+	\centering
+	\caption{Tempo de execução do algoritmo Multi-Source Dijkstra em ordem a $ (|V|+|E|)\cdot \log |V|$.}
+\end{figure}
+
+Como o gráfico indica, obtiveram-se resultados aproximadamente lineares em relação à sua complexidade temporal, pelo que se confirma a complexidade teórica
+analisada face aos grafos utilizados.
 
 
 \chapter{Análise da conectividade do grafo}
