@@ -749,10 +749,10 @@ Tal como descrito na seccão \hyperref[perpetivas:mdvrp]{3.6}, para resolver o p
 De forma a avaliar a qualidade da solução implementada, procedeu-se à análise da complexidade das soluções algorítmicas implementadas. 
 Para tal, foram feitas análises teóricas e empíricas.
 
-//TODO ANALISE ESPACIAL
 
 \section{Depth-First-Search algorithm}
-Tal como descrito na secção \hyperref[algo:dfs]{3.1.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Tal como descrito na secção \hyperref[algo:dfs]{3.1.1}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a complexidade espacial 
+é \(O(V)\) uma vez que a implementação utilizada deste algoritmo necessita de guardar a informação de se os nós já foram visitados ou não.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
@@ -768,7 +768,8 @@ analisada face aos grafos utilizados.
 
 
 \section{Breath-First-Search algorithm}
-Tal como descrito na secção \hyperref[algo:bfs]{3.1.2}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \).
+Tal como descrito na secção \hyperref[algo:bfs]{3.1.2}, a complexidade temporal deste algoritmo é da ordem de \( O(|V| + |E|) \) e a sua complexidade espacial
+é de ordem constante \(O(V)\) uma vez que a implementação deste algoritmo necessita de guardar os vértices ainda não visitados numa queue.
 Para se fazer a análise empírica do algoritmo, foi utilizado o algoritmo quinze vezes em cada mapa (Porto, PortoSCC, Espinho, EspinhoSCC, Penafiel, PenafielSCC).
 O gráfico representado de seguida mostra os resultados obtidos em ordem à complexidade temporal teórica:
 
