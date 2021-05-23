@@ -37,9 +37,8 @@ void viewDistribution(GraphViewer &gv, const Graph *graph) {
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
@@ -85,9 +84,8 @@ void viewScc(GraphViewer &gv, const Graph *graph, const size_t maxSccComponentId
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
@@ -121,9 +119,8 @@ void viewShortestPath(GraphViewer &gv, const Graph *graph) {
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
