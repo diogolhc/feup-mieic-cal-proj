@@ -55,10 +55,10 @@ void MultiSourceDijkstra::run() {
                     path.at(destinationVertex) = v;
 
                     destinationVertex->setCluster(v->getCluster());
+                    vertexQueue.insertOrDecreaseKey(destinationVertex);
                 } else {
                         //TODO see what todo (noice)
                 }
-                vertexQueue.insertOrDecreaseKey(destinationVertex);
             }
         }
     }
