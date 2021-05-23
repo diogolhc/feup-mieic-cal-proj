@@ -136,6 +136,18 @@ void multiDepotVehicleRouting(GraphFile *graphFile, double timeLim, bool passLim
     }
 
     for (StorageCenter & storageCenter: graphFile->getStorageCenters()) {
+        bool found = false;
+        for (const ApplicationCenter & applicationCenter : graphFile->getApplicationCenters()) {
+            if (storageCenter.getVertex()->getSCC() == applicationCenter.getVertex()->getSCC()) {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            storageCenter.getVertex()->setType(NOT_USED_SC);
+    }
+
+    for (StorageCenter & storageCenter: graphFile->getStorageCenters()) {
         std::vector<ApplicationCenter *> original;
         for (ApplicationCenter & applicationCenter : storageCenter.getAcCluster())
             original.push_back(&applicationCenter);
