@@ -15,7 +15,6 @@ private:
     void calculateAndShowSCC();
     void distributeSubMenu();
     void distributeAndShow(double timeLim, bool passTimeLim);
-    void aStarSubMenu();
     void aStarAndShow(Vertex *source, Vertex *dest);
     void dijkstraAndShow(Vertex *source, Vertex *dest);
     void shortestPathSubMenu();

@@ -216,7 +216,6 @@ void Application::distributeSubMenu() {
         cin.ignore(9999, '\n');
 
         if (timeLim > 0) {
-            //this->distributeAndShow(timeLim);
             break;
         } else {
             cout << "Invalid time" << endl;
@@ -248,36 +247,6 @@ void Application::distributeAndShow(double timeLim, bool passTimeLim) {
     multiDepotVehicleRouting(this->graphFileSelected, timeLim, passTimeLim);
     view(this->graphFileSelected, DISTRIBUTION);
     this->graphFileSelected->reset();
-}
-
-
-void Application::aStarSubMenu() {
-    Graph *graph = this->graphFileSelected->getGraph();
-
-    size_t source, dest;
-    while (true) {
-        cout << "Insert source id and destination id: <source> <destination>\n";
-        cout << "> ";
-        cin >> source >> dest;
-
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(9999, '\n');
-            continue;
-        }
-        cin.ignore(9999, '\n');
-
-        Vertex *s = graph->findVertex(source);
-        Vertex *d = graph->findVertex(dest);
-
-        if (s == nullptr || d == nullptr) {
-            cout << "Invalid ids\n";
-        } else {
-            this->aStarAndShow(s, d);
-            break;
-        }
-
-    }
 }
 
 
