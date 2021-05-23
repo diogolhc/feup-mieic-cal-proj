@@ -56,7 +56,7 @@ Vertex *Dijkstra::getNearestAC(Truck * truck) {
     MutablePriorityQueue<Vertex> vertexQueue;
     vertexQueue.insert(v);
 
-    cout << "E vai uma" << endl;
+    cout << "S-";
 
     while(!vertexQueue.empty()) {
 
@@ -69,7 +69,6 @@ Vertex *Dijkstra::getNearestAC(Truck * truck) {
             for (ApplicationCenter *applicationCenter : aclist){
                 Vertex * vertex = applicationCenter->getVertex();
                 if (vertex->getId() == v->getId()){
-                    cout << "saiu aqui" << endl;
                     found  = true;
                     break;
                 }
@@ -93,7 +92,7 @@ Vertex *Dijkstra::getNearestAC(Truck * truck) {
         }
     }
 
-    cout << "Ja acabou jessica " << (v->getType() == APPLICATION_CENTER) << endl;
+    cout << (v->getType() == APPLICATION_CENTER) << "-" << v->getDist() << "; ";
 
     return v;
 }
