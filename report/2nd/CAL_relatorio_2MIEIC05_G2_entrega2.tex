@@ -609,34 +609,78 @@ O nosso programa deve permitir as seguintes funcionalidades:
 \chapter{Funcionalidades e cenários implementados}
 \label{func}
 O nosso programa vai acompanhado dos seguintes mapas: Porto, Espinho, Penafiel e correspondentes componentes
-fortemente conexas de cada um dos referidos. \par
+fortemente conexas de cada um dos referidos sendo que para a sua visualização dos mesmos é utilizada 
+a ferramenta recomendada \textit{GraphViewerCpp}. \par
 
 Nestes mapas é possível realizar as seguintes operações:
-\begin{itemize}
-	\item Dar load aos mapas sendo esta operação seguida da visualização dos mesmos com as localizações dos centros
-		de aplicação e armazenamento.
-	\item Determinar as componentes fortemente conexas do grafo, sendo mostrado posteriormente a amarelo a componente maior e, a azul,
-		todas as restantes componentes.
-	\item Determinar o caminho mais curto entre dois vértices, sendo mostrado posteriormente o caminho, os vertices visitados
-		pelo algoritmo, e a contagem de vértices visitados.
-		//TODO mencionar dijkstra/astar e adicionar dijkstra interface para comparar
-	\item Fazer a distribuição das vacinas completamente, tendo que ser passado ainda como input o tempo limite de conservação em minutos das vacinas.
-		É feita a atribuição de rotas para carrinhas desde os centros de armazenamento até aos centros de aplicação,
-		sendo posteriormente mostrada a distância percorrida por cada carrinha. Para além disto, é mostrado o grafo utilizado
-		da seguinte forma: Centros de aplicação a amarelo quando na sua componente fortemente conexa está presente pelo menos um centro de armazenamento, vermelho caso contrário;
-		Centros de armazenamento a verde quando na sua componente fortemente conexa está presente pelo menos um centro de aplicação, laranja caso contrário;
-		A cada carrinha é atribuída uma cor aleatoriamente que é usada para identificar as arestas por onde ela passa. Se numa aresta passar mais que uma vez uma carrinha, mesmo que seja a mesma,
-		essa aresta é colorida a vermelho para dar essa indicação. \par
 
-		O programa recebe ainda um outro input que permite ao utilizador introduzir se deseja distribuir as vacinas dos centros de distribuição para os centros de aplicação mesmo que isso 
-		leve a que o tempo de distribuição aos centros de aplicação ultrapasse o tempo limite introduzido, apesar de ser o tempo mínimo possível entre o centro de aplicação e o respetivo
-		centro de distribuição. Estes casos são comuns quando é dado como input um tempo extremamente baixo, impedindo que seja cumprido esse tempo mínimo mesmo que se vá diretamente, a partir do centro
-		de distribuição, ao respetivo centro de aplicação. \par
+\section{\textit{Load} de mapas}
+Inicialmente o programa permite escolher entre um conjunto de mapas, sendo que, mesmo após dar load a um deles, é
+possível dar load a outro. Após cada load o utilizador visualiza o mapa sendo possível identificar claramente
+os centros de distribuição e os centros de aplicação.
 
-		//TODO adicionar mais cenas(?) imagens de exemplo não ficariam mal...
+\begin{figure}[H]
+	\includegraphics[width=1.0\textwidth]{./imgs/funcs/load.png}
+	\centering
+	\caption{Visualização após \textit{load} do mapa do \textit{Porto}.}
+\end{figure}
 
-\end{itemize}
 
+\section{Determinar as componentes fortemente conexas de um grafo}
+O programa permite determinar as componentes fortemente conexas de um dado grafo, sendo mostrado posteriormente
+a amarelo a componente maior e, a azul, todas as restantes componentes.
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\textwidth]{./imgs/funcs/scc.png}
+	\centering
+	\caption{Visualização das componentes fortemente conexas do Porto.}
+\end{figure}
+
+
+\section{Determinar caminho mais curto entre dois vértices}
+É possível determinar o caminho mais curto entre dois vértices utilizando dois algoritmos: \hyperref[algo:astar]{A*} ou \hyperref[algo:dijkstra]{Dijkstra},
+sendo mostrado posteriormente o caminho, os vertices visitados pelo algoritmo, e a contagem de vértices visitados. \par
+Desta forma é possível comparar os resultados obtidos pelos dois algoritmos nomeadamente o número de vértices que cada um processa.
+
+
+\subsection{A* \textit{algorithm}}
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\textwidth]{./imgs/funcs/astar.png}
+	\centering
+	\caption{Visualização da execução do algoritmo \textit{A*}.}
+\end{figure}
+
+
+\subsection{Dijkstra \textit{algorithm}}
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\textwidth]{./imgs/funcs/dijkstra.png}
+	\centering
+	\caption{Visualização da execução do algoritmo \textit{Dijkstra}.}
+\end{figure}
+
+
+\section{Fazer a distribuição das vacinas}
+O programa permite ainda fazer a distribuição das vacinas completamente.
+É pedido como input input o tempo limite de conservação em minutos das vacinas. Neste programa é assumido que a velocidade das carrinhas
+utilizadas no transporte das vacinas é tal que é numericamente igual às distancias percorridas. Isto aconteceu por não termos dados relativos às velocidades máximas
+em cada uma das arestas. \par
+É feita a atribuição de rotas para carrinhas desde os centros de armazenamento até aos centros de aplicação,
+sendo posteriormente mostrada o tempo dispendido por cada carrinha. Para além disto, é mostrado o grafo utilizado
+da seguinte forma: Centros de aplicação a amarelo quando na sua componente fortemente conexa está presente pelo menos um centro de armazenamento, vermelho caso contrário;
+Centros de armazenamento a verde quando na sua componente fortemente conexa está presente pelo menos um centro de aplicação, laranja caso contrário;
+A cada carrinha é atribuída uma cor aleatoriamente que é usada para identificar as arestas por onde ela passa. 
+Se numa aresta passar mais que uma vez uma carrinha, mesmo que seja a mesma, essa aresta é colorida a vermelho para dar essa indicação. \par
+
+O programa recebe ainda um outro input que permite ao utilizador escolher se deseja visualizar os caminhos mais rápidos posssíveis mesmo que o tempo limite seja ultrapassado.
+Esta situação pode acontecer quando é introduzido um tempo limite extremamente baixo.
+
+\begin{figure}[H]
+	\includegraphics[width=1.0\textwidth]{./imgs/funcs/distribute.png}
+	\centering
+	\caption{Visualização da distribuição das vacinas no Porto.}
+\end{figure}
 
 
 \chapter{Estruturas de dados utilizadas}
