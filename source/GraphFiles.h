@@ -32,6 +32,7 @@ public:
     vector<size_t> getStorage_centers_ids() const;
     vector<StorageCenter> & getStorageCenters();
     vector<ApplicationCenter> getApplicationCenters();
+    GraphFile* getGraphFile();
     void reset();
 };
 

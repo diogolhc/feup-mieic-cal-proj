@@ -10,6 +10,8 @@
 
 using namespace std;
 
+bool portoLoaded = false;
+
 
 Application::Application(const string &files_root) : graphFiles(files_root) {}
 

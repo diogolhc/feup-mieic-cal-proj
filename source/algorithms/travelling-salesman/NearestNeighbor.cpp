@@ -24,6 +24,8 @@ std::vector<Vertex *> NearestNeighbor::run() {
 
     vector<ApplicationCenter *> aclist = truck->getACList();
 
+    cout << "NN for " << this->s->getId() << " : ";
+
     while(count1 < aclist.size()){
 
         Vertex * s1 = v;
@@ -51,6 +53,8 @@ std::vector<Vertex *> NearestNeighbor::run() {
         dijkstra.changeOriginId(v->getId());
 
     }
+
+    cout << endl;
 
     this->running_path.push_back(v);
 
