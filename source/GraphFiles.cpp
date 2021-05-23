@@ -28,8 +28,7 @@ GraphFile* GraphFile::getGraphFile(){
     if (!this->loaded)
         this->load();
     return this;
-};
-
+}
 
 void GraphFile::load() {
     ifstream node_stream_latlng(nodes_file_latlng);
@@ -91,7 +90,7 @@ void GraphFile::load() {
         Vertex *v = graph.findVertex(id);
         v->setType(STORAGE_CENTER);
         this->storage_centers_ids.push_back(id);
-        this->storageCenters.emplace_back(v, vector<Truck*>()); //TODO change this
+        this->storageCenters.emplace_back(v, vector<Truck*>());
     }
 
     centers_stream >> size;
@@ -112,7 +111,7 @@ double GraphFile::getScale() {
     return this->scale;
 }
 
-std::string GraphFile::getbackGroundImage() const {
+std::string GraphFile::getBackGroundImage() const {
     return this->background_file;
 }
 
@@ -133,15 +132,8 @@ void GraphFile::reset() {
         storageCenter.clearTrucks();
         storageCenter.clearApplicationCenters();
     }
-    /*for (Edge * edge : this->graph.getEdges()){
-        edge->resetTrucks();
-        edge->setPassedShortestPath(false);
-    }*/
-
 }
 
-// TODO maybe get this values by a single file latter ?,
-// TODO find images and set their respective center here
 GraphFiles::GraphFiles(const std::string &filesDir) :
         Porto(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_full_nodes_latlng.txt", filesDir + "/porto_full_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_centers.txt"),
         PortoStrongComponent(1.0/7000.0, {.lat = 41.146, .lon = -8.6}, filesDir + "/porto_strong_nodes_latlng.txt", filesDir + "/porto_strong_edges.txt", filesDir + "/porto.jpg", filesDir + "/porto_strong_centers.txt"),

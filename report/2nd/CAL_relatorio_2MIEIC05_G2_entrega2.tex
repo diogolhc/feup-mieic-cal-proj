@@ -1006,12 +1006,34 @@ nos mapas da componente fortemente conexa os vértices estão todos a amarelo.
 
 \chapter{Conclusão}
 
-// TODO Mudar esta conclusão
-De forma a resolver o problema proposto foram conjugados os algoritmos descritos acima, como se explica de seguida: 
-de modo a verificar se temos caminho de ida e de volta entre os centros de distribuição e aplicação aplica-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, 
-obtendo-se as componentes fortemente conexas; de seguida, faz-se a distribuição dos centros de aplicação pelos centros de distribuição em clusters, utilizando o 
-algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}; posteriormente, para se obter o percurso final, onde as carrinhas saem dos centros de distribuição e distribuem
-as vacinas àos respetivos centros de aplicação, utiliza-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}.
+\par Este projeto assumiu como objetivo a implementação de um programa que consiste na obtenção de um percurso que permita transportar
+vacinas a partir de centros de distribuição aos centros de aplicação, onde o principal objetivo seria a minimização do tempo 
+necessário para distribuir as vacinas e o objetivo secundário a minimização do número de carrinhas utilizadas para fazer o transporte. \par
+
+Para tal, esta implementação apoiou-se na utilização de vários algoritmos de grafos. \par
+
+O trabalho empírico realizado envolveu o cálculo do tempo que os dados algoritmos demoravam a executar numa dada situação, fazendo-se, 
+posteriormente, uma média pesada dos resultados obtidos em situações diferentes. Recolhidos estes resultados, tornou-se possível a 
+verificação das complexidades dos algoritmos implementados.
+
+Para a realização da solução face ao problema descrito, fez-se, inicialmente, o estudo dos algoritmos dados nas aulas da unidade curricular de Concepção e Análise de Algoritmos do 2º Ano 
+do MIEIC, leccionada na FEUP. Posteriormente, foi feito um estudo do problema em questão e de possíveis algoritmos para a resolução do mesmo.
+Numa terceira e última fase procedeu-se à implementação da solução do problema. Esta solução consistiu na conjugação de vários algoritmos:
+de modo a verificar se temos caminho de ida e de volta entre os centros de distribuição e aplicação aplicou-se o algoritmo \hyperref[algo:kosaraju]{Kosaraju}, 
+obtendo-se as componentes fortemente conexas; de seguida, fez-se a distribuição dos centros de aplicação pelos centros de distribuição em clusters, utilizando o 
+algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}; finalmente, para se obter o percurso final, onde as carrinhas saem dos centros de distribuição e distribuem
+as vacinas àos respetivos centros de aplicação, utilizou-se o algoritmo \hyperref[algo:nn]{Nearest Neighbor}. \par
+
+Este projeto apresenta, contudo, limitações, nomeadamente ao nível do tamanho das amostras utilizadas nas análises empíricas feitas e nas soluções obtidas. 
+O problema sobre o qual o projeto incide mostra-se de uma complexidade elevada, estando incluído na classe dos problemas NP-Hard, pelo que não é possível obter
+uma solução exata em tempo polinomial. Contudo, face aos resultados obtidos, conclui-se que a solução implementada fornece resultados bastante bons e passíveis de 
+serem usados em situações reais.
+
+Após a realização deste Trabalho, concluiu-se que a implementação de soluções para problemas de grafos aplicados a situações de vida real não é trivial, obrigando-nos a adaptar vários 
+algoritmos face aos problemas aonde serão aplicados. Desta forma, este projeto revelou-se importante para o nosso desenvolvimento individual e 
+estudantil, levando-nos a fazer várias pesquisas e implementações variadas dos algoritmos. Assim, concluiu-se que este trabalho
+é bastante pertinente face aos assuntos lecionados na unidade curricular de Concepção e Análise de Algoritmos, aumentando a nossa motivação sobre estes assuntos, uma 
+vez que realizamos soluções para problemas reais.
 
 
 \chapter{Contribuição}

@@ -37,9 +37,8 @@ void viewDistribution(GraphViewer &gv, const Graph *graph) {
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
@@ -85,9 +84,8 @@ void viewScc(GraphViewer &gv, const Graph *graph, const size_t maxSccComponentId
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
@@ -121,9 +119,8 @@ void viewShortestPath(GraphViewer &gv, const Graph *graph) {
 
     GraphViewer::id_t idEdge = 0, u, v;
     for (Edge *e : graph->getEdges()) {
-        // WARNING this is switched due to a bug in the graphViewer version used (it displays arrows from destination node to origin node)
-        v = e->getOrig()->getId();
-        u = e->getDest()->getId();
+        u = e->getOrig()->getId();
+        v = e->getDest()->getId();
 
         GraphViewer::Edge &edge = gv.addEdge(idEdge, gv.getNode(u), gv.getNode(v), GraphViewer::Edge::DIRECTED);
 
@@ -159,10 +156,10 @@ void view(GraphFile *graphFile, const viewState &state, size_t maxSccComponentId
             break;
     }
 
-    if (graphFile->getbackGroundImage() != "") {
+    if (graphFile->getBackGroundImage() != "") {
         gv.setBackground(
-                graphFile->getbackGroundImage(),
-                sf::Vector2f(-8.7817, -41.3095), // TODO this values by attribute?
+                graphFile->getBackGroundImage(),
+                sf::Vector2f(-8.7817, -41.3095),
                 sf::Vector2f(1.3297, 1.0) / 7010.0f,
                 0.8
         );

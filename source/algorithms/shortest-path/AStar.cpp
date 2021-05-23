@@ -83,12 +83,8 @@ std::list<Edge *> AStar::getPath() const {
     if (!this->ran)
         return res;
 
-    int count = 0;
-
     Vertex *v = d;
     while(v->getId() != s->getId()) {
-
-        cout << "Here bitch " << count++ << " " << path.size() << endl;
 
         pair<Edge*, Vertex*> p = path.at(v);
         if (p.first == nullptr) {

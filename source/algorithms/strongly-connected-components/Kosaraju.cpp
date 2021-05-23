@@ -14,7 +14,6 @@ void Kosaraju::DFS1(Graph *g, Vertex *s, stack<Vertex *> &stack) {
     stack.push(s);
 }
 
-
 // g here is transposed
 void Kosaraju::DFS2(Graph *g, size_t component, Vertex *s) {
     s->setVisited(true);
@@ -31,21 +30,7 @@ void Kosaraju::DFS2(Graph *g, size_t component, Vertex *s) {
         }
     }
 }
-/*
 
-Graph Kosaraju::getTranspose(Graph &g) {
-    Graph t;
-    for (Vertex *v : g.getVertexSet()) {
-        t.addVertex(v->getId());
-        for (Edge * edge : v->getOutgoing()) {
-            Vertex* dest = edge->getDest();
-            t.addVertex(dest->getId());
-            t.addEdge(dest->getId(), v->getId(), 0);
-        }
-    }
-    return t;
-}
-*/
 void Kosaraju::run(Graph *g) {
     stack<Vertex*> stack;
     size_t component = 0;
@@ -61,7 +46,6 @@ void Kosaraju::run(Graph *g) {
         }
     }
 
-    //Graph t = getTranspose(g);
 
     for (Vertex* v : g->getVertexSet()) {
         v->setVisited(false);

@@ -14,7 +14,6 @@ class Dijkstra {
     int vertexViewedCount;
 public:
     void initialize(Graph * graph, int origin_id);
-    void run();
     void changeOriginId(int origin_id);
     void find(int dest_id);
     Vertex * getNearestAC(Truck * truck);

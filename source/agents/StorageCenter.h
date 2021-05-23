@@ -20,8 +20,6 @@ public:
     void addApplicationCenter(const ApplicationCenter & applicationCenter);
     Vertex * getVertex() const;
     std::vector<ApplicationCenter>& getAcCluster();
-    void initTruckAC();
-    void addTruck(const std::vector<ApplicationCenter *> & newACList);
     std::vector<Truck *> & getTrucks();
     void clearTrucks();
     size_t getVaccines() const;
