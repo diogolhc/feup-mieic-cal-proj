@@ -157,6 +157,7 @@ O problema proposto é semelhante ao \textit{Travelling Salesman Problem}, coloc
 O facto de termos vários centros de distribuição leva a que este problema vá ao encontro da generalização do \textit{Vehicle routing problem}, ou seja, entramos no âmbito de \textit{Multi-depot vehicle routing problem}.
 
 	\section{Acessibilidade}
+	\label{perspetivas:acessibilidade}
 	Acessibilidade diz respeito à possibilidade de, num dado grafo, aceder aos seus vértices a partir de outros. \par
 	Para a analisar, poderemos usar algoritmos tal como o \textit{depth-first-search} (\textit{DFS}) ou \textit{breadth-first-search} (\textit{BFS}), que nos indicam os componentes conexos de um grafo.
 
@@ -222,6 +223,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 	
 
 	\section{Conectividade forte}
+	\label{perspetivas:conectividadeforte}
 	De forma a podermos utilizar certos tipos de algoritmos, temos de, primeiro, averiguar a conectividade do grafo de entrada. Este, sendo um grafo que representa um mapa real, será um grafo esparso, pelo que teremos de confirmar se é possível navegar de um dado vértice para os outros, descartando os vértices que não são acessíveis. \par
 	Para tal, poderemos usar o algoritmo de \textit{Kosaraju} ou o algoritmo de \textit{Tarjan}, cujo objetivo é encontrar as componentes fortemente conexas de um grafo dirigido, isto é, encontrar conjuntos de vértices onde todos os vértices desse conjunto são atingíveis a partir de qualquer outro vértice pertencente a esse mesmo conjunto.
 	
@@ -334,6 +336,7 @@ O facto de termos vários centros de distribuição leva a que este problema vá
 
 
 	\section{Caminho mais curto}
+	\label{perspetivas:caminhomaiscurto}
 	Para resolvermos o problema em questão, teremos, também, de calcular o caminho mais curto entre dois vértices do grafo, de forma a, posteriormente, conseguirmos conectar os vários centros de administração ao centro de distribuição a si referenciado. \par
 	Desta forma, pretende-se, com os seguintes algoritmos, determinar o caminho mais curto entre um vértice de origem e um vértice de destino.
 
@@ -658,16 +661,16 @@ a resolução do problema. \par
 \chapter{Algoritmos efetivamente implementados}
 Para a solução do problema proposto, foram implementados parte dos algoritmos descritos em \hyperref[perspetivas]{Perspetivas de solução}. \par
 
-Para efetuar a análise da Acessibilidade, foram implementados os algoritmos \hyperref[algo:dfs]{DFS} e \hyperref[algo:bfs]{BFS}. \par
+Para efetuar a análise da \hyperref[perspetivas:acessibilidade]{Acessibilidade}, foram implementados os algoritmos \hyperref[algo:dfs]{DFS} e \hyperref[algo:bfs]{BFS}. \par
 
-Para a análise da complexidade da Conectividade forte do grafo, foi implementado o algoritmo \hyperref[algo:kosaraju]{Kosaraju} uma vez que 
+Para a análise da complexidade da \hyperref[perspetivas:conectividadeforte]{Conectividade forte} do grafo, foi implementado o algoritmo \hyperref[algo:kosaraju]{Kosaraju} uma vez que 
 se mostrou, em relação ao algoritmo \hyperref[algo:tarjan]{Tarjan}, mais adequado pela sua simplicidade e eficácia. Por outro lado, devido à
 estrutura do Grafo utilizada, foi possível implementar este algoritmo sem a necessidade de criar o grafo transposto descrito no pseudocódigo,
 uma vez que eram guardadas as arestas pela sua direção. \par
 
-Para o cálculo do Caminho mais curto, foram implementados os algoritmos \hyperref[algo:dijkstra]{Dijkstra} e \hyperref[algo:astar]{Astar}. 
-Uma vez que estes algoritmos são algoritmos gananciosos e garantem a solução ótima com os grafos utilizados, foram feitas alterações nos mesmos de modo a
-que, quando se atinge o ponto de interesse mais próximo, estes terminam, de forma a evitar a análise de vértices sem interesse e, portanto, melhorar a sua eficiência.
+Para o cálculo do Caminho mais curto, foram implementados os algoritmos \hyperref[algo:dijkstra]{Dijkstra} e \hyperref[algo:astar]{A*}. 
+Uma vez que estes algoritmos são algoritmos gananciosos, foram feitas alterações nos mesmos de modo a que, quando se atinge o ponto de
+interesse mais próximo, estes terminam, de forma a evitar a análise de vértices sem interesse e, portanto, melhorar a sua eficiência.
 Uma vez que o algoritmo \hyperref[algo:floydwarshall]{Floyd-Warshall} tem uma complexidade muito elevada \( O(|V|^3) \), descartou-se a sua utilização
 para a resolução do problema proposto. \par
 
@@ -728,8 +731,8 @@ mais próximo, é escolhido o ponto de interesse mais próximo como o demonstra 
 \end{center}
 
 
-Uma vez que podem haver vários centros de distribuição, foi necessário resolver o \hyperref[perspetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. Tal como 
-descrito na seccão \hyperref[perspetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}. \par 
+Por outro lado uma vez que pode haver vários centros de distribuição, foi necessário resolver o \hyperref[perpetivas:mdvrp]{Multi-depot Vehicle Routing Problem}. 
+Tal como descrito na seccão \hyperref[perpetivas:mdvrp]{3.6}, para resolver o problema foi implementado o algoritmo \hyperref[algo:msdijkstra]{Multi-source Dijkstra}. \par 
 
 
 
