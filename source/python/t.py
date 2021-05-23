@@ -1,8 +1,8 @@
 import random
 
-count = 23
+count = 1
 
-with open("espinho_full_nodes_latlng.txt", "r") as f:
+with open("porto_full_nodes_latlng.txt", "r") as f:
     l = f.readlines()
     novos = []
     for s in l[1:]:
@@ -10,6 +10,7 @@ with open("espinho_full_nodes_latlng.txt", "r") as f:
         id = t[0][1:]
     
         novos.append(id)
+        
 
     with open("tal.txt", "w") as g:
         g.write(str(count) + "\n")
@@ -17,6 +18,7 @@ with open("espinho_full_nodes_latlng.txt", "r") as f:
             index = random.randint(0, len(novos))
             num = random.randint(0, 100)
             line = str(novos[index]) + " " + str(num)
+            print(novos[index])
             g.write(line + "\n")
             novos.pop(index)
         
