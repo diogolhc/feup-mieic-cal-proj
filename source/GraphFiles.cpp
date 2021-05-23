@@ -24,6 +24,12 @@ Graph* GraphFile::getGraph() {
     return &graph;
 }
 
+GraphFile* GraphFile::getGraphFile(){
+    if (!this->loaded)
+        this->load();
+    return this;
+};
+
 
 void GraphFile::load() {
     ifstream node_stream_latlng(nodes_file_latlng);
@@ -165,36 +171,29 @@ void GraphFiles::load() {
 }
 */
 GraphFile* GraphFiles::getPorto() {
-    Porto.load();
-    return &Porto;
+    return Porto.getGraphFile();
 }
 
 GraphFile* GraphFiles::getPortoStrongComponent() {
-    PortoStrongComponent.load();
-    return &PortoStrongComponent;
+    return PortoStrongComponent.getGraphFile();
 }
 
 GraphFile* GraphFiles::getPenafiel() {
-    Penafiel.load();
-    return &Penafiel;
+    return Penafiel.getGraphFile();
 }
 
 GraphFile* GraphFiles::getPenafielStrongComponent() {
-    PenafielStrongComponent.load();
-    return &PenafielStrongComponent;
+    return PenafielStrongComponent.getGraphFile();
 }
 
 GraphFile* GraphFiles::getEspinho() {
-    Espinho.load();
-    return &Espinho;
+    return Espinho.getGraphFile();
 }
 
 GraphFile* GraphFiles::getEspinhoStrongComponent() {
-    EspinhoStrongComponent.load();
-    return &EspinhoStrongComponent;
+    return EspinhoStrongComponent.getGraphFile();
 }
 
 GraphFile* GraphFiles::getPortugal() {
-    Portugal.load();
-    return &Portugal;
+    return Portugal.getGraphFile();
 }
