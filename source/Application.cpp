@@ -201,6 +201,8 @@ void Application::calculateAndShowSCC() {
 
 void Application::distributeSubMenu() {
     double timeLim;
+    bool passTimeLim = false;
+
     while (true) {
         cout << "How much is the time limit?\n";
         cout << "> ";
@@ -214,18 +216,36 @@ void Application::distributeSubMenu() {
         cin.ignore(9999, '\n');
 
         if (timeLim > 0) {
-            this->distributeAndShow(timeLim);
+            //this->distributeAndShow(timeLim);
             break;
         } else {
             cout << "Invalid time" << endl;
             continue;
         }
     }
+
+    while (true) {
+        cout << "Should the truck pass the time if the it is found to be impossible to comply with the time limit? (0/1)\n";
+        cout << "> ";
+        cin >> passTimeLim;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            cout << "Invalid input" << endl;
+            continue;
+        }
+        cin.ignore(9999, '\n');
+
+        this->distributeAndShow(timeLim, passTimeLim);
+        break;
+
+    }
 }
 
 
-void Application::distributeAndShow(double timeLim) {
-    multiDepotVehicleRouting(this->graphFileSelected, timeLim);
+void Application::distributeAndShow(double timeLim, bool passTimeLim) {
+    multiDepotVehicleRouting(this->graphFileSelected, timeLim, passTimeLim);
     view(this->graphFileSelected, DISTRIBUTION);
     this->graphFileSelected->reset();
 }
