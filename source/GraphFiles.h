@@ -28,8 +28,6 @@ public:
     double getScale();
     std::string getbackGroundImage() const;
     Coordinates getCentralCoordinates() const;
-    vector<size_t> getApplication_centers_ids() const;
-    vector<size_t> getStorage_centers_ids() const;
     vector<StorageCenter> & getStorageCenters();
     vector<ApplicationCenter> getApplicationCenters();
     GraphFile* getGraphFile();
@@ -48,8 +46,6 @@ private:
     GraphFile Espinho;
     GraphFile EspinhoStrongComponent;
 
-    GraphFile Portugal;
-
 public:
     GraphFiles(const std::string &filesDir);
     void load();
@@ -61,7 +57,6 @@ public:
     GraphFile* getPenafielStrongComponent();
     GraphFile* getEspinho();
     GraphFile* getEspinhoStrongComponent();
-    GraphFile* getPortugal();
 };
 
 
