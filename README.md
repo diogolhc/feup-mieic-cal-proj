@@ -4,17 +4,18 @@
 ## Description  
 
 The purpose of this project is to distribute vaccines from 
-a set of depots to a set of application centres minimizing 
-the number of vehicles used and respecting the conservation 
-time of the vaccines. 
+a set of storage centers to a set of application centres 
+minimizing the number of vehicles used without exceeding the 
+vaccines conservation time.
 
 The main concepts used for the development of this project are 
-the **Travelling salesman problem**, **Vehicle routing problem** 
+the **Travelling Salesman problem**, **Vehicle Routing problem** 
 and the **Multi-depot Vehicle Routing Problem**.
 
-This project was developed by Diogo Luís Henriques Costa, 
-Francisco José Barbosa Marques Colino e Rui Filipe Teixeira 
-Alves for CAL 2020-21.
+This project was developed by Diogo Luís Henriques Costa 
+(up201906731@edu.fe.up.pt), Francisco José Barbosa Marques 
+Colino (up201905405@edu.fe.up.pt) and Rui Filipe Teixeira 
+Alves (up201905853@edu.fe.up.pt) for CAL 2020-21.
 
 
 ## Products
@@ -30,3 +31,35 @@ Compiling the source code is straight forward using the
 ## Library Dependency
 
 GraphViewerCpp at *"source/lib/GraphViewerCpp"*
+
+
+## Screenshots
+
+Further details on the screenshots can be found at the *"Funcionalidades e 
+cenários implementados"* section of the report.
+
+
+### Load Map of *Porto*
+
+![report/2nd/imgs/funcs/load.png](report/2nd/imgs/funcs/load.png)
+
+
+### Strongly Connected Components
+
+![report/2nd/imgs/funcs/scc.png](report/2nd/imgs/funcs/scc.png)
+
+
+### A* Shortest Path
+
+![report/2nd/imgs/funcs/astar.png](report/2nd/imgs/funcs/astar.png)
+
+
+### Dijkstra Shortest Path
+
+![report/2nd/imgs/funcs/dijkstra.png](report/2nd/imgs/funcs/dijkstra.png)
+
+
+### Vaccine Distribution
+
+![report/2nd/imgs/funcs/distribute.png](report/2nd/imgs/funcs/distribute.png)
+
