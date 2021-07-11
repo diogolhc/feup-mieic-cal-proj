@@ -9,7 +9,7 @@ minimizing the number of vehicles used without exceeding the
 vaccines conservation time.
 
 The main concepts used for the development of this project are 
-the **Travelling Salesman problem**, **Vehicle Routing problem** 
+the **Travelling Salesman Problem**, **Vehicle Routing Problem** 
 and the **Multi-depot Vehicle Routing Problem**.
 
 This project was developed by Diogo Luís Henriques Costa 
